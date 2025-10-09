@@ -1,0 +1,213 @@
+/* Video de fondo */
+.background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Overlay opcional para oscurecer el fondo */
+.user::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.059); /* Puedes ajustar la opacidad */
+  z-index: 0;
+}
+
+/* Fondo general y fuente */
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Contenedor principal */
+.user_options-container {
+  width: 100%;
+  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 20px;
+  gap: 16px;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Logo */
+.login-illustration {
+  width: auto;
+  max-width: 380px;
+  height: auto;
+  margin: 0 auto 0px;
+  display: block;
+  opacity: 1;
+}
+
+/* Texto de bienvenida */
+.user_options-text {
+  width: 100%;
+  margin-top: -4px;
+}
+
+.user_unregistered-title {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #4E342E;
+  margin-top: -17px;
+  margin-bottom: 4px;
+}
+
+.user_unregistered-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #5D4037;
+  margin-bottom: 18px;
+  padding: 0 10px;
+}
+
+/* Formulario */
+.user_options-forms {
+  width: 100%;
+}
+
+.user_forms-login {
+  width: 100%;
+}
+
+.forms_field {
+  margin-bottom: 20px;
+}
+
+.forms_buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.forms_buttons-action {
+  background-color: #e8716d !important;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 10px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(232, 113, 109, 0.3);
+  transition: all 0.3s ease-in-out;
+}
+
+.forms_buttons-action:hover {
+  background-color: #d45f5b !important;
+  transform: scale(1.03);
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+  .login-illustration {
+    max-width: 140px;
+    margin-bottom: 0;
+  }
+
+  .user_options-container {
+    padding: 20px 15px;
+    gap: 14px;
+  }
+
+  .user_options-text {
+    margin-top: -4px;
+  }
+
+  .user_unregistered-title {
+    font-size: 1.5rem;
+    margin-top: -4px;
+    margin-bottom: 4px;
+  }
+
+  .user_unregistered-text {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .user_options-container {
+    padding: 18px 12px;
+    gap: 12px;
+  }
+
+  .login-illustration {
+    max-width: 120px;
+    margin-bottom: 0;
+  }
+
+  .user_options-text {
+    margin-top: -4px;
+  }
+
+  .user_unregistered-title {
+    font-size: 1.3rem;
+    margin-top: -4px;
+    margin-bottom: 4px;
+  }
+
+  .user_unregistered-text {
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+  }
+}
+
+/* Estilos para el enlace de registro */
+.registro-link {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #5D4037;
+  text-align: center;
+}
+
+.registro-enlace {
+  color: #e8716d;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.registro-enlace:hover {
+  color: #d45f5b;
+}
+
+/* Estilos para el enlace de inicio de sesión */
+
+.login-link {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #5D4037;
+  text-align: center;
+}
+
+.login-enlace {
+  color: #e8716d;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.login-enlace:hover {
+  color: #d45f5b;
+}

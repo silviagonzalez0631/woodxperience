@@ -1,0 +1,224 @@
+/* src/style/Nosotros.css */
+.nosotros-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Sección Cocinas a Medida - Estructura vertical */
+.cocinas-medida-section {
+  margin-bottom: 80px;
+}
+
+.cocinas-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Parte superior: Título y descripción corta */
+.cocinas-superior {
+  text-align: center;
+  max-width: 800px;
+  margin: 0px;
+  margin:  auto;
+}
+
+.cocinas-superior h2 {
+  font-size: 2.2rem;
+  color: #2c1810;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.intro-text {
+  font-size: 1.3rem;
+  color: #5d4037;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Parte central: Imagen */
+.cocinas-centro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.cocinas-imagen img {
+  width: 100%;
+  max-width: 800px;
+  height: -100px;
+  border-radius: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Parte inferior: Texto largo */
+.cocinas-inferior {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.descripcion-texto p {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.descripcion-texto p strong {
+  color: #2c1810;
+  font-weight: 600;
+}
+
+/* El resto de estilos se mantiene igual */
+.productos-destacados-section {
+  margin-bottom: 80px;
+  padding: 60px 0;
+  background: #f8f5f2;
+}
+
+.titulo-seccion {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #2c1810;
+  margin-bottom: 50px;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.producto-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.producto-imagen img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.producto-info {
+  padding: 25px;
+}
+
+.producto-info h3 {
+  font-size: 1.4rem;
+  color: #2c1810;
+  margin-bottom: 15px;
+}
+
+.producto-info p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  min-height: 80px;
+}
+
+.producto-precio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+  margin-bottom: 20px;
+}
+
+.btn-3d {
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+  width: 100%;
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+.disenos-personalizados-section {
+  margin-bottom: 80px;
+}
+
+.disenos-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.diseno-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.diseno-item:last-child {
+  margin-bottom: 0;
+}
+
+.diseno-texto h2 {
+  font-size: 1.8rem;
+  color: #2c1810;
+  margin-bottom: 20px;
+}
+
+.diseno-texto p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.diseno-imagen img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Ocultar en móvil */
+@media (max-width: 768px) {
+  .nosotros-container {
+    display: none;
+  }
+}
+
+/* Responsive para PC */
+@media (max-width: 1024px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .diseno-item {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+}

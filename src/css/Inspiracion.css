@@ -1,0 +1,21 @@
+/* src/style/Inspiracion.css */
+.inspiracion {
+  padding: var(--espacio-l);
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espacio-m);
+  margin-top: var(--espacio-m);
+}
+
+.galeria img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}

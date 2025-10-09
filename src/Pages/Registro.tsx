@@ -89,7 +89,7 @@ import {
             <div className="user_options-text">
             <h2 className="user_unregistered-title">¡Bienvenido al Registro!</h2>
             <p className="user_unregistered-text">
-                Regístrate para comenzar a explorar nuestros productos exclusivos y vivir la experiencia WoodXperience.
+                Vamos Regístrate para comenzar a explorar nuestros productos exclusivos y vivir la experiencia WoodXperience.
             </p>
             </div>
 

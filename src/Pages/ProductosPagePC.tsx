@@ -1,10 +1,11 @@
-// src/pages/ProductosPagePC.tsx
 import React from 'react';
 import ProductosPC from './ProductosPC';
 import '../css/ProductosPage.css';
+import CarruselHero from '../Components/CarruselHero';
+
 
 // Importar imágenes
-import heroImagen from '/imagenes/1-6-1024x768.jpg';
+
 import destacado1 from '/imagenes/53640ca5041335d934de074b3f8d760a.jpg';
 import destacado2 from '/imagenes/18d5a056241554bff84bb5c034837fb1.png';
 import procesoImagen from '/imagenes/3-1024x768.jpeg';
@@ -12,25 +13,8 @@ import procesoImagen from '/imagenes/3-1024x768.jpeg';
 const ProductosPagePC: React.FC = () => {
   return (
     <div className="productos-page-container">
-      {/* Hero Section Moderna */}
-      <section className="productos-hero">
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1>Descubre la Magia de la Madera</h1>
-            <p className="hero-subtitle">
-              Donde la tradición artesanal se encuentra con el diseño innovador
-            </p>
-            <p className="hero-description">
-              Cada pieza cuenta una historia única, creada con pasión y perfeccionada con precisión. 
-              Transformamos la madera en experiencias que perduran.
-            </p>
-            <button className="hero-cta-btn">Explorar Colección</button>
-          </div>
-          <div className="hero-image">
-            <img src={heroImagen} alt="Artesanía en madera" />
-          </div>
-        </div>
-      </section>
+      {/* Carrusel interactivo */}
+<CarruselHero />
 
       {/* Sección Destacados */}
       <section className="destacados-section">

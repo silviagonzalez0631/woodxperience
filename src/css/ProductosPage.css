@@ -1,73 +1,71 @@
-/* src/style/ProductosPage.css */
 .productos-page-container {
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Hero Section */
-.productos-hero {
-  background: linear-gradient(135deg, #74594e 0%, #A69D92 100%, #74594e 0%);
+/*Seccion carrusel*/
+.carrusel-hero {
+  width: 100%;
+  height: 500px;
+  position: relative;
+}
+
+.swiper-hero {
+  width: 100%;
+  height: 100%;
+}
+
+.slide-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.texto-overlay {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
   color: white;
-  padding: 80px 0;
-  margin-bottom: 80px;
+  max-width: 500px;
 }
 
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  padding: 0 40px;
+.texto-overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 
-.hero-text h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  font-weight: 300;
-  line-height: 1.1;
-}
-
-.hero-subtitle {
-  font-size: 1.4rem;
-  margin-bottom: 25px;
+.texto-overlay p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
   opacity: 0.9;
-  font-weight: 300;
 }
 
-.hero-description {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: 35px;
-  opacity: 0.8;
-}
-
-.hero-cta-btn {
+.texto-overlay button {
   background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
   color: #fffefb;
   border: none;
-  padding: 15px 35px;
+  padding: 12px 30px;
   border-radius: 30px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 5px 20px rgba(163, 88, 1, 0.3);
 }
 
-.hero-cta-btn:hover {
+.texto-overlay button:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.432);
 }
 
-.hero-image img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 15px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
 
 /* Sección Destacados */
 .destacados-section {

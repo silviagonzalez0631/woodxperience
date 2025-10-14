@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import {
+    import { useState, useEffect } from "react";
+    import axios from "axios";
+    import { useNavigate } from "react-router-dom";
+    import {
     TextField,
     Button,
     Alert,
@@ -12,7 +12,7 @@ import {
     import PersonIcon from "@mui/icons-material/Person";
     import "../css/estilosLogin.css";
 
-    type BackendError = { mensaje?: string };
+    type BackendError = { error?: string };
 
     function isAxiosErrorLike<T = unknown>(
     error: unknown
@@ -43,19 +43,21 @@ import {
         }
 
         try {
-        const res = await axios.post("http://localhost:8001/api/administrador/login", {
-            nombre,
-            email,
-            password,
-        });
+            const res = await axios.post("http://localhost:8001/registro", {
+        nombre,
+        email,
+        password,
+    });
 
-        setTipoMensaje("success");
-        setMensaje("Registro exitoso");
+    const mensajeBackend = res.data?.data?.mensaje ?? "Registro exitoso";
+    setTipoMensaje("success");
+    setMensaje(mensajeBackend);
+
         setTimeout(() => navigate("/Login"), 2000);
         } catch (error: unknown) {
         setTipoMensaje("error");
         if (isAxiosErrorLike<BackendError>(error)) {
-            const msg = error.response?.data?.mensaje ?? "Algo salió mal";
+            const msg = error.response?.data?.error ?? "Algo salió mal";
             setMensaje("Error: " + msg);
         } else if (error instanceof Error) {
             setMensaje(" " + error.message);
@@ -89,7 +91,7 @@ import {
             <div className="user_options-text">
             <h2 className="user_unregistered-title">¡Bienvenido al Registro!</h2>
             <p className="user_unregistered-text">
-                Vamos Regístrate para comenzar a explorar nuestros productos exclusivos y vivir la experiencia WoodXperience.
+                Regístrate para comenzar a explorar nuestros productos exclusivos y vivir la experiencia WoodXperience.
             </p>
             </div>
 
@@ -154,10 +156,10 @@ import {
                     REGISTRARME
                     </Button>
                     <p className="login-link">
-                        ¿Ya tienes cuenta?{" "}
-                        <span className="login-enlace" onClick={() => navigate("/Login")}>
+                    ¿Ya tienes cuenta?{" "}
+                    <span className="login-enlace" onClick={() => navigate("/Login")}>
                         Inicia sesión aquí
-                        </span>
+                    </span>
                     </p>
                 </div>
                 {mensaje && <Alert severity={tipoMensaje}>{mensaje}</Alert>}

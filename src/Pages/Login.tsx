@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import {
+    import { useState, useEffect } from "react";
+    import axios from "axios";
+    import { useNavigate } from "react-router-dom";
+    import {
     TextField,
     Button,
     Alert,
@@ -11,7 +11,7 @@ import {
     } from "@mui/material";
     import EmailIcon from "@mui/icons-material/Email";
     import LockIcon from "@mui/icons-material/Lock";
-    import "../css/estilosLogin.css"; 
+    import "../css/estilosLogin.css";
 
     interface LoginResponse {
     token: string;
@@ -19,10 +19,11 @@ import {
         id: string;
         nombre: string;
         email: string;
+        rol: string;
     };
     }
 
-    type BackendError = { mensaje?: string };
+    type BackendError = { error?: string };
 
     function isAxiosErrorLike<T = unknown>(
     error: unknown
@@ -47,39 +48,34 @@ import {
 
         if (!email.trim() || !password.trim()) {
         setTipoMensaje("error");
-        setMensaje(" Por favor completa todos los campos");
+        setMensaje("Por favor completa todos los campos");
         return;
         }
 
         try {
-        const res = await axios.post<LoginResponse>(
-            "http://localhost:8001/api/administrador/login",
+        const res = await axios.post<{ data: LoginResponse }>(
+            "http://localhost:8001/login",
             { email, password }
         );
 
-        const { token, usuario } = res.data;
+        const { token, usuario } = res.data.data;
 
-        if (token && usuario) {
-            localStorage.setItem("token", token);
-            localStorage.setItem("usuario", JSON.stringify(usuario));
-            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        localStorage.setItem("token", token);
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-            setTipoMensaje("success");
-            setMensaje(" Login exitoso");
-            navigate("/Inicio");
-        } else {
-            setTipoMensaje("error");
-            setMensaje(" Error: respuesta incompleta del servidor");
-        }
+        setTipoMensaje("success");
+        setMensaje("Login exitoso");
+        setTimeout(() => navigate("/Inicio"), 2000);
         } catch (error: unknown) {
         setTipoMensaje("error");
         if (isAxiosErrorLike<BackendError>(error)) {
-            const msg = error.response?.data?.mensaje ?? "Algo salió mal";
-            setMensaje(" Error: " + msg);
+            const msg = error.response?.data?.error ?? "Algo salió mal";
+            setMensaje("Error: " + msg);
         } else if (error instanceof Error) {
             setMensaje(" " + error.message);
         } else {
-            setMensaje(" Error inesperado");
+            setMensaje("Error inesperado");
         }
         }
     };
@@ -93,36 +89,26 @@ import {
 
     return (
         <section className="user">
-            <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="background-video">
+        <video autoPlay loop muted playsInline className="background-video">
             <source src="/videos/FondoLogin.mp4" type="video/mp4" />
             Tu navegador no soporta videos HTML5.
         </video>
         <div className="user_options-container">
-        <img
+            <img
             src="/imagenes/LogoWoodXperience.png"
             alt="Logo WoodXperience"
             className="login-illustration"
-        />
+            />
 
-        <div className="user_options-text">
-            <div className="user_options-unregistered">
+            <div className="user_options-text">
             <h2 className="user_unregistered-title">¡Bienvenido al Login!</h2>
             <p className="user_unregistered-text">
-                En WoodXperience te invitamos a iniciar sesión para descubrir y comprar nuestros productos
-                exclusivos.
+                En WoodXperience te invitamos a iniciar sesión para descubrir y comprar nuestros productos exclusivos.
             </p>
             </div>
-        </div>
 
-
-            <div className="user_options-forms bounceRight" id="user_options-forms">
+            <div className="user_options-forms bounceRight">
             <div className="user_forms-login">
-                
                 <form className="forms_form" onSubmit={handleSubmit}>
                 <fieldset className="forms_fieldset">
                     <div className="forms_field">
@@ -169,10 +155,10 @@ import {
                     INGRESAR
                     </Button>
                     <p className="registro-link">
-                        ¿No tienes cuenta?{" "}
-                        <span className="registro-enlace" onClick={() => navigate("/Registro")}>
+                    ¿No tienes cuenta?{" "}
+                    <span className="registro-enlace" onClick={() => navigate("/Registro")}>
                         Regístrate aquí
-                        </span>
+                    </span>
                     </p>
                 </div>
                 {mensaje && <Alert severity={tipoMensaje}>{mensaje}</Alert>}

@@ -18,6 +18,7 @@ import AcercaDeMobile from './Pages/AcercaDeMobile';
 import Login from "./Pages/Login";
 import Registro from "./Pages/Registro";
 import './index.css';
+import PerfilMobile from './Pages/PerfilMobile';
 
 function App() {
   const isMobile = useMobileDetect();
@@ -40,6 +41,7 @@ function App() {
             <Route path="*" element={<Error404 />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
+            <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <Inicio />} />
           </Routes>
         </main>
         

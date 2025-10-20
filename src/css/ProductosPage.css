@@ -298,28 +298,40 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
-/* Ocultar en móvil */
+/* Responsive para móvil */
 @media (max-width: 768px) {
-  .productos-page-container {
+  /* Ocultar solo el carrusel */
+  .carrusel-hero {
     display: none;
   }
-}
 
-/* Responsive para PC */
-@media (max-width: 1024px) {
-  .hero-content,
-  .proceso-content {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: center;
-  }
-  
+  /* Ajustes visuales para secciones */
   .destacados-grid {
     grid-template-columns: 1fr;
+    padding: 0 20px;
   }
-  
+
+  .proceso-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;
+  }
+
+  .texto-overlay h1 {
+    font-size: 2rem;
+  }
+
+  .texto-overlay p {
+    font-size: 1rem;
+  }
+
+  .texto-overlay button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
 }

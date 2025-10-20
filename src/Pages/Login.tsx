@@ -62,6 +62,7 @@
 
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(usuario));
+        window.location.href ="/" // Esto nos ayuda a recargar la pagina
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         setTipoMensaje("success");

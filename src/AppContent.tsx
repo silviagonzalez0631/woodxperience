@@ -18,6 +18,7 @@ import Login from "./Pages/Login";
 import Registro from "./Pages/Registro";
 import './index.css';
 import PerfilMobile from './Pages/PerfilMobile';
+import PerfilPC from './Pages/PerfilPC';
 
 
 //Componentes del panel de administrador
@@ -52,7 +53,7 @@ import Dashboard from './Pages/Admin/Dashboard';
                 <Route path="*" element={<Error404 />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Registro />} />
-                <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <Inicio />} />
+                <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
 
                 {/* Rutas del panel de administración */}
                 <Route path="/admin" element={<AdminLayout />}>

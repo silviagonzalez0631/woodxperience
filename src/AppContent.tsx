@@ -18,9 +18,13 @@ import Login from "./Pages/Login";
 import Registro from "./Pages/Registro";
 import './index.css';
 import PerfilMobile from './Pages/PerfilMobile';
+<<<<<<< HEAD
 import { useState } from 'react';
 import CarritoCompra from './Components/CarritoCompra';
 import CarritoPage from './Pages/CarritoPage'; 
+=======
+import PerfilPC from './Pages/PerfilPC';
+>>>>>>> b105e244b0edc2805d629f8cac8acbb988eeb70c
 
 
 //Componentes del panel de administrador
@@ -58,7 +62,7 @@ import Dashboard from './Pages/Admin/Dashboard';
                 <Route path="*" element={<Error404 />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Registro />} />
-                <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <Inicio />} />
+                <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
 
                 {/* Nueva ruta para la página del carrito */}
                 <Route path="/carrito" element={<CarritoPage />} />

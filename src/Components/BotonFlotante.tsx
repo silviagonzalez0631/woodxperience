@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 
-const BotonFlotante: React.FC = () => {
+type Props = {
+  onClick: () => void;
+};
+
+const BotonFlotante: React.FC<Props> = ({ onClick }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -14,15 +18,10 @@ const BotonFlotante: React.FC = () => {
     return () => window.removeEventListener('scroll', mostrarBoton);
   }, []);
 
-  const handleClick = () => {
-    console.log("Ir al carrito");
-    // Aquí puedes redirigir o abrir modal
-  };
-
   return (
     <button
       className={`boton-flotante ${visible ? 'visible' : ''}`}
-      onClick={handleClick}
+      onClick={onClick} // ← ahora usa la función que viene de AppContent
     >
       <FaShoppingCart />
     </button>

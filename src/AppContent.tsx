@@ -18,6 +18,9 @@ import Login from "./Pages/Login";
 import Registro from "./Pages/Registro";
 import './index.css';
 import PerfilMobile from './Pages/PerfilMobile';
+import { useState } from 'react';
+import CarritoCompra from './Components/CarritoCompra';
+import CarritoPage from './Pages/CarritoPage'; 
 
 
 //Componentes del panel de administrador
@@ -33,6 +36,9 @@ import Dashboard from './Pages/Admin/Dashboard';
     const isAdminRoute = location.pathname.startsWith('/admin');
 
 
+  const [mostrarCarrito, setMostrarCarrito] = useState(false); // ← nuevo estado
+
+  const toggleCarrito = () => setMostrarCarrito((prev) => !prev); // ← función para abrir/cerrar
 
     return (
         
@@ -54,6 +60,9 @@ import Dashboard from './Pages/Admin/Dashboard';
                 <Route path="/registro" element={<Registro />} />
                 <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <Inicio />} />
 
+                {/* Nueva ruta para la página del carrito */}
+                <Route path="/carrito" element={<CarritoPage />} />
+
                 {/* Rutas del panel de administración */}
                 <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<Dashboard />} />
@@ -74,7 +83,12 @@ import Dashboard from './Pages/Admin/Dashboard';
             
             {/* COMPONENTES PC */}
             {!isMobile && !isAdminRoute && <PiePagina />}
-            {!isMobile && !isAdminRoute && <BotonFlotante />}
+            {!isMobile && !isAdminRoute && (
+                <>
+                    <BotonFlotante onClick={toggleCarrito} />
+                    {mostrarCarrito && <CarritoCompra />}
+                </>
+)}
 
         </div>
 

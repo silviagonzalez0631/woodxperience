@@ -22,6 +22,8 @@ import { useState } from 'react';
 import CarritoCompra from './Components/CarritoCompra';
 import CarritoPage from './Pages/CarritoPage'; 
 import PerfilPC from '../src/Pages/PerfilPC';
+import ModalCarritoPC from './Pages/ModalCarritoPC';
+
 
 //Componentes del panel de administrador
 import AdminLayout from './Pages/Admin/AdminLayout';
@@ -59,6 +61,7 @@ import Dashboard from './Pages/Admin/Dashboard';
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Registro />} />
                 <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
+                <Route path="/modal-carrito" element={<ModalCarritoPC />} />
 
                 {/* Nueva ruta para la página del carrito */}
                 <Route path="/carrito" element={<CarritoPage />} />

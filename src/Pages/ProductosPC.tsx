@@ -11,7 +11,7 @@ type Producto = {
 
 const ProductosPC: React.FC = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
-  const { agregarProducto } = useCarrito(); // ← usar el contexto
+  const { agregarProducto } = useCarrito();
 
   useEffect(() => {
     const fetchProductos = async () => {
@@ -30,7 +30,13 @@ const ProductosPC: React.FC = () => {
   }, []);
 
   const handleAgregar = (producto: Producto) => {
-    // validacion de lo de inicio de sesion por este boton
+    const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "/modal-carrito"; // ← redirige a tu nueva página
+    return;
+  }
+
     agregarProducto({
       id: producto.id,
       titulo: producto.titulo,
@@ -41,33 +47,36 @@ const ProductosPC: React.FC = () => {
   };
 
   return (
-    <section className="seccion-productos-pc">
-      <h2 className="titulo-productos-pc">Visualiza nuestros productos</h2>
-      
-      <div className="grid-productos-pc">
-        {productos.map((producto) => (
-          <div key={producto.id} className="producto-card-pc">
-            <div className="producto-imagen-container">
-              <img 
-                src={producto.imagenes?.[0] ?? "/imagenes/default.jpg"} 
-                alt={producto.titulo}
-                className="producto-imagen-pc"
-              />
-            </div>
-            <h3 className="producto-titulo-pc">{producto.titulo}</h3>
-            <p className="producto-descripcion-pc">{producto.descripcion}</p>
-            <div className="producto-precio-pc">${producto.precio.toLocaleString()}</div>
+    <>
+      <section className="seccion-productos-pc">
+        <h2 className="titulo-productos-pc">Visualiza nuestros productos</h2>
+        
+        <div className="grid-productos-pc">
+          {productos.map((producto) => (
+            <div key={producto.id} className="producto-card-pc">
+              <div className="producto-imagen-container">
+                <img 
+                  src={producto.imagenes?.[0] ?? "/imagenes/default.jpg"} 
+                  alt={producto.titulo}
+                  className="producto-imagen-pc"
+                />
+              </div>
+              <h3 className="producto-titulo-pc">{producto.titulo}</h3>
+              <p className="producto-descripcion-pc">{producto.descripcion}</p>
+              <div className="producto-precio-pc">${producto.precio.toLocaleString()}</div>
 
-            <button 
-              className="btn-agregar-carrito" 
-              onClick={() => handleAgregar(producto)}
-            >
-              Agregar al carrito
-            </button>
-          </div>
-        ))}
-      </div>
-    </section>
+              <button 
+                className="btn-agregar-carrito" 
+                onClick={() => handleAgregar(producto)}
+              >
+                Agregar al carrito
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </>
   );
 };
 

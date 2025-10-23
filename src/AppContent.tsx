@@ -18,14 +18,10 @@ import Login from "./Pages/Login";
 import Registro from "./Pages/Registro";
 import './index.css';
 import PerfilMobile from './Pages/PerfilMobile';
-<<<<<<< HEAD
 import { useState } from 'react';
 import CarritoCompra from './Components/CarritoCompra';
 import CarritoPage from './Pages/CarritoPage'; 
-=======
-import PerfilPC from './Pages/PerfilPC';
->>>>>>> b105e244b0edc2805d629f8cac8acbb988eeb70c
-
+import PerfilPC from '../src/Pages/PerfilPC';
 
 //Componentes del panel de administrador
 import AdminLayout from './Pages/Admin/AdminLayout';

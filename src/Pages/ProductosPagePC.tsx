@@ -19,7 +19,7 @@ const ProductosPagePC: React.FC = () => {
       {/* Sección Destacados */}
       <section className="destacados-section">
         <div className="section-header">
-          <h2>Piezas Exclusivas</h2>
+          <h2 className="titulo-productos-pc">Piezas Exclusivas</h2>
           <p>Selección especial de nuestras creaciones más solicitadas</p>
         </div>
         
@@ -88,6 +88,13 @@ const ProductosPagePC: React.FC = () => {
 
       {/* Llamado a la acción */}
       <section className="cta-section">
+        <div className="cta-video-background">
+          <video autoPlay muted loop playsInline>
+            <source src="/videos/VideoMueblesFondo.mp4" type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+
         <div className="cta-content">
           <h2>¿Tienes una idea en mente?</h2>
           <p>Transformamos tus visiones en piezas tangibles de calidad excepcional</p>
@@ -97,6 +104,7 @@ const ProductosPagePC: React.FC = () => {
           </div>
         </div>
       </section>
+
 
       {/* Tu componente ProductosPC existente - Se mantiene igual */}
       <ProductosPC />

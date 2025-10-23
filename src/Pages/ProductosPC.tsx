@@ -36,6 +36,7 @@ const ProductosPC: React.FC = () => {
           <div key={producto.id} className="producto-card-pc">
             <div className="producto-imagen-container">
               <img 
+              //modificar para que muestre el 3d del producto en las tarjetas 
                 src={producto.imagenes?.[0] ?? "/imagenes/default.jpg"} 
                 alt={producto.titulo}
                 className="producto-imagen-pc"

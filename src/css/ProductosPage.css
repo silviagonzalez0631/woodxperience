@@ -382,16 +382,22 @@
 }
 
 .btn-agregar-carrito {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: var(--color-primario);
-  color: rgb(61, 7, 7);
-  border-radius: 6px;
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
+  color: #fffefb;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .btn-agregar-carrito:hover {
-  background: var(--color-secundario);
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #b98c61 0%, #a87c55 100%);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
 }
+

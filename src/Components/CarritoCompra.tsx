@@ -1,40 +1,58 @@
 import React from 'react';
 import { useCarrito } from '../Pages/Context/CarrritoContext';
 import '../css/CarritoCompra.css';
+import { useNavigate } from 'react-router-dom';
 
-const CarritoCompra: React.FC = () => {
-  const { carrito } = useCarrito(); // ← aquí obtienes los productos
+type Props = {
+  onClose: () => void;
+  className?: string;
+};
 
-  const subtotal = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
-  const envioTotal = carrito.length * 159; // puedes ajustar lógica de envío
-  const total = subtotal + envioTotal;
+const CarritoCompra: React.FC<Props> = ({ onClose, className = '' }) => {
+  const { carrito } = useCarrito();
+  const navigate = useNavigate();
 
   return (
-    <div className="carrito">
+    <div className={`carrito ${className}`}>
       <div className="carrito-header">
         <h3>Tu carrito</h3>
-        <button className="cerrar-btn">✕</button>
+        <button className="cerrar-btn" onClick={onClose}>✕</button>
       </div>
 
       <div className="carrito-items">
         {carrito.map((p) => (
-          <div key={p.id} className="item">
-            <img src={p.imagen} alt={p.titulo} />
-            <div className="info">
-              <h4>{p.titulo}</h4>
-              <p>Precio: ${p.precio}</p>
-              <p>Cantidad: {p.cantidad}</p>
-              <p>Envío: $159</p>
-            </div>
+          <div key={p.id} className="carrito-preview-item simple">
+          <div className="carrito-info-texto">
+            <span className="carrito-cantidad">{p.cantidad} ×</span>
+            <span className="carrito-nombre">{p.titulo}</span>
           </div>
+        </div>
+
         ))}
       </div>
 
+      <div className="carrito-mensaje">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
+          alt="Video icon"
+          className="carrito-icono"
+        />
+        <p className="carrito-texto">
+          ¡Le diste Click al carrito!<br />
+          ¿Desea continuar con su compra?
+        </p>
+      </div>
+
       <div className="carrito-footer">
-        <p>Subtotal: ${subtotal}</p>
-        <p>Envío: ${envioTotal}</p>
-        <h4>Total: ${total}</h4>
-        <button className="btn-pagar">Continuar compra</button>
+        <button
+          className="btn-pagar"
+          onClick={() => {
+            onClose();
+            navigate('/carrito');
+          }}
+        >
+          Continuar compra
+        </button>
       </div>
     </div>
   );

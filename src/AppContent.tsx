@@ -1,5 +1,5 @@
-// src/App.tsx (actualizado)
-import React from 'react';
+// src/App.tsx
+import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import BarraNavegacion from './Components/BarraNavegacion';
 import Inicio from './Pages/Inicio';
@@ -14,87 +14,87 @@ import BotonCarritoMobile from './Components/BotonCarritoMobile';
 import NosotrosMobile from './Pages/NosotrosMobile';
 import NosotrosPC from './Pages/NosotrosPC';
 import AcercaDeMobile from './Pages/AcercaDeMobile';
-import Login from "./Pages/Login";
-import Registro from "./Pages/Registro";
-import './index.css';
+import Login from './Pages/Login';
+import Registro from './Pages/Registro';
 import PerfilMobile from './Pages/PerfilMobile';
-import { useState } from 'react';
 import CarritoCompra from './Components/CarritoCompra';
-import CarritoPage from './Pages/CarritoPage'; 
-import PerfilPC from '../src/Pages/PerfilPC';
+import CarritoPage from './Pages/CarritoPage';
+import PerfilPC from './Pages/PerfilPC';
 import ModalCarritoPC from './Pages/ModalCarritoPC';
 
-
-//Componentes del panel de administrador
+// Panel de administrador
 import AdminLayout from './Pages/Admin/AdminLayout';
 import Dashboard from './Pages/Admin/Dashboard';
 
-
-
-
+import './index.css';
 
     function AppContent({ isMobile }: { isMobile: boolean }) {
     const location = useLocation();
     const isAdminRoute = location.pathname.startsWith('/admin');
+    const isInicio = location.pathname === '/';
+    const token = localStorage.getItem('token');
+    const usuarioLogueado = !!token;
 
+    const [mostrarCarrito, setMostrarCarrito] = useState(false);
+    const [cerrandoCarrito, setCerrandoCarrito] = useState(false);
 
-  const [mostrarCarrito, setMostrarCarrito] = useState(false); // ← nuevo estado
+    const toggleCarrito = () => setMostrarCarrito((prev) => !prev);
 
-  const toggleCarrito = () => setMostrarCarrito((prev) => !prev); // ← función para abrir/cerrar
+    const cerrarCarritoConAnimacion = () => {
+        setCerrandoCarrito(true);
+        setTimeout(() => {
+        setMostrarCarrito(false);
+        setCerrandoCarrito(false);
+        }, 300); // duración de la animación en ms
+    };
 
     return (
-        
         <div className="app-container">
-            {!isAdminRoute && <BarraNavegacion />}
-            
-            <main style={{flex: 1, paddingBottom: isMobile && !isAdminRoute ? '90px' : '0'}}>
+        {!isAdminRoute && <BarraNavegacion />}
+
+        <main style={{ flex: 1, paddingBottom: isMobile && !isAdminRoute ? '90px' : '0' }}>
             <Routes>
-                <Route path="/" element={<Inicio />} />
-                <Route path="/producto/:id" element={<DetalleProducto />} />
-                <Route path="/servicios" element={<Servicios />} />
-                {/* Ruta condicional para Nosotros */}
-                <Route path="/nosotros" element={isMobile ? <NosotrosMobile /> : <NosotrosPC />} />
-                {/* Ruta para Acerca de Nosotros (solo móvil) */}
-                <Route path="/acerca" element={isMobile ? <AcercaDeMobile /> : <NosotrosPC />} />
-                <Route path="/productos" element={<ProductosPagePC />} />
-                <Route path="*" element={<Error404 />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registro" element={<Registro />} />
-                <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
-                <Route path="/modal-carrito" element={<ModalCarritoPC />} />
-
-                {/* Nueva ruta para la página del carrito */}
-                <Route path="/carrito" element={<CarritoPage />} />
-
-                {/* Rutas del panel de administración */}
-                <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/" element={<Inicio />} />
+            <Route path="/producto/:id" element={<DetalleProducto />} />
+            <Route path="/servicios" element={<Servicios />} />
+            <Route path="/nosotros" element={isMobile ? <NosotrosMobile /> : <NosotrosPC />} />
+            <Route path="/acerca" element={isMobile ? <AcercaDeMobile /> : <NosotrosPC />} />
+            <Route path="/productos" element={<ProductosPagePC />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
+            <Route path="/modal-carrito" element={<ModalCarritoPC />} />
+            <Route path="/carrito" element={<CarritoPage />} />
+            <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<Dashboard />} />
-
             </Route>
-
+            <Route path="*" element={<Error404 />} />
             </Routes>
-            </main>
-            
-            {/* COMPONENTES MÓVIL */}
-            {isMobile && !isAdminRoute && (
+        </main>
+
+        {/* COMPONENTES MÓVIL */}
+        {isMobile && !isAdminRoute && (
             <>
-                <BarraInferiorMobile />
-                <BotonCarritoMobile />
+            <BarraInferiorMobile />
+            <BotonCarritoMobile />
             </>
+        )}
+
+        {/* COMPONENTES PC */}
+        {!isMobile && !isAdminRoute && usuarioLogueado && !isInicio && location.pathname !== '/carrito' && (
+            <>
+            <BotonFlotante onClick={toggleCarrito} />
+            {mostrarCarrito && (
+                <CarritoCompra
+                onClose={cerrarCarritoConAnimacion}
+                className={cerrandoCarrito ? 'cerrando' : ''}
+                />
             )}
+            </>
+        )}
 
-            
-            {/* COMPONENTES PC */}
-            {!isMobile && !isAdminRoute && <PiePagina />}
-            {!isMobile && !isAdminRoute && (
-                <>
-                    <BotonFlotante onClick={toggleCarrito} />
-                    {mostrarCarrito && <CarritoCompra />}
-                </>
-)}
-
+        {!isMobile && !isAdminRoute && <PiePagina />}
         </div>
-
     );
     }
 

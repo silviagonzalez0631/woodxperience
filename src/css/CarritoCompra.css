@@ -2,84 +2,188 @@
   position: fixed;
   right: 0;
   top: 0;
-  width: 320px;
+  width: 340px;
   height: 100%;
-  background: #fff;
-  border-left: 1px solid #eee;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  background: #fffefb;
+  border-left: 1px solid #e6d9cd;
+  box-shadow: -4px 0 12px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   z-index: 2000;
+  font-family: 'Segoe UI', sans-serif;
+  animation: fadeInSlide 0.3s ease forwards;
+}
+
+.carrito.cerrando {
+  animation: fadeOutSlide 0.3s ease forwards;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOutSlide {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
 }
 
 .carrito-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--espacio-m);
-  border-bottom: 1px solid #eee;
-  background: var(--color-primario);
-  color: white;
+  padding: 1rem 1.2rem;
+  background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
+  color: #fffefb;
+  border-bottom: 1px solid #d8c2b4;
 }
 
 .cerrar-btn {
   background: none;
   border: none;
-  color: white;
+  color: #fffefb;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
 .carrito-items {
   flex: 1;
   overflow-y: auto;
-  padding: var(--espacio-m);
-}
-
-.item {
+  padding: 1rem;
   display: flex;
-  align-items: center;
-  margin-bottom: var(--espacio-m);
-  border-bottom: 1px solid #f1f1f1;
-  padding-bottom: var(--espacio-s);
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-.item img {
+.carrito-preview-item.simple {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.95rem;
+  color: #5d4037;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e6d9cd;
+  padding-bottom: 0.5rem;
+}
+
+.carrito-mensaje {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: #fffefb;
+  border-top: 1px solid #e6d9cd;
+  border-bottom: 1px solid #e6d9cd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.carrito-icono {
   width: 60px;
   height: 60px;
-  object-fit: cover;
-  margin-right: var(--espacio-s);
-  border-radius: 8px;
+  object-fit: contain;
+  opacity: 0.9;
+  animation: pulse 1.8s infinite ease-in-out;
 }
 
-.item .info h4 {
-  margin: 0;
-  font-size: 0.95rem;
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
 }
 
-.item .info p {
-  margin: 0.2rem 0 0;
-  color: #555;
+.carrito-texto {
+  font-size: 1.05rem;
+  color: #5d4037;
+  line-height: 1.5;
+  font-weight: 600;
+  text-align: center;
 }
+.carrito-preview-item.simple {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #e6d9cd;
+  padding-bottom: 0.6rem;
+}
+
+.carrito-info-texto {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #5d4037;
+  font-weight: 500;
+}
+
+.carrito-cantidad {
+  background: #f1e6dc;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #8B4513;
+}
+
+.carrito-nombre {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #5d4037;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .carrito-footer {
-  padding: var(--espacio-m);
-  border-top: 1px solid #eee;
-  background: #fafafa;
+  padding: 1.5rem 1.2rem;
+  border-top: 1px solid #e6d9cd;
+  background: #f8f5f2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .btn-pagar {
   width: 100%;
-  padding: var(--espacio-m);
-  background: var(--color-secundario);
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
   color: white;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 25px;
   font-weight: bold;
-  margin-top: var(--espacio-s);
-  transition: background 0.3s;
+  cursor: pointer;
 }
 
 .btn-pagar:hover {
-  background: #e0a800;
+  background: #a0522d;
+  box-shadow: 0 6px 18px rgba(139, 69, 19, 0.2);
+  animation: lift 0.2s ease forwards;
 }
+
+@keyframes lift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2px);
+  }
+}
+

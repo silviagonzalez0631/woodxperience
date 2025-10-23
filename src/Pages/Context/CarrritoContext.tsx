@@ -13,6 +13,7 @@ import React, { createContext, useContext, useState } from 'react';
     agregarProducto: (producto: ProductoCarrito) => void;
     eliminarProducto: (id: number) => void;
     vaciarCarrito: () => void;
+    actualizarCantidad: (id: number, nuevaCantidad: number) => void;
     };
 
     const CarritoContext = createContext<CarritoContextType | undefined>(undefined);
@@ -40,8 +41,18 @@ import React, { createContext, useContext, useState } from 'react';
         setCarrito([]);
     };
 
+    const actualizarCantidad = (id: number, nuevaCantidad: number) => {
+        setCarrito((prev) =>
+        prev.map((p) =>
+            p.id === id ? { ...p, cantidad: nuevaCantidad } : p
+        )
+        );
+    };
+
     return (
-        <CarritoContext.Provider value={{ carrito, agregarProducto, eliminarProducto, vaciarCarrito }}>
+        <CarritoContext.Provider
+        value={{ carrito, agregarProducto, eliminarProducto, vaciarCarrito, actualizarCantidad }}
+        >
         {children}
         </CarritoContext.Provider>
     );

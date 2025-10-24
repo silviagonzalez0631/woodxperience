@@ -1,45 +1,46 @@
     import React from "react";
+    import "../css/ModalPerfilPC.css"; // reutilizamos estilos
 
-    const Perfil: React.FC = () => {
+    const PerfilMobile: React.FC = () => {
     const usuarioGuardado = localStorage.getItem("usuario");
     const usuario = usuarioGuardado ? JSON.parse(usuarioGuardado) : null;
 
     if (!usuario) {
         return (
-        <div className="perfil-container">
-            <h2>Lo siento, no has iniciado sesión</h2>
-            <p>Por favor inicia sesión para ver tu perfil.</p>
+        <div className="modal-perfil-pc-box perfil-mobile-wrapper">
+            <h2 className="perfil-nombre-modal">No has iniciado sesión</h2>
+            <p className="perfil-email-modal">Por favor inicia sesión para ver tu perfil.</p>
+            <button
+            className="btn-modal-perfil ingresar"
+            onClick={() => (window.location.href = "/login")}
+            >
+            Iniciar sesión
+            </button>
         </div>
         );
     }
 
     return (
-        <div className="perfil-container">
-        <h2>Mi Perfil</h2>
-        <p><strong>Nombre:</strong> {usuario.nombre}</p>
-        <p><strong>Email:</strong> {usuario.email}</p>
-        <p><strong>Rol:</strong> {usuario.rol}</p>
+        <div className="modal-perfil-pc-box perfil-mobile-wrapper">
+        <div className="perfil-avatar-modal">
+            <span>{usuario.nombre.charAt(0).toUpperCase()}</span>
+        </div>
+        <h2 className="perfil-nombre-modal">{usuario.nombre}</h2>
+        <p className="perfil-email-modal">{usuario.email}</p>
+        <p className="perfil-rol-modal">Rol: <strong>{usuario.rol}</strong></p>
 
         <button
+            className="btn-modal-perfil cerrar"
             onClick={() => {
             localStorage.removeItem("usuario");
             localStorage.removeItem("token");
-            window.location.href = "/"; // Redirige al inicio y recarga la página
-            }}
-            style={{
-            marginTop: "20px",
-            padding: "10px 20px",
-            backgroundColor: "#c62828",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer",
+            window.location.href = "/";
             }}
         >
-            Cerrar Sesión
+            Cerrar sesión
         </button>
         </div>
     );
     };
 
-    export default Perfil;
+    export default PerfilMobile;

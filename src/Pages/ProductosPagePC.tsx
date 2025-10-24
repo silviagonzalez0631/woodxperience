@@ -1,20 +1,35 @@
 import React from 'react';
 import ProductosPC from './ProductosPC';
 import '../css/ProductosPage.css';
-import CarruselHero from '../Components/CarruselHero';
-
-
-// Importar imágenes
 
 import destacado1 from '/imagenes/53640ca5041335d934de074b3f8d760a.jpg';
 import destacado2 from '/imagenes/18d5a056241554bff84bb5c034837fb1.png';
-import procesoImagen from '/imagenes/3-1024x768.jpeg';
+import producto1 from '/imagenes/18-1024x575.jpg';
+import producto2 from '/imagenes/18d5a056241554bff84bb5c034837fb1.png';
+import producto3 from '/imagenes/1E1E013A-7731-421A-A227-668AB5D4ADEE.webp';
 
 const ProductosPagePC: React.FC = () => {
   return (
     <div className="productos-page-container">
-      {/* Carrusel interactivo */}
-<CarruselHero />
+
+      {/* Llamado a la acción */}
+      <section className="cta-section">
+        <div className="cta-video-background">
+          <video autoPlay muted loop playsInline>
+            <source src="/videos/VideoMueblesFondo.mp4" type="video/mp4" />
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+
+        <div className="cta-content">
+          <h2>¿Tienes una idea en mente?</h2>
+          <p>Transformamos tus visiones en piezas tangibles de calidad excepcional</p>
+          <div className="cta-buttons">
+            <button className="cta-btn primary">Solicitar Cotización</button>
+            <button className="cta-btn secondary">Ver Portafolio Completo</button>
+          </div>
+        </div>
+      </section>
 
       {/* Sección Destacados */}
       <section className="destacados-section">
@@ -51,62 +66,50 @@ const ProductosPagePC: React.FC = () => {
         </div>
       </section>
 
-      {/* Sección Proceso Creativo */}
-      <section className="proceso-section">
-        <div className="proceso-content">
-          <div className="proceso-text">
-            <h2>Del Bosque a tu Hogar</h2>
-            <div className="proceso-steps">
-              <div className="proceso-step">
-                <div className="step-number">01</div>
-                <div className="step-content">
-                  <h4>Selección Premium</h4>
-                  <p>Elegimos maderas de la más alta calidad, respetando siempre la sostenibilidad</p>
-                </div>
-              </div>
-              <div className="proceso-step">
-                <div className="step-number">02</div>
-                <div className="step-content">
-                  <h4>Diseño Personalizado</h4>
-                  <p>Cada proyecto nace de tus necesidades y se adapta a tu espacio único</p>
-                </div>
-              </div>
-              <div className="proceso-step">
-                <div className="step-number">03</div>
-                <div className="step-content">
-                  <h4>Artesanía Experta</h4>
-                  <p>Combinamos técnicas tradicionales con tecnología de vanguardia</p>
-                </div>
-              </div>
+      {/* Sección Trabajos Destacados (movida desde Nosotros) */}
+      <section className="productos-destacados-section">
+        <h2 className="titulo-seccion">Nuestros Trabajos Destacados</h2>
+        
+        <div className="productos-grid">
+          <div className="producto-card">
+            <div className="producto-imagen">
+              <img src={producto1} alt="Decoración moderna" />
+            </div>
+            <div className="producto-info">
+              <h3>Decoración Moderna</h3>
+              <p>Un espacio para disfrutar de una convivencia agradable, en madera lisa y...</p>
+              <div className="producto-precio">$ 500.000</div>
+              <button className="btn-3d">Ver en 3D</button>
             </div>
           </div>
-          <div className="proceso-image">
-            <img src={procesoImagen} alt="Proceso de creación" />
+          
+          <div className="producto-card">
+            <div className="producto-imagen">
+              <img src={producto2} alt="Llavero de casa" />
+            </div>
+            <div className="producto-info">
+              <h3>Llavero de Casa</h3>
+              <p>Llavero de sala para las llaves en madera oscura y diseño abstracto, a colocar en la sala o entrada principal muestra de...</p>
+              <div className="producto-precio">$ 70.000</div>
+              <button className="btn-3d">Ver en 3D</button>
+            </div>
+          </div>
+          
+          <div className="producto-card">
+            <div className="producto-imagen">
+              <img src={producto3} alt="Casa estilo clásico" />
+            </div>
+            <div className="producto-info">
+              <h3>Casa estilo Clásico</h3>
+              <p>Casa en Madera de Roble y construida en base a los diseños antiguos de la época para...</p>
+              <div className="producto-precio">$ 40.000.000</div>
+              <button className="btn-3d">Ver en 3D</button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Llamado a la acción */}
-      <section className="cta-section">
-        <div className="cta-video-background">
-          <video autoPlay muted loop playsInline>
-            <source src="/videos/VideoMueblesFondo.mp4" type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
-        </div>
-
-        <div className="cta-content">
-          <h2>¿Tienes una idea en mente?</h2>
-          <p>Transformamos tus visiones en piezas tangibles de calidad excepcional</p>
-          <div className="cta-buttons">
-            <button className="cta-btn primary">Solicitar Cotización</button>
-            <button className="cta-btn secondary">Ver Portafolio Completo</button>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Tu componente ProductosPC existente - Se mantiene igual */}
+      {/* Catálogo completo */}
       <ProductosPC />
     </div>
   );

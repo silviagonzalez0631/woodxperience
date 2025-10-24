@@ -19,7 +19,7 @@ import Registro from './Pages/Registro';
 import PerfilMobile from './Pages/PerfilMobile';
 import CarritoCompra from './Components/CarritoCompra';
 import CarritoPage from './Pages/CarritoPage';
-import PerfilPC from './Pages/PerfilPC';
+import PerfilPC from './Pages/ModalPerfilPC';
 import ModalCarritoPC from './Pages/ModalCarritoPC';
 
 // Panel de administrador

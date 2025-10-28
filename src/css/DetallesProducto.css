@@ -1,57 +1,83 @@
-.detalles-producto {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.detalles-producto h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-}
-
-.producto-info {
+.detalle-producto-layout {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  align-items: center;
-  justify-content: center;
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 2rem;
+  background: #fffefb;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.producto-info img {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.producto-detalle {
+.detalle-imagenes {
   flex: 1;
-  min-width: 280px;
+  min-width: 300px;
 }
 
-.producto-detalle h2 {
-  font-size: 1.8rem;
+.detalle-imagen-principal {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.detalle-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detalle-titulo {
+  font-size: 2rem;
+  color: #5d4037;
   margin-bottom: 1rem;
 }
 
-.producto-detalle p {
+.detalle-descripcion {
+  font-size: 1rem;
+  color: #74594e;
   margin-bottom: 1.5rem;
-  line-height: 1.6;
-  color: #444;
 }
 
-.btn-comprar {
-  padding: 0.8rem 1.5rem;
-  background-color: #2e7d32;
-  color: white;
+.detalle-precio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+  margin-bottom: 2rem;
+}
+
+.detalle-botones {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-agregar,
+.btn-3d {
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 25px;
+  font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s ease;
 }
 
-.btn-comprar:hover {
-  background-color: #256428;
+.btn-agregar {
+  background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
+  color: #fffefb;
+}
+
+.btn-agregar:hover {
+  background: #b98c61;
+}
+
+.btn-3d {
+  background: transparent;
+  border: 2px solid #b98c61;
+  color: #b98c61;
+}
+
+.btn-3d:hover {
+  background: #f8f5f2;
 }

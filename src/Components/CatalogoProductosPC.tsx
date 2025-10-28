@@ -1,5 +1,5 @@
-import React from 'react';
-import { useCarrito } from '../Pages/Context/CarrritoContext'; // ajusta la ruta
+    import React from 'react';
+    import { useNavigate } from 'react-router-dom';
 
     type Producto = {
     id: number;
@@ -14,32 +14,31 @@ import { useCarrito } from '../Pages/Context/CarrritoContext'; // ajusta la ruta
     };
 
     const CatalogoProductosPC: React.FC<Props> = ({ productos }) => {
-    const { agregarProducto } = useCarrito();
+    const navigate = useNavigate();
 
-    const handleAgregar = (producto: Producto) => {
-        const token = localStorage.getItem("token");
+    const irADetalle = (id: number) => {
+        navigate(`/producto/${id}`);
+    };
 
-        if (!token) {
-        window.location.href = "/modal-carrito";
-        return;
-        }
-
-        agregarProducto({
-        id: producto.id,
-        titulo: producto.titulo,
-        precio: producto.precio,
-        imagen: producto.imagenes?.[0] ?? "/imagenes/default.jpg",
-        cantidad: 1,
-        });
+    //Función para construir la URL de la imagen desde backend
+    const getImagenUrl = (path?: string) => {
+        if (!path) return "/imagenes/default.jpg";
+        if (path.startsWith("http")) return path;
+        return `http://localhost:8001${path}`;
     };
 
     return (
         <div className="grid-productos-pc">
         {productos.map((producto) => (
-            <div key={producto.id} className="producto-card-pc">
+            <div
+            key={producto.id}
+            className="producto-card-pc"
+            onClick={() => irADetalle(producto.id)}
+            style={{ cursor: 'pointer' }}
+            >
             <div className="producto-imagen-container">
                 <img
-                src={producto.imagenes?.[0] ?? "/imagenes/default.jpg"}
+                src={getImagenUrl(producto.imagenes?.[0])}
                 alt={producto.titulo}
                 className="producto-imagen-pc"
                 />
@@ -49,10 +48,13 @@ import { useCarrito } from '../Pages/Context/CarrritoContext'; // ajusta la ruta
             <div className="producto-precio-pc">${producto.precio.toLocaleString()}</div>
 
             <button
-                className="btn-agregar-carrito"
-                onClick={() => handleAgregar(producto)}
+                className="btn-ver-detalles"
+                onClick={(e) => {
+                e.stopPropagation(); 
+                irADetalle(producto.id);
+                }}
             >
-                Agregar al carrito
+                Ver detalles
             </button>
             </div>
         ))}
@@ -60,4 +62,4 @@ import { useCarrito } from '../Pages/Context/CarrritoContext'; // ajusta la ruta
     );
     };
 
-export default CatalogoProductosPC;
+    export default CatalogoProductosPC;

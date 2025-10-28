@@ -56,13 +56,7 @@ const UsuariosPage: React.FC = () => {
                 }}
                 sx={{ flexGrow: 1 }}
             />
-            <Button
-                variant="contained"
-                startIcon={<AddIcon />}
-                sx={{ ml: 2, backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }}
-            >
-                Agregar Usuario
-            </Button>
+            
         </Toolbar>
       </Paper>
       <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>

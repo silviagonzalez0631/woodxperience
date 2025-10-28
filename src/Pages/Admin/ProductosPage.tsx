@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Select, MenuItem, FormControl, InputLabel, Chip, IconButton } from '@mui/material';
+import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
@@ -77,6 +77,23 @@ const columns: GridColDef[] = [
 const ProductosPage: React.FC = () => {
   const [stockFilter, setStockFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [open, setOpen] = useState(false);
+
+  const [newProduct, setNewProduct] = useState({
+    titulo: '',
+    descripcion: '',
+    precio: '',
+    stock: '',
+  });
+
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleFormSubmit = () => {
+    console.log("Nuevo producto a guardar:", newProduct);
+    // Aquí iría la lógica para enviar los datos a la API
+    handleClose();
+  };
 
   // Lógica de filtrado (a implementar con datos reales)
   const filteredRows = mockRows.filter(row => {
@@ -102,6 +119,7 @@ const ProductosPage: React.FC = () => {
             variant="contained"
             startIcon={<AddIcon />}
             sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' }, mr: 2 }}
+            onClick={handleClickOpen}
           >
             Agregar Producto
           </Button>
@@ -156,6 +174,59 @@ const ProductosPage: React.FC = () => {
           }}
         />
       </Paper>
+
+      {/* Modal para agregar nuevo producto */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle sx={{ color: '#5d4037' }}>Agregar Nuevo Producto</DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ mb: 2 }}>
+            Completa los siguientes campos para registrar un nuevo producto en el inventario.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            name="titulo"
+            label="Título del Producto"
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setNewProduct({ ...newProduct, titulo: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            name="descripcion"
+            label="Descripción"
+            type="text"
+            fullWidth
+            multiline
+            rows={4}
+            variant="standard"
+            onChange={(e) => setNewProduct({ ...newProduct, descripcion: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            name="precio"
+            label="Precio (COP)"
+            type="number"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setNewProduct({ ...newProduct, precio: e.target.value })}
+          />
+          <TextField
+            margin="dense"
+            name="stock"
+            label="Stock (Cantidad disponible)"
+            type="number"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} sx={{ color: '#5d4037' }}>Cancelar</Button>
+          <Button onClick={handleFormSubmit} variant="contained" sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }}>Guardar</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

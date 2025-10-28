@@ -26,8 +26,13 @@ import PerfilDireccion from './Pages/PerfilDireccion';
 import FormularioPago from './Components/FormularioPago';
 
 // Panel de administrador
-import AdminLayout from './Pages/Admin/AdminLayout';
-import Dashboard from './Pages/Admin/Dashboard';
+import AdminLayout from './Pages/Admin/AdminLayout'; // This path is correct if AdminLayout.tsx is in src/admin/
+import DashboardPage from './Pages/Admin/DashboardPage';
+import UsuariosPage from './Pages/Admin/UsuariosPage';
+import ProductosPage from './Pages/Admin/ProductosPage';
+import OrdenesPage from './Pages/Admin/OrdenesPage';
+import PagosPage from './Pages/Admin/PagosPage';
+import ResenasPage from './Pages/Admin/ResenasPage';
 
 import './index.css';
 
@@ -72,7 +77,12 @@ import './index.css';
             <Route path="/perfil/direccion" element={<PerfilDireccion />} />
             <Route path="/pago/:id" element={<FormularioPago />} />
             <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<Dashboard />} />
+                <Route index element={<DashboardPage />} />
+                <Route path="usuarios" element={<UsuariosPage />} />
+                <Route path="productos" element={<ProductosPage />} />
+                <Route path="ordenes" element={<OrdenesPage />} />
+                <Route path="pagos" element={<PagosPage />} />
+                <Route path="resenas" element={<ResenasPage />} />
             </Route>
             <Route path="*" element={<Error404 />} />
             </Routes>

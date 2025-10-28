@@ -1,5 +1,5 @@
-import React from 'react';
-import ProductosPC from './ProductosPC';
+import React, { useEffect, useState } from 'react';
+import CatalogoProductosPC from '../Components/CatalogoProductosPC';
 import '../css/ProductosPage.css';
 
 import destacado1 from '/imagenes/53640ca5041335d934de074b3f8d760a.jpg';
@@ -8,7 +8,33 @@ import producto1 from '/imagenes/18-1024x575.jpg';
 import producto2 from '/imagenes/18d5a056241554bff84bb5c034837fb1.png';
 import producto3 from '/imagenes/1E1E013A-7731-421A-A227-668AB5D4ADEE.webp';
 
+type Producto = {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  precio: number;
+  imagenes: string[];
+};
+
 const ProductosPagePC: React.FC = () => {
+  const [productos, setProductos] = useState<Producto[]>([]);
+
+  useEffect(() => {
+    const fetchProductos = async () => {
+      try {
+        const res = await fetch("http://localhost:8001/productos");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          setProductos(json.data);
+        }
+      } catch (error) {
+        console.error("Error al cargar productos:", error);
+      }
+    };
+
+    fetchProductos();
+  }, []);
+
   return (
     <div className="productos-page-container">
 
@@ -66,7 +92,7 @@ const ProductosPagePC: React.FC = () => {
         </div>
       </section>
 
-      {/* Sección Trabajos Destacados (movida desde Nosotros) */}
+      {/* Sección Trabajos Destacados */}
       <section className="productos-destacados-section">
         <h2 className="titulo-seccion">Nuestros Trabajos Destacados</h2>
         
@@ -110,7 +136,7 @@ const ProductosPagePC: React.FC = () => {
       </section>
 
       {/* Catálogo completo */}
-      <ProductosPC />
+      <CatalogoProductosPC productos={productos} />
     </div>
   );
 };

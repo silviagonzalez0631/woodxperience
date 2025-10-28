@@ -1,5 +1,6 @@
     import { useState } from "react";
     import { useNavigate } from "react-router-dom";
+    import "../css/PerfilDireccion.css";
 
     export default function PerfilDireccion() {
     const [linea, setLinea] = useState("");

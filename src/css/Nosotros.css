@@ -1,224 +1,426 @@
-/* src/style/Nosotros.css */
-.nosotros-container {
-  max-width: 1200px;
+/*Nosotros Banner*/
+.bannerNosotros {
+  width: 100%;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.1)
+  ), url('/imagenes/FondoBannerNosotros.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 60px;
+  animation: fadeInBanner 1s ease-in-out;
+}
+
+.bannerNosotros_contenido {
+  max-width: 1200px; /* igual al navbar */
   margin: 0 auto;
-  padding: 40px 20px;
-}
-
-/* Sección Cocinas a Medida - Estructura vertical */
-.cocinas-medida-section {
-  margin-bottom: 80px;
-}
-
-.cocinas-vertical {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 20px;
   gap: 40px;
 }
 
-/* Parte superior: Título y descripción corta */
-.cocinas-superior {
-  text-align: center;
-  max-width: 800px;
-  margin: 0px;
-  margin:  auto;
+.bannerNosotros_texto {
+  flex: 1;
+  color: white;
 }
 
-.cocinas-superior h2 {
-  font-size: 2.2rem;
-  color: #2c1810;
+.bannerNosotros_texto h1 {
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 20px;
+}
+
+.bannerNosotros_texto p {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.bannerNosotros_imagen img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Animación */
+@keyframes fadeInBanner {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .bannerNosotros_contenido {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .bannerNosotros_texto h1 {
+    font-size: 2.4rem;
+  }
+
+  .bannerNosotros_texto p {
+    font-size: 1.2rem;
+  }
+
+  .bannerNosotros_imagen img {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+
+
+
+
+
+/*Nosotros imagen y texto*/
+.nosotros-section {
+  margin-bottom: 60px;
+  background: linear-gradient(#dcd7d2, #ffffff);
+  border-radius: 15px;
+  padding: 25px 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Grid adaptable */
+.nosotros-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Imagen con estilo cálido */
+.nosotros-imagen img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* Texto con calidez y claridad */
+.nosotros-texto h2 {
+  font-size: 2.4rem;
+  color: #3f2216;
+  margin-bottom: 25px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.nosotros-texto p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.nosotros-texto p strong {
+  color: #5d4037;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .nosotros-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .nosotros-texto h2 {
+    font-size: 2rem;
+  }
+
+  .nosotros-texto p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .nosotros-section {
+    padding: 20px 15px;
+  }
+
+  .nosotros-texto h2 {
+    font-size: 1.8rem;
+  }
+
+  .nosotros-texto p {
+    font-size: 1rem;
+  }
+}
+.cita-nosotros {
+  font-style: italic;
+  background: #f8f5f2;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 3px solid #8B4513;
+  margin-bottom: 20px;
+}
+
+/*Tarjetas mision, vision y valores*/
+.tarjetas-nosotros {
+  padding: 100px 20px;
+  
+  text-align: center;
+}
+
+.titulo-tarjetas {
+  font-size: 2.6rem;
+  color: #4b2a1a;
+  margin-bottom: 60px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+.tarjetas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tarjeta-nosotros {
+  background: #fffefc;
+  padding: 40px 30px;
+  border-radius: 20px;
+  border: 1px solid #e2d6c9;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-nosotros::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  width: 60px;
+  height: 4px;
+  background-color: #a0522d;
+  border-radius: 2px;
+}
+
+.tarjeta-nosotros:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.icono-tarjeta {
+  font-size: 2.8rem;
+  color: #a0522d;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.tarjeta-nosotros h3 {
+  font-size: 1.7rem;
+  color: #3f2216;
+  margin-bottom: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tarjeta-nosotros p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #5a4a3f;
+  margin: 0;
+  font-family: 'Georgia', serif;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .tarjetas-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .tarjeta-nosotros {
+    text-align: center;
+    padding: 35px 25px;
+  }
+
+  .tarjeta-nosotros h3 {
+    font-size: 1.5rem;
+  }
+
+  .tarjeta-nosotros p {
+    font-size: 1rem;
+  }
+}
+
+
+/*Seccion de servicios*/
+.servicios-section {
+  padding: 60px 20px;
+  background-color: #fdf8f4;
+  text-align: center;
+}
+
+.titulo-servicios {
+  font-size: 2rem;
+  color: #2c1810;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.servicios-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.servicio-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #8B4513;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+
+.servicio-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.servicio-card h3 {
+  font-size: 1.3rem;
+  color: #2c1810;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.servicio-card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #666;
+  margin: 0;
+}
+
+/* Responsive */
+@media (min-width: 1025px) {
+  .servicios-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .servicio-card {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 768px) {
+  .titulo-servicios {
+    font-size: 1.6rem;
+  }
+
+  .servicio-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .servicio-card p {
+    font-size: 0.9rem;
+  }
+}
+
+
+/*Estilos para la seccion de iluminacion*/
+.iluminacion-section {
+  margin-bottom: 80px;;
+  border-radius: 15px;
+  padding: 60px 30px;
+  animation: fadeInIluminacion 0.8s ease-in-out;
+}
+
+.iluminacion-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.iluminacion-texto h2 {
+  font-size: 2rem;
+  color: #3f2216;
+  margin-bottom: 20px;
+  font-weight: 700;
   line-height: 1.3;
 }
 
-.intro-text {
-  font-size: 1.3rem;
-  color: #5d4037;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-/* Parte central: Imagen */
-.cocinas-centro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-}
-
-.cocinas-imagen img {
-  width: 100%;
-  max-width: 800px;
-  height: -100px;
-  border-radius: 10px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-/* Parte inferior: Texto largo */
-.cocinas-inferior {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.descripcion-texto p {
-  font-size: 1.3rem;
+.iluminacion-texto p {
+  font-size: 1.15rem;
   line-height: 1.8;
-  margin-bottom: 20px;
-  color: #333;
+  color: #4a3a2f;
+  max-width: 600px;
 }
 
-.descripcion-texto p strong {
-  color: #2c1810;
-  font-weight: 600;
-}
-
-/* El resto de estilos se mantiene igual */
-.productos-destacados-section {
-  margin-bottom: 80px;
-  padding: 60px 0;
-  background: #f8f5f2;
-}
-
-.titulo-seccion {
-  text-align: center;
-  font-size: 2.5rem;
-  color: #2c1810;
-  margin-bottom: 50px;
-}
-
-.productos-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.producto-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.iluminacion-imagen {
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.producto-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-}
-
-.producto-imagen img {
+.iluminacion-imagen img {
   width: 100%;
-  height: 200px;
+  height: auto;
   object-fit: cover;
+  display: block;
+  border-radius: 12px;
 }
 
-.producto-info {
-  padding: 25px;
-}
-
-.producto-info h3 {
-  font-size: 1.4rem;
-  color: #2c1810;
-  margin-bottom: 15px;
-}
-
-.producto-info p {
-  color: #666;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  min-height: 80px;
-}
-
-.producto-precio {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #8B4513;
-  margin-bottom: 20px;
-}
-
-.btn-3d {
-  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
-  width: 100%;
-}
-
-.btn-3d:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
-}
-
-.disenos-personalizados-section {
-  margin-bottom: 80px;
-}
-
-.disenos-content {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.diseno-item {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: center;
-  margin-bottom: 80px;
-}
-
-.diseno-item:last-child {
-  margin-bottom: 0;
-}
-
-.diseno-texto h2 {
-  font-size: 1.8rem;
-  color: #2c1810;
-  margin-bottom: 20px;
-}
-
-.diseno-texto p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: #333;
-  margin-bottom: 25px;
-}
-
-.diseno-imagen img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-}
-
-/* Ocultar en móvil */
-@media (max-width: 768px) {
-  .nosotros-container {
-    display: none;
+/* Animación */
+@keyframes fadeInIluminacion {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Responsive para PC */
-@media (max-width: 1024px) {
-  .productos-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Responsive para escritorio */
+@media (min-width: 769px) {
+  .iluminacion-content {
+    flex-direction: row;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 60px;
   }
-  
-  .diseno-item {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    text-align: center;
-  }
-}
 
-@media (max-width: 768px) {
-  .productos-grid {
-    grid-template-columns: 1fr;
+  .iluminacion-texto {
+    flex: 1;
+  }
+
+  .iluminacion-imagen {
+    flex: 1;
+  }
+
+  .iluminacion-imagen img {
+    height: 320px;
   }
 }

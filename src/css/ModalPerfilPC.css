@@ -126,3 +126,41 @@
     .btn-volver-inicio:hover {
     color: #A0522D;
     }
+
+
+    /*Vista para movil*/
+
+        @media (max-width: 768px) {
+    .modal-perfil-pc-box {
+        width: 100%;
+        margin: 40px 20px;
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
+
+    .perfil-avatar-modal {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    .perfil-nombre-modal {
+        font-size: 1.4rem;
+    }
+
+    .perfil-email-modal,
+    .perfil-rol-modal {
+        font-size: 0.95rem;
+    }
+
+    .btn-modal-perfil {
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
+    }
+    }
+
+    .perfil-mobile-wrapper {
+    margin: 60px auto;
+    max-width: 360px;
+    }
+

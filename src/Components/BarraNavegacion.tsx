@@ -45,11 +45,23 @@ const BarraNavegacion: React.FC = () => {
             <Buscador />
 
             <nav className="nav-mobile">
-              <Link to="/" className="nav-link">Inicio</Link>
-              <Link to="/productos" className="nav-link">Productos</Link>
-              <Link to="/nosotros" className="nav-link">Sobre nosotros</Link>
-              <Link to="/acerca" className="nav-link">Acerca de nosotros</Link>
-            </nav>
+            <Link to="/" className="nav-link">Inicio</Link>
+
+            {!usuario && (
+              <Link to="/login" className="nav-link">Login</Link>
+            )}
+
+            {usuario && (
+              <>
+                <Link to="/productos" className="nav-link">Productos</Link>
+                <Link to="/nosotros" className="nav-link">Sobre nosotros</Link>
+                <Link to="/acerca" className="nav-link">Acerca de nosotros</Link>
+                <Link to="/perfil" className="nav-link">Perfil</Link>
+              </>
+            )}
+          </nav>
+
+
           </div>
         </header>
       </div>
@@ -73,16 +85,23 @@ const BarraNavegacion: React.FC = () => {
         </div>
 
         <nav className="nav-pc">
-          <Link to="/" className="nav-link-pc">Inicio</Link>
+      <Link to="/" className="nav-link-pc">Inicio</Link>
+
+      {!usuario && (
+        <Link to="/login" className="nav-link-pc login">Login</Link>
+      )}
+
+      {usuario && (
+        <>
           <Link to="/productos" className="nav-link-pc">Productos</Link>
           <Link to="/nosotros" className="nav-link-pc">Sobre Nosotros</Link>
+          <Link to="/perfil" className="nav-link-pc">Perfil</Link>
+        </>
+      )}
+    </nav>
 
-          {usuario ? (
-            <Link to="/perfil" className="nav-link-pc">Perfil</Link>
-          ) : (
-            <Link to="/login" className="nav-link-pc login">Login</Link>
-          )}
-        </nav>
+
+
       </header>
     </div>
   );

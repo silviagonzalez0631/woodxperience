@@ -17,11 +17,12 @@ import imagen3 from '/imagenes/Carrusel3.jpg';
         <Swiper
             modules={[Autoplay, Pagination]}
             autoplay={{
-                delay: 4000, // tiempo en milisegundos (4 segundos)
+                delay: 5000, // tiempo en milisegundos (6 segundos)
                 disableOnInteraction: false, // sigue moviéndose aunque el usuario interactúe
             }}
             pagination={{ clickable: true }}
             loop={true}
+            speed={1000}
             className="swiper-hero"
             >
 

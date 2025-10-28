@@ -21,6 +21,9 @@ import CarritoCompra from './Components/CarritoCompra';
 import CarritoPage from './Pages/CarritoPage';
 import PerfilPC from './Pages/ModalPerfilPC';
 import ModalCarritoPC from './Pages/ModalCarritoPC';
+import RespuestaPago from './Pages/RespuestaPago';
+import PerfilDireccion from './Pages/PerfilDireccion';
+import FormularioPago from './Components/FormularioPago';
 
 // Panel de administrador
 import AdminLayout from './Pages/Admin/AdminLayout';
@@ -65,6 +68,9 @@ import './index.css';
             <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
             <Route path="/modal-carrito" element={<ModalCarritoPC />} />
             <Route path="/carrito" element={<CarritoPage />} />
+            <Route path="/respuesta-pago" element={<RespuestaPago />} />
+            <Route path="/perfil/direccion" element={<PerfilDireccion />} />
+            <Route path="/pago/:id" element={<FormularioPago />} />
             <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<Dashboard />} />
             </Route>

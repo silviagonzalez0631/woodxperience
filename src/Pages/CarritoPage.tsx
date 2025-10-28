@@ -7,6 +7,73 @@ import '../css/CarritoPage.css';
     const { carrito, actualizarCantidad, eliminarProducto } = useCarrito();
     const navigate = useNavigate();
 
+
+    if (carrito.length === 0) {
+    return (
+        <div className="carrito-vacio">
+        <h2>Tu carrito de compras</h2>
+        <p>Tu carrito está vacío. Agrega productos para continuar.</p>
+        </div>
+    );
+    }
+
+    const handleComprar = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        navigate("/login"); // redirige sin alertas
+        return;
+    }
+
+    if (carrito.length === 0) {
+        navigate("/productos"); // o muestra un mensaje en pantalla
+        return;
+    }
+
+    try {
+        const productos = carrito.map((p) => ({
+        productoId: p.id,
+        cantidad: p.cantidad,
+        precio: p.precio,
+        }));
+
+        const subtotal = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+        const envioTotal = carrito.length * 159;
+        const total = subtotal + envioTotal;
+
+        const res = await fetch("http://localhost:8001/crear-orden", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            productos,
+            envio: envioTotal,
+            total,
+        }),
+        });
+
+        const data = await res.json();
+
+        if (res.status === 403 && data.redirigir) {
+        navigate(data.redirigir); // redirige al formulario de dirección
+        return;
+        }
+
+        if (data.success) {
+        navigate(`/pago/${data.id}`); // redirige al pago
+        } else {
+        console.error("Error al crear la orden:", data.error);
+        }
+    } catch (error) {
+        console.error("Error de conexión al comprar:", error);
+    }
+    };
+
+
+
+
     const subtotal = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
     const envioTotal = carrito.length * 159;
     const total = subtotal + envioTotal;
@@ -65,7 +132,7 @@ import '../css/CarritoPage.css';
                 <p>Subtotal: ${subtotal.toLocaleString()}</p>
                 <p>Envío: ${envioTotal.toLocaleString()}</p>
                 <h4>Total: ${total.toLocaleString()}</h4>
-                <button className="btn-finalizar">¡Comprar!</button>
+                <button className="btn-finalizar" onClick={handleComprar}>¡Comprar!</button>
                 <button className="btn-regresar" onClick={() => navigate('/productos')}>
                     ← Regresar a productos
                 </button>

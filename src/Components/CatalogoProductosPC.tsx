@@ -20,7 +20,6 @@
         navigate(`/producto/${id}`);
     };
 
-    //Función para construir la URL de la imagen desde backend
     const getImagenUrl = (path?: string) => {
         if (!path) return "/imagenes/default.jpg";
         if (path.startsWith("http")) return path;
@@ -28,37 +27,41 @@
     };
 
     return (
-        <div className="grid-productos-pc">
-        {productos.map((producto) => (
-            <div
-            key={producto.id}
-            className="producto-card-pc"
-            onClick={() => irADetalle(producto.id)}
-            style={{ cursor: 'pointer' }}
-            >
-            <div className="producto-imagen-container">
-                <img
-                src={getImagenUrl(producto.imagenes?.[0])}
-                alt={producto.titulo}
-                className="producto-imagen-pc"
-                />
-            </div>
-            <h3 className="producto-titulo-pc">{producto.titulo}</h3>
-            <p className="producto-descripcion-pc">{producto.descripcion}</p>
-            <div className="producto-precio-pc">${producto.precio.toLocaleString()}</div>
+        <section className="productos-destacados-section">
+        <h2 className="titulo-seccion">Catálogo de Productos</h2>
 
-            <button
-                className="btn-ver-detalles"
-                onClick={(e) => {
-                e.stopPropagation(); 
-                irADetalle(producto.id);
-                }}
+        <div className="productos-grid">
+            {productos.map((producto) => (
+            <div
+                key={producto.id}
+                className="producto-card"
+                onClick={() => irADetalle(producto.id)}
+                style={{ cursor: 'pointer' }}
             >
-                Ver detalles
-            </button>
+                <div className="producto-imagen">
+                <img
+                    src={getImagenUrl(producto.imagenes?.[0])}
+                    alt={producto.titulo}
+                />
+                </div>
+                <div className="producto-info">
+                <h3>{producto.titulo}</h3>
+                <p>{producto.descripcion}</p>
+                <div className="producto-precio">${producto.precio.toLocaleString()}</div>
+                <button
+                    className="btn-3d"
+                    onClick={(e) => {
+                    e.stopPropagation();
+                    irADetalle(producto.id);
+                    }}
+                >
+                    Ver detalles
+                </button>
+                </div>
             </div>
-        ))}
+            ))}
         </div>
+        </section>
     );
     };
 

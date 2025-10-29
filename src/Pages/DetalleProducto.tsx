@@ -87,14 +87,9 @@ export default function DetalleProducto() {
             Agregar al carrito
           </button>
           {producto.modelo3D && (
-            <a
-              href={producto.modelo3D}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-3d"
-            >
-              Ver en 3D
-            </a>
+            <button className="btn-3d" onClick={() => navigate("/productos")}>
+              Regresar
+            </button>
           )}
         </div>
       </div>

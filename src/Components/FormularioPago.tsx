@@ -21,7 +21,7 @@
             }
 
             // ✅ Aquí haces el POST correcto al backend Deno
-            const res = await fetch(`http://localhost:8001/pago/iniciar/${id}`, {
+            const res = await fetch(`http://10.221.253.235:8001/pago/iniciar/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

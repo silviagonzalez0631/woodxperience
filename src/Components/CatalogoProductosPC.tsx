@@ -1,6 +1,6 @@
     import React from 'react';
     import { useNavigate } from 'react-router-dom';
-
+    import { getBackendAssetUrl } from '../Pages/imageUtils';
     type Producto = {
     id: number;
     titulo: string;
@@ -20,12 +20,6 @@
         navigate(`/producto/${id}`);
     };
 
-    const getImagenUrl = (path?: string) => {
-        if (!path) return "/imagenes/default.jpg";
-        if (path.startsWith("http")) return path;
-        return `http://localhost:8001${path}`;
-    };
-
     return (
         <section className="productos-destacados-section">
         <h2 className="titulo-seccion">Catálogo de Productos</h2>
@@ -40,7 +34,7 @@
             >
                 <div className="producto-imagen">
                 <img
-                    src={getImagenUrl(producto.imagenes?.[0])}
+                    src={getBackendAssetUrl(producto.imagenes?.[0])}
                     alt={producto.titulo}
                 />
                 </div>

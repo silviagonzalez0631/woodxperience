@@ -24,7 +24,7 @@ export default function PerfilDireccion() {
             return;
         }
 
-        const res = await fetch("http://localhost:8001/direcciones", {
+        const res = await fetch("http://10.221.253.235:8001/direcciones", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

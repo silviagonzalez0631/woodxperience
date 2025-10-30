@@ -43,7 +43,7 @@
         }
 
         try {
-            const res = await axios.post("http://localhost:8001/registro", {
+            const res = await axios.post("http://10.221.253.235:8001/registro", {
         nombre,
         email,
         password,

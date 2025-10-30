@@ -3,6 +3,7 @@ import { useCarrito } from './Context/CarrritoContext';
 import procesoImagen from '/imagenes/3-1024x768.jpeg';
 import diseno1 from '/imagenes/1-6-1024x768.jpg';
 import diseno2 from '/imagenes/14-1024x683.jpg';
+import { getBackendAssetUrl } from './imageUtils';
 import '../css/Inicio.css';
 
 type Producto = {
@@ -22,7 +23,7 @@ const InicioMobile: React.FC = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        const res = await fetch("http://localhost:8001/productos");
+        const res = await fetch("http://10.221.253.235:8001/productos");
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
           const productosConImagenes = json.data.map((p: Producto) => ({
@@ -52,7 +53,7 @@ const InicioMobile: React.FC = () => {
       id: producto.id,
       titulo: producto.titulo,
       precio: producto.precio,
-      imagen: producto.imagenes?.[0] ?? "/imagenes/default.jpg",
+      imagen: getBackendAssetUrl(producto.imagenes?.[0]),
       cantidad: 1,
     });
   };
@@ -69,8 +70,8 @@ const InicioMobile: React.FC = () => {
             {productos.map((producto) => (
               <div key={producto.id} className="producto-card-mobile">
                 <div className="producto-imagen-mobile">
-                  <img
-                    src={producto.imagenes?.[0] ?? "/imagenes/default.jpg"}
+                  <img // Aquí se usa la función para construir la URL de la imagen
+                    src={getBackendAssetUrl(producto.imagenes?.[0])}
                     alt={producto.titulo}
                     className="producto-imagen-mobile-img"
                   />

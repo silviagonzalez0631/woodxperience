@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../Pages/Context/CarrritoContext';
 import '../css/CarritoPage.css';
+import { getBackendAssetUrl } from './imageUtils';
 
     const CarritoPage: React.FC = () => {
     const { carrito, actualizarCantidad, eliminarProducto } = useCarrito();
@@ -41,7 +42,7 @@ import '../css/CarritoPage.css';
         const envioTotal = carrito.length * 159;
         const total = subtotal + envioTotal;
 
-        const res = await fetch("http://localhost:8001/crear-orden", {
+        const res = await fetch("http://10.221.253.235:8001/crear-orden", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -93,7 +94,7 @@ import '../css/CarritoPage.css';
                 <div className="carrito-lista">
                     {carrito.map((p) => (
                     <div key={p.id} className="carrito-page-item">
-                        <img src={p.imagen} alt={p.titulo} />
+                        <img src={getBackendAssetUrl(p.imagen)} alt={p.titulo} />
                         <div className="carrito-page-info">
                         <h4>{p.titulo}</h4>
 

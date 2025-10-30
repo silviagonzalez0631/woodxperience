@@ -54,7 +54,7 @@
 
         try {
         const res = await axios.post<{ data: LoginResponse }>(
-            "http://localhost:8001/login",
+            "http://10.221.253.235:8001/login",
             { email, password }
         );
 

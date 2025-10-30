@@ -2,6 +2,7 @@ import React from 'react';
 import { useCarrito } from '../Pages/Context/CarrritoContext';
 import '../css/CarritoCompra.css';
 import { useNavigate } from 'react-router-dom';
+import { getBackendAssetUrl } from '../Pages/imageUtils';
 
 type Props = {
   onClose: () => void;
@@ -23,7 +24,7 @@ const CarritoCompra: React.FC<Props> = ({ onClose, className = '' }) => {
         {carrito.map((p) => (
           <div key={p.id} className="carrito-preview-item simple">
           <div className="carrito-info-texto">
-            <span className="carrito-cantidad">{p.cantidad} ×</span>
+            <img src={getBackendAssetUrl(p.imagen)} alt={p.titulo} className="carrito-item-imagen" />
             <span className="carrito-nombre">{p.titulo}</span>
           </div>
         </div>

@@ -1,12 +1,42 @@
 .admin-layout {
   display: flex;
-  height: 100vh;
-  background-color: #f4f6f8;
-  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f5f2; /* Un blanco roto cálido */
+  min-height: 100vh;
 }
 
-.admin-content {
-  flex: 1;
-  padding: 30px;
-  overflow-y: auto;
+.admin-navbar {
+  background-color: #cabfb2 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border-bottom: 1px solid #a88a6d;
+}
+
+.admin-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+}
+
+.admin-logo-img {
+  height: 40px;
+}
+
+.admin-nav-link {
+  color: #5d4037 !important;
+  font-weight: 600 !important;
+  margin: 0 0.5rem !important;
+}
+
+.admin-icon-btn {
+  color: #5d4037 !important;
+}
+
+.admin-avatar {
+  background-color: #a88a6d !important;
+  color: white !important;
+}
+
+.admin-main-content {
+  flex-grow: 1;
+  padding: 2rem;
 }

@@ -114,107 +114,67 @@
 }
 
 
-.productos-destacados-section {
-  margin-bottom: 80px;
-  padding: 60px 0;
-  background: #f8f5f2;
+/* Sección Proceso */
+.proceso-section {
+  margin-bottom: 100px;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #f8f5f2 0%, #ffffff 100%);
 }
 
-.titulo-seccion {
-  text-align: center;
-  font-size: 2.5rem;
-  color: #2c1810;
-  margin-bottom: 50px;
-}
-
-.productos-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+.proceso-content {
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
 }
 
-.producto-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  overflow: hidden;
-}
-
-.producto-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-}
-
-.producto-imagen img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-.producto-info {
-  padding: 25px;
-}
-
-.producto-info h3 {
-  font-size: 1.4rem;
+.proceso-text h2 {
+  font-size: 2.5rem;
   color: #2c1810;
-  margin-bottom: 15px;
+  margin-bottom: 40px;
+  font-weight: 300;
 }
 
-.producto-info p {
+.proceso-step {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 35px;
+}
+
+.step-number {
+  background: #8B4513;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.step-content h4 {
+  font-size: 1.3rem;
+  color: #2c1810;
+  margin-bottom: 8px;
+}
+
+.step-content p {
   color: #666;
   line-height: 1.6;
-  margin-bottom: 20px;
-  min-height: 80px;
 }
 
-.producto-precio {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #8B4513;
-  margin-bottom: 20px;
-}
-
-.btn-3d {
-  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+.proceso-image img {
   width: 100%;
-}
-
-.btn-3d:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
-}
-
-@media (max-width: 1024px) {
-  .inspiracion-item {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    text-align: center;
-  }
-}
-
-
-@media (max-width: 1024px) {
-  .productos-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .productos-grid {
-    grid-template-columns: 1fr;
-  }
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
 }
 
 
@@ -329,4 +289,5 @@
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
 }
+
 

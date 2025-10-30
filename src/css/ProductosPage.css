@@ -67,7 +67,7 @@
 }
 
 
-/* Sección Destacados */
+/* Sección Productos Destacados */
 .destacados-section {
   margin-bottom: 100px;
   padding: 0 40px;
@@ -92,17 +92,17 @@
 
 .destacados-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  grid-template-columns: repeat(3, 1fr); /* ← ahora son 3 tarjetas */
+  gap: 30px; /* ← más compacto */
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .destacado-card {
   background: white;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
   position: relative;
 }
@@ -113,7 +113,7 @@
 }
 
 .destacado-card.featured {
-  border: 2px solid  #74594e;
+  border: 2px solid #74594e;
 }
 
 .featured-badge {
@@ -130,38 +130,40 @@
 
 .destacado-image img {
   width: 100%;
-  height: 250px;
+  height: 220px; /* ← menos alto para que no se vean tan grandes */
   object-fit: cover;
+  display: block;
+  border-radius: 0;
 }
 
 .destacado-content {
-  padding: 30px;
+  padding: 25px;
 }
 
 .destacado-content h3 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: #2c1810;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .destacado-content p {
   color: #666;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .precio-destacado {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: bold;
   color: #8B4513;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .btn-destacado {
   background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 10px 20px;
   border-radius: 25px;
   font-weight: 600;
   cursor: pointer;
@@ -174,67 +176,144 @@
   box-shadow: 0 5px 15px rgba(139, 69, 19, 0.3);
 }
 
-/* Sección Proceso */
-.proceso-section {
-  margin-bottom: 100px;
-  padding: 80px 40px;
-  background: linear-gradient(135deg, #f8f5f2 0%, #ffffff 100%);
+/* Responsive para tablet y móvil */
+@media (max-width: 1024px) {
+  .destacados-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
 }
 
-.proceso-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
+@media (max-width: 768px) {
+  .destacados-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+  }
 }
 
-.proceso-text h2 {
+
+/* Sección tarjetas del catálogo de productos */
+.productos-destacados-section {
+  margin-bottom: 80px;
+  padding: 60px 0;
+  background: #f8f5f2;
+}
+
+.titulo-seccion {
+  text-align: center;
   font-size: 2.5rem;
   color: #2c1810;
-  margin-bottom: 40px;
-  font-weight: 300;
+  margin-bottom: 50px;
 }
 
-.proceso-step {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 35px;
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.step-number {
-  background: #8B4513;
-  color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.producto-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.producto-imagen {
+  width: 100%;
+  height: 240px; /* ← más compacto y equilibrado */
+  background-color: #f0f0f0;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-right: 20px;
-  flex-shrink: 0;
 }
 
-.step-content h4 {
-  font-size: 1.3rem;
+.producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ← llena el espacio visualmente */
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.producto-info {
+  padding: 25px;
+}
+
+.producto-info h3 {
+  font-size: 1.4rem;
   color: #2c1810;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 }
 
-.step-content p {
+.producto-info p {
   color: #666;
   line-height: 1.6;
+  margin-bottom: 20px;
+  min-height: 80px;
 }
 
-.proceso-image img {
+.producto-precio {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #8B4513;
+  margin-bottom: 20px;
+}
+
+.btn-3d {
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
   width: 100%;
-  height: 400px;
-  object-fit: cover;
-  border-radius: 15px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .inspiracion-item {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* CTA Video Section */

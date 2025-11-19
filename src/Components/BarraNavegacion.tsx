@@ -48,7 +48,7 @@ const BarraNavegacion: React.FC = () => {
             <Link to="/" className="nav-link">Inicio</Link>
 
             {!usuario && (
-              <Link to="/login" className="nav-link">Login</Link>
+              <Link to="/Login" className="nav-link">Login</Link>
             )}
 
             {usuario && (
@@ -88,7 +88,7 @@ const BarraNavegacion: React.FC = () => {
       <Link to="/" className="nav-link-pc">Inicio</Link>
 
       {!usuario && (
-        <Link to="/login" className="nav-link-pc login">Login</Link>
+        <Link to="/Login" className="nav-link-pc login">Login</Link>
       )}
 
       {usuario && (

@@ -40,7 +40,8 @@
                 </div>
                 <div className="producto-info">
                 <h3>{producto.titulo}</h3>
-                <p>{producto.descripcion}</p>
+                <p>{producto.descripcion.length > 100 ? producto.descripcion.slice(0, 100) + '...' : producto.descripcion}</p>
+
                 <div className="producto-precio">${producto.precio.toLocaleString()}</div>
                 <button
                     className="btn-3d"

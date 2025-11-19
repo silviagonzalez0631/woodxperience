@@ -1,5 +1,7 @@
 .admin-dashboard {
-  padding: 1rem;
+  padding: 2rem;
+  min-height: 100vh;
+  background: #f7f5f2;
 }
 
 .welcome-card {
@@ -19,6 +21,20 @@
   color: #a88a6d;
 }
 
+.welcome-header {
+  margin-bottom: 0.5rem;
+}
+
+.welcome-header h1 {
+  color: #5d4037;
+  font-size: 1.35rem;
+  margin-bottom: 0.2rem;
+}
+
+.welcome-header .MuiTypography-subtitle1 {
+  color: #7a6a60;
+}
+
 .kpi-grid {
   margin-top: 1rem;
 }
@@ -27,6 +43,8 @@
   color: white !important;
   border-radius: 12px !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(168, 138, 109, 0.15);
+  cursor: pointer;
 }
 
 .kpi-card:hover {
@@ -38,12 +56,124 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  padding: 1rem 0.5rem;
 }
 
 .kpi-value {
   font-weight: bold;
+  font-size: 2rem;
 }
 
 .kpi-title {
   opacity: 0.9;
+  font-size: 1rem;
+}
+
+.dashboard-widget {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(168, 138, 109, 0.08);
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Recomendaciones / Última actividad styles */
+.dashboard-widget .last-activity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.last-activity .activity-item {
+  background: #faf7f5;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  font-size: 0.95rem;
+  color: #5d4037;
+}
+
+/* Compact KPI quick list for small screens */
+.kpi-compact {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.kpi-compact .compact-item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  box-shadow: 0 2px 6px rgba(168,138,109,0.06);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 140px;
+}
+.kpi-compact .compact-item .compact-value {
+  font-weight: 700;
+  color: #5d4037;
+}
+.kpi-compact .compact-item .compact-label {
+  font-size: 0.85rem;
+  color: #7a6a60;
+}
+
+.rec-icon { color: #8a6f60; }
+
+.admin-profile-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(168, 138, 109, 0.10);
+  margin-top: 2rem;
+  padding: 1.5rem 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .admin-dashboard .MuiGrid-container {
+    flex-direction: column !important;
+  }
+  .kpi-grid .MuiGrid-item {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+  .admin-profile-card {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-dashboard {
+    padding: 0.5rem;
+  }
+  .welcome-header h1 {
+    font-size: 1.08rem;
+    line-height: 1.15;
+    margin-bottom: 0.12rem;
+  }
+  .welcome-header .MuiTypography-subtitle1 {
+    font-size: 0.82rem;
+    margin-bottom: 0.18rem;
+  }
+  .kpi-card-content {
+    flex-direction: row;
+    gap: 0.9rem;
+    padding: 0.6rem 0.15rem;
+  }
+  .kpi-value {
+    font-size: 1.15rem;
+  }
+  .dashboard-widget {
+    padding: 0.95rem;
+  }
+  .admin-profile-card {
+    padding: 0.95rem 0.18rem;
+  }
+  .kpi-compact { gap: 0.5rem; }
+  .kpi-compact .compact-item { min-width: calc(50% - 0.5rem); padding: 0.45rem 0.55rem; }
+  .kpi-compact .compact-item .compact-value { font-size: 1rem; }
+  .kpi-compact .compact-item .compact-label { font-size: 0.78rem; }
+  .recommendation-list { margin-top: 0.45rem; }
+  .dashboard-widget .last-activity { gap: 0.35rem; }
+  .last-activity .activity-item { font-size: 0.9rem; padding: 0.34rem; }
 }

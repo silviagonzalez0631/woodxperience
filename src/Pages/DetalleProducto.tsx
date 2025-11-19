@@ -2,7 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCarrito } from "../Pages/Context/CarrritoContext";
 import "../css/DetallesProducto.css";
-import { getBackendAssetUrl } from './imageUtils';
 import ModelViewer from "../Components/ModelViewer";
 
 type Producto = {
@@ -23,7 +22,7 @@ export default function DetalleProducto() {
   useEffect(() => {
     const fetchProducto = async () => {
       try {
-        const res = await fetch(`http://10.221.253.235:8001/productos/${id}`);
+        const res = await fetch(`http://localhost:8001/productos/${id}`);
         const json = await res.json();
         if (json.success) {
           setProducto(json.data);
@@ -39,8 +38,7 @@ export default function DetalleProducto() {
   const handleAgregar = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Debes iniciar sesión para agregar al carrito.");
-      navigate("/modal-carrito");
+      navigate("/modal-carrito"); // ← redirección sin alerta
       return;
     }
 
@@ -49,12 +47,11 @@ export default function DetalleProducto() {
         id: producto.id,
         titulo: producto.titulo,
         precio: producto.precio,
-        imagen: getBackendAssetUrl(producto.imagenes?.[0]),
+        imagen: producto.imagenes?.[0] ?? "/imagenes/default.jpg",
         cantidad: 1,
       });
 
-      alert("Producto agregado al carrito");
-      navigate("/productos");
+      navigate("/productos"); // ← también sin alerta
     }
   };
 
@@ -65,13 +62,13 @@ export default function DetalleProducto() {
       <div className="detalle-imagenes">
         {producto.modelo3D ? (
           <ModelViewer
-            src={getBackendAssetUrl(producto.modelo3D)}
+            src={producto.modelo3D}
             alt={producto.titulo}
             style={{ width: "100%", height: "400px", borderRadius: "12px" }}
           />
         ) : (
           <img
-            src={getBackendAssetUrl(producto.imagenes?.[0])}
+            src={producto.imagenes?.[0]}
             alt={producto.titulo}
             className="detalle-imagen-principal"
           />

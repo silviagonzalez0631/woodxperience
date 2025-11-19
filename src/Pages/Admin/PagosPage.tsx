@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, Grid, Card, CardContent, Paper, Toolbar, TextField, InputAdornment, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Link } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { Box, Typography, Card, CardContent, Paper, Toolbar, TextField, InputAdornment, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Link } from '@mui/material';
+import { useTheme, useMediaQuery } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import SyncProblemIcon from '@mui/icons-material/SyncProblem';
-import PriceCheckIcon from '@mui/icons-material/PriceCheck';
-import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
 
 // --- Mock Data ---
 const mockKpis = {
@@ -70,6 +68,8 @@ const columns: GridColDef[] = [
 ];
 
 const PagosPage: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [statusFilter, setStatusFilter] = useState('');
   const [methodFilter, setMethodFilter] = useState('');
 
@@ -85,78 +85,122 @@ const PagosPage: React.FC = () => {
         Transacciones y Liquidez
       </Typography>
 
-      {/* KPIs Financieros */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ backgroundColor: '#e8f5e9' }}>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>Ingresos Netos (Mes)</Typography>
-              <Typography variant="h5" component="div" sx={{ color: '#2e7d32', fontWeight: 'bold' }}>{formatCurrency(mockKpis.ingresosNetos)}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ backgroundColor: '#fff8e1' }}>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>Reembolsos Procesados</Typography>
-              <Typography variant="h5" component="div" sx={{ color: '#f57f17', fontWeight: 'bold' }}>{formatCurrency(mockKpis.reembolsos)}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>Comisiones de Plataforma</Typography>
-              <Typography variant="h5" component="div">{formatCurrency(mockKpis.comisiones)}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Card sx={{ backgroundColor: '#ffebee' }}>
-            <CardContent>
-              <Typography color="textSecondary" gutterBottom>Transacciones Fallidas</Typography>
-              <Typography variant="h5" component="div" sx={{ color: '#c62828', fontWeight: 'bold' }}>{mockKpis.fallidas}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      {/* KPIs Financieros (grid simple para evitar problemas de tipado en Grid) */}
+      <Box sx={{ mb: 3, display: 'grid', gap: isMobile ? 1 : 3, gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)' }}>
+        <Card sx={{ backgroundColor: '#e8f5e9' }}>
+          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Ingresos Netos (Mes)</Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#2e7d32', fontWeight: 'bold' }}>{formatCurrency(mockKpis.ingresosNetos)}</Typography>
+          </CardContent>
+        </Card>
+
+        <Card sx={{ backgroundColor: '#fff8e1' }}>
+          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Reembolsos Procesados</Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#f57f17', fontWeight: 'bold' }}>{formatCurrency(mockKpis.reembolsos)}</Typography>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Comisiones de Plataforma</Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div">{formatCurrency(mockKpis.comisiones)}</Typography>
+          </CardContent>
+        </Card>
+
+        <Card sx={{ backgroundColor: '#ffebee' }}>
+          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Transacciones Fallidas</Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#c62828', fontWeight: 'bold' }}>{mockKpis.fallidas}</Typography>
+          </CardContent>
+        </Card>
+      </Box>
 
       {/* Barra de Herramientas y Filtros */}
       <Paper sx={{ mb: 2, p: 2 }}>
-        <Toolbar>
-          <TextField variant="standard" placeholder="Buscar por ID Transacción/Orden..." InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>), }} sx={{ flexGrow: 1, mr: 2 }} />
-          <FormControl variant="standard" sx={{ minWidth: 180, mr: 2 }}>
-            <InputLabel>Filtrar por Estado</InputLabel>
-            <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Filtrar por Estado">
-              <MenuItem value=""><em>Todos</em></MenuItem>
-              <MenuItem value="Aprobado">Aprobado</MenuItem>
-              <MenuItem value="Fallido">Fallido</MenuItem>
-              <MenuItem value="Reembolsado">Reembolsado</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl variant="standard" sx={{ minWidth: 180 }}>
-            <InputLabel>Filtrar por Método</InputLabel>
-            <Select value={methodFilter} onChange={(e) => setMethodFilter(e.target.value)} label="Filtrar por Método">
-              <MenuItem value=""><em>Todos</em></MenuItem>
-              <MenuItem value="Visa">Visa</MenuItem>
-              <MenuItem value="PayPal">PayPal</MenuItem>
-              <MenuItem value="Mastercard">Mastercard</MenuItem>
-              <MenuItem value="PSE">PSE</MenuItem>
-            </Select>
-          </FormControl>
-        </Toolbar>
+        {isMobile ? (
+          <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <TextField
+              variant="standard"
+              placeholder="Buscar por ID Transacción/Orden..."
+              InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }}
+              sx={{ width: '100%' }}
+            />
+            <FormControl variant="standard" sx={{ width: '100%' }}>
+              <InputLabel>Filtrar por Estado</InputLabel>
+              <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Filtrar por Estado">
+                <MenuItem value=""><em>Todos</em></MenuItem>
+                <MenuItem value="Aprobado">Aprobado</MenuItem>
+                <MenuItem value="Fallido">Fallido</MenuItem>
+                <MenuItem value="Reembolsado">Reembolsado</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="standard" sx={{ width: '100%' }}>
+              <InputLabel>Filtrar por Método</InputLabel>
+              <Select value={methodFilter} onChange={(e) => setMethodFilter(e.target.value)} label="Filtrar por Método">
+                <MenuItem value=""><em>Todos</em></MenuItem>
+                <MenuItem value="Visa">Visa</MenuItem>
+                <MenuItem value="PayPal">PayPal</MenuItem>
+                <MenuItem value="Mastercard">Mastercard</MenuItem>
+                <MenuItem value="PSE">PSE</MenuItem>
+              </Select>
+            </FormControl>
+          </Toolbar>
+        ) : (
+          <Toolbar>
+            <TextField variant="standard" placeholder="Buscar por ID Transacción/Orden..." InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>), }} sx={{ flexGrow: 1, mr: 2 }} />
+            <FormControl variant="standard" sx={{ minWidth: 180, mr: 2 }}>
+              <InputLabel>Filtrar por Estado</InputLabel>
+              <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Filtrar por Estado">
+                <MenuItem value=""><em>Todos</em></MenuItem>
+                <MenuItem value="Aprobado">Aprobado</MenuItem>
+                <MenuItem value="Fallido">Fallido</MenuItem>
+                <MenuItem value="Reembolsado">Reembolsado</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="standard" sx={{ minWidth: 180 }}>
+              <InputLabel>Filtrar por Método</InputLabel>
+              <Select value={methodFilter} onChange={(e) => setMethodFilter(e.target.value)} label="Filtrar por Método">
+                <MenuItem value=""><em>Todos</em></MenuItem>
+                <MenuItem value="Visa">Visa</MenuItem>
+                <MenuItem value="PayPal">PayPal</MenuItem>
+                <MenuItem value="Mastercard">Mastercard</MenuItem>
+                <MenuItem value="PSE">PSE</MenuItem>
+              </Select>
+            </FormControl>
+          </Toolbar>
+        )}
       </Paper>
 
       {/* Tabla de Transacciones */}
-      <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } } }}
-          pageSizeOptions={[5, 10, 20]}
-          sx={{ border: 'none', '& .MuiDataGrid-cell': { color: '#5d4037' } }}
-        />
-      </Paper>
+      {isMobile ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {filteredRows.map(row => (
+            <Card key={row.id}>
+              <CardContent>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{row.id}</Typography>
+                <Typography variant="body2">Orden: #{row.ordenId}</Typography>
+                <Typography variant="body2">Monto: {formatCurrency(row.monto)}</Typography>
+                <Typography variant="body2">Método: {row.metodo}</Typography>
+                <Typography variant="body2">Fecha: {row.fecha}</Typography>
+                <Box sx={{ mt: 1 }}>
+                  <Chip label={row.estado} size="small" />
+                </Box>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      ) : (
+        <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } } }}
+            pageSizeOptions={[5, 10, 20]}
+            sx={{ border: 'none', '& .MuiDataGrid-cell': { color: '#5d4037' } }}
+          />
+        </Paper>
+      )}
     </Box>
   );
 };

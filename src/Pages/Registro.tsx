@@ -43,15 +43,15 @@
         }
 
         try {
-            const res = await axios.post("http://10.221.253.235:8001/registro", {
-        nombre,
-        email,
-        password,
-    });
+        const res = await axios.post("http://localhost:8001/registro", {
+            nombre,
+            email,
+            password,
+        });
 
-    const mensajeBackend = res.data?.data?.mensaje ?? "Registro exitoso";
-    setTipoMensaje("success");
-    setMensaje(mensajeBackend);
+        const mensajeBackend = res.data?.data?.mensaje ?? "Registro exitoso";
+        setTipoMensaje("success");
+        setMensaje(mensajeBackend);
 
         setTimeout(() => navigate("/Login"), 2000);
         } catch (error: unknown) {
@@ -159,6 +159,12 @@
                     ¿Ya tienes cuenta?{" "}
                     <span className="login-enlace" onClick={() => navigate("/Login")}>
                         Inicia sesión aquí
+                    </span>
+                    </p>
+
+                    <p className="regresar-link">
+                    <span className="regresar-enlace" onClick={() => navigate("/")}>
+                        Regresar al inicio
                     </span>
                     </p>
                 </div>

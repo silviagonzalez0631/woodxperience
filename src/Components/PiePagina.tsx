@@ -25,7 +25,7 @@ const PiePagina: React.FC = () => {
             <h4>Contacto</h4>
             <a href="#contacto" className="footer-link">Formulario</a>
             <a href="mailto:info@woodxperience.com" className="footer-link">
-              <FaEnvelope /> info@woodxperience.com
+              <FaEnvelope /> woodXperience2025@gmail.com
             </a>
           </div>
 

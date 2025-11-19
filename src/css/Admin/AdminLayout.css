@@ -1,6 +1,7 @@
+/* Admin layout and header styles */
 .admin-layout {
   display: flex;
-  background-color: #f8f5f2; /* Un blanco roto cálido */
+  background-color: #f8f5f2; /* warm off-white */
   min-height: 100vh;
 }
 
@@ -8,35 +9,142 @@
   background-color: #cabfb2 !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
   border-bottom: 1px solid #a88a6d;
+  min-width: 0;
+}
+
+/* Keep toolbar on a single line and consistent height so the <Toolbar/> spacer works */
+.admin-navbar .MuiToolbar-root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  min-height: 64px; /* ensures spacer matches AppBar height */
 }
 
 .admin-logo-link {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.7rem;
   text-decoration: none;
+  min-width: 0;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin-logo-img {
-  height: 40px;
+  height: 36px;
+  width: auto;
+  min-width: 36px;
 }
 
 .admin-nav-link {
   color: #5d4037 !important;
   font-weight: 600 !important;
   margin: 0 0.5rem !important;
+  min-width: 0;
 }
 
 .admin-icon-btn {
   color: #5d4037 !important;
+  padding: 6px !important;
 }
 
 .admin-avatar {
   background-color: #a88a6d !important;
   color: white !important;
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
 }
 
 .admin-main-content {
   flex-grow: 1;
   padding: 2rem;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Ensure the Toolbar spacer inside main matches AppBar height so content isn't hidden */
+.admin-main-content .MuiToolbar-root {
+  min-height: 74px; /* same as .admin-navbar .MuiToolbar-root */
+}
+
+/* Responsive adjustments for inner admin pages (DataGrid/cards/etc.) */
+@media (max-width: 900px) {
+  .admin-navbar .MuiToolbar-root {
+    min-height: 64px;
+    gap: 0.4rem;
+  }
+  .admin-logo-link {
+    gap: 0.5rem;
+    max-width: 55%;
+  }
+  .admin-logo-img {
+    height: 30px;
+    min-width: 30px;
+  }
+  .admin-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
+
+  .admin-main-content {
+    padding: 1rem 0.5rem;
+  }
+
+  .MuiPaper-root, .MuiCard-root {
+    padding: 1rem !important;
+    margin-bottom: 1rem !important;
+    box-sizing: border-box;
+  }
+
+  .MuiTypography-h4, .MuiTypography-h5 {
+    font-size: 1.2rem !important;
+  }
+
+  .MuiDataGrid-root {
+    font-size: 0.95rem !important;
+  }
+
+  .MuiDataGrid-columnHeader, .MuiDataGrid-cell {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  .MuiButton-root {
+    min-width: 36px !important;
+    font-size: 0.95rem !important;
+    padding: 6px 10px !important;
+  }
+
+  .MuiTextField-root {
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-main-content {
+    padding: 0.6rem 0.4rem;
+  }
+  .admin-main-content .MuiToolbar-root {
+    min-height: 64px;
+  }
+  .MuiPaper-root, .MuiCard-root {
+    padding: 0.6rem !important;
+    margin-bottom: 0.7rem !important;
+  }
+  .MuiTypography-h4, .MuiTypography-h5 {
+    font-size: 1rem !important;
+  }
+  .MuiDataGrid-root {
+    font-size: 0.9rem !important;
+  }
+  .MuiButton-root {
+    font-size: 0.9rem !important;
+    padding: 5px 8px !important;
+  }
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useCarrito } from '../Pages/Context/CarrritoContext';
 import { FaShoppingCart } from 'react-icons/fa';
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 
 const BotonFlotante: React.FC<Props> = ({ onClick }) => {
   const [visible, setVisible] = useState(false);
+  const { toastVisible } = useCarrito();
 
   useEffect(() => {
     const mostrarBoton = () => {
@@ -20,7 +22,7 @@ const BotonFlotante: React.FC<Props> = ({ onClick }) => {
 
   return (
     <button
-      className={`boton-flotante ${visible ? 'visible' : ''}`}
+      className={`boton-flotante ${visible ? 'visible' : ''} ${toastVisible ? 'pulse' : ''}`}
       onClick={onClick} // ← ahora usa la función que viene de AppContent
     >
       <FaShoppingCart />

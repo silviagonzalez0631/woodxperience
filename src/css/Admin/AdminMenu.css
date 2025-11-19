@@ -1,3 +1,4 @@
+
 .admin-menu {
     width: 220px;
     background-color: #1e1e2f;
@@ -5,25 +6,27 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    }
+    position: relative;
+    z-index: 20;
+}
 
-    .admin-title {
+.admin-title {
     font-size: 20px;
     margin-bottom: 30px;
     text-align: center;
     color: #00bcd4;
-    }
+}
 
-    .admin-menu ul {
+.admin-menu ul {
     list-style: none;
     padding: 0;
-    }
+}
 
-    .admin-menu li {
+.admin-menu li {
     margin-bottom: 20px;
-    }
+}
 
-    .link {
+.link {
     color: white;
     text-decoration: none;
     font-weight: 500;
@@ -31,13 +34,79 @@
     padding: 10px;
     border-radius: 6px;
     transition: background 0.3s;
-    }
+}
 
-    .link:hover {
+.link:hover {
     background-color: #2e2e42;
-    }
+}
 
-    .link.active {
+.link.active {
     background-color: #00bcd4;
     color: #1e1e2f;
+}
+
+/* Botón hamburguesa solo visible en móvil */
+.admin-menu-hamburger {
+    display: none;
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    background: #1e1e2f;
+    color: #00bcd4;
+    border: none;
+    z-index: 30;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* Botón cerrar solo visible en móvil */
+.admin-menu-close {
+    display: none;
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    color: #00bcd4;
+    border: none;
+    z-index: 30;
+    cursor: pointer;
+}
+
+/* Fondo oscuro al abrir el menú en móvil */
+.admin-menu-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30,30,47,0.6);
+    z-index: 10;
+}
+
+@media (max-width: 900px) {
+    .admin-menu {
+        position: fixed;
+        top: 0;
+        left: -100vw;
+        height: 100vh;
+        width: 80vw;
+        max-width: 320px;
+        box-shadow: 2px 0 16px rgba(0,0,0,0.15);
+        transition: left 0.3s;
+        padding-top: 48px;
     }
+    .admin-menu.open {
+        left: 0;
+    }
+    .admin-menu-hamburger {
+        display: block;
+    }
+    .admin-menu-close {
+        display: block;
+    }
+    .admin-menu-backdrop {
+        display: block;
+    }
+}

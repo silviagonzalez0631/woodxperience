@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid, Card, CardContent, Avatar, Paper } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, Avatar, Paper, useTheme, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -18,6 +18,8 @@ const kpiCards = [
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box className="admin-dashboard">
@@ -33,25 +35,41 @@ const DashboardPage: React.FC = () => {
             </Typography>
           </Box>
 
-          <Grid container spacing={3} className="kpi-grid">
-            {kpiCards.map((card, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <Card className="kpi-card" sx={{ backgroundColor: card.color }} onClick={() => navigate(card.link)}>
-                  <CardContent className="kpi-card-content">
-                    <Box className="kpi-icon">{card.icon}</Box>
+          {isMobile ? (
+            <Box className="kpi-compact" role="list">
+              {kpiCards.map((card, index) => (
+                <Paper key={index} className="compact-item" onClick={() => navigate(card.link)} role="listitem">
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box className="rec-icon">{card.icon}</Box>
                     <Box>
-                      <Typography variant="h4" component="div" className="kpi-value">
-                        {card.value}
-                      </Typography>
-                      <Typography variant="body1" className="kpi-title">
-                        {card.title}
-                      </Typography>
+                      <div className="compact-value">{card.value}</div>
+                      <div className="compact-label">{card.title}</div>
                     </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+                  </Box>
+                </Paper>
+              ))}
+            </Box>
+          ) : (
+            <Grid container spacing={3} className="kpi-grid">
+              {kpiCards.map((card, index) => (
+                <Grid item xs={12} sm={6} md={3} key={index}>
+                  <Card className="kpi-card" sx={{ backgroundColor: card.color }} onClick={() => navigate(card.link)}>
+                    <CardContent className="kpi-card-content">
+                      <Box className="kpi-icon">{card.icon}</Box>
+                      <Box>
+                        <Typography variant="h4" component="div" className="kpi-value">
+                          {card.value}
+                        </Typography>
+                        <Typography variant="body1" className="kpi-title">
+                          {card.title}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
 
           {/* Placeholder para Gráfico de Tendencias */}
           <Paper className="dashboard-widget">
@@ -68,9 +86,11 @@ const DashboardPage: React.FC = () => {
               <HistoryIcon />
               <Typography variant="h6">Última Actividad</Typography>
             </Box>
-            <Typography>Nueva orden #1005</Typography>
-            <Typography>Usuario 'Leo' registrado</Typography>
-            <Typography>Producto 'Mesa de Roble' editado</Typography>
+            <Box className="last-activity">
+              <div className="activity-item">Nueva orden <strong>#1005</strong></div>
+              <div className="activity-item">Usuario <strong>Leo</strong> registrado</div>
+              <div className="activity-item">Producto <strong>Mesa de Roble</strong> editado</div>
+            </Box>
           </Paper>
         </Grid>
 

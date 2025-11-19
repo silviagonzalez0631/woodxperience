@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Card, CardContent } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { useTheme, useMediaQuery } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -75,6 +77,8 @@ const columns: GridColDef[] = [
 ];
 
 const ProductosPage: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [stockFilter, setStockFilter] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
   const [open, setOpen] = useState(false);
@@ -114,66 +118,119 @@ const ProductosPage: React.FC = () => {
         Gestión de Productos
       </Typography>
       <Paper sx={{ mb: 2, p: 2 }}>
-        <Toolbar>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' }, mr: 2 }}
-            onClick={handleClickOpen}
-          >
-            Agregar Producto
-          </Button>
-          <FormControl variant="standard" sx={{ minWidth: 150, mr: 2 }}>
-            <InputLabel>Filtrar por Stock</InputLabel>
-            <Select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)} label="Filtrar por Stock">
-              <MenuItem value=""><em>Todos</em></MenuItem>
-              <MenuItem value="en-stock">En Stock</MenuItem>
-              <MenuItem value="stock-bajo">Stock Bajo</MenuItem>
-              <MenuItem value="agotado">Agotado</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl variant="standard" sx={{ minWidth: 180, mr: 2 }}>
-            <InputLabel>Filtrar por Categoría</InputLabel>
-            <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} label="Filtrar por Categoría">
-              <MenuItem value=""><em>Todas</em></MenuItem>
-              {mockCategories.map(cat => <MenuItem key={cat} value={cat}>{cat}</MenuItem>)}
-            </Select>
-          </FormControl>
-          <TextField
-            variant="standard"
-            placeholder="Buscar por nombre, SKU..."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
+        {isMobile ? (
+          <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Button variant="contained" startIcon={<AddIcon />} onClick={handleClickOpen} sx={{ width: '100%', backgroundColor: '#5d4037' }}>Agregar Producto</Button>
+            <FormControl variant="standard" sx={{ width: '100%' }}>
+              <InputLabel>Filtrar por Stock</InputLabel>
+              <Select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)} label="Filtrar por Stock">
+                <MenuItem value=""><em>Todos</em></MenuItem>
+                <MenuItem value="en-stock">En Stock</MenuItem>
+                <MenuItem value="stock-bajo">Stock Bajo</MenuItem>
+                <MenuItem value="agotado">Agotado</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="standard" sx={{ width: '100%' }}>
+              <InputLabel>Filtrar por Categoría</InputLabel>
+              <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} label="Filtrar por Categoría">
+                <MenuItem value=""><em>Todas</em></MenuItem>
+                {mockCategories.map(cat => <MenuItem key={cat} value={cat}>{cat}</MenuItem>)}
+              </Select>
+            </FormControl>
+            <TextField variant="standard" placeholder="Buscar por nombre, SKU..." InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }} sx={{ width: '100%' }} />
+          </Toolbar>
+        ) : (
+          <Toolbar>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' }, mr: 2 }}
+              onClick={handleClickOpen}
+            >
+              Agregar Producto
+            </Button>
+            <FormControl variant="standard" sx={{ minWidth: 150, mr: 2 }}>
+              <InputLabel>Filtrar por Stock</InputLabel>
+              <Select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)} label="Filtrar por Stock">
+                <MenuItem value=""><em>Todos</em></MenuItem>
+                <MenuItem value="en-stock">En Stock</MenuItem>
+                <MenuItem value="stock-bajo">Stock Bajo</MenuItem>
+                <MenuItem value="agotado">Agotado</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl variant="standard" sx={{ minWidth: 180, mr: 2 }}>
+              <InputLabel>Filtrar por Categoría</InputLabel>
+              <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} label="Filtrar por Categoría">
+                <MenuItem value=""><em>Todas</em></MenuItem>
+                {mockCategories.map(cat => <MenuItem key={cat} value={cat}>{cat}</MenuItem>)}
+              </Select>
+            </FormControl>
+            <TextField
+              variant="standard"
+              placeholder="Buscar por nombre, SKU..."
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              sx={{ flexGrow: 1 }}
+            />
+          </Toolbar>
+        )}
+      </Paper>
+      {isMobile ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {filteredRows.map(p => (
+            <Card key={p.id}>
+              <CardContent>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{p.nombre}</Typography>
+                <Typography variant="body2">SKU: {p.sku}</Typography>
+                <Typography variant="body2">Categoría: {p.categoria}</Typography>
+                <Typography variant="body2">Precio: {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(p.precio)}</Typography>
+                <Box sx={{ mt: 1 }}>
+                  {(() => {
+                    const stock = p.stock;
+                    let color: 'success' | 'warning' | 'error' = 'success';
+                    let label = `En Stock (${stock})`;
+                    if (stock === 0) { color = 'error'; label = 'Agotado'; }
+                    else if (stock <= 10) { color = 'warning'; label = `Stock Bajo (${stock})`; }
+                    return <Chip label={label} color={color} size="small" />;
+                  })()}
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                  <IconButton size="small"><EditIcon /></IconButton>
+                  <IconButton size="small"><DeleteIcon /></IconButton>
+                  <IconButton size="small"><ReviewsIcon /></IconButton>
+                </Box>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      ) : (
+        <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
             }}
-            sx={{ flexGrow: 1 }}
+            pageSizeOptions={[5, 10, 20]}
+            sx={{
+              border: 'none',
+              '& .MuiDataGrid-cell': {
+                color: '#5d4037',
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: '#f5f5f5',
+              }
+            }}
           />
-        </Toolbar>
-      </Paper>
-      <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 20]}
-          sx={{
-            border: 'none',
-            '& .MuiDataGrid-cell': {
-              color: '#5d4037',
-            },
-            '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#f5f5f5',
-            }
-          }}
-        />
-      </Paper>
+        </Paper>
+      )}
 
       {/* Modal para agregar nuevo producto */}
       <Dialog open={open} onClose={handleClose}>

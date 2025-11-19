@@ -27,7 +27,7 @@ const Inicio: React.FC = () => {
   useEffect(() => {
     const fetchProductos = async () => {
       try {
-        const res = await fetch("http://10.221.253.235:8001/productos");
+        const res = await fetch("http://localhost:8001/productos");
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
           setProductos(json.data);

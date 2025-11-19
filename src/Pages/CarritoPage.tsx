@@ -1,12 +1,16 @@
 import React from 'react';
+import { useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { useCarrito } from '../Pages/Context/CarrritoContext';
 import '../css/CarritoPage.css';
-import { getBackendAssetUrl } from './imageUtils';
 
     const CarritoPage: React.FC = () => {
     const { carrito, actualizarCantidad, eliminarProducto } = useCarrito();
     const navigate = useNavigate();
+    useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
 
 
     if (carrito.length === 0) {
@@ -42,7 +46,7 @@ import { getBackendAssetUrl } from './imageUtils';
         const envioTotal = carrito.length * 159;
         const total = subtotal + envioTotal;
 
-        const res = await fetch("http://10.221.253.235:8001/crear-orden", {
+        const res = await fetch("http://localhost:8001/crear-orden", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -94,7 +98,7 @@ import { getBackendAssetUrl } from './imageUtils';
                 <div className="carrito-lista">
                     {carrito.map((p) => (
                     <div key={p.id} className="carrito-page-item">
-                        <img src={getBackendAssetUrl(p.imagen)} alt={p.titulo} />
+                        <img src={p.imagen} alt={p.titulo} />
                         <div className="carrito-page-info">
                         <h4>{p.titulo}</h4>
 
@@ -105,7 +109,7 @@ import { getBackendAssetUrl } from './imageUtils';
                                 p.cantidad > 1 && actualizarCantidad(p.id, p.cantidad - 1)
                                 }
                             >
-                                −
+                                
                             </button>
                             <span>{p.cantidad}</span>
                             <button onClick={() => actualizarCantidad(p.id, p.cantidad + 1)}>

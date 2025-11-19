@@ -125,12 +125,30 @@
 
 .carrito-info-texto {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
   font-size: 1rem;
   color: #5d4037;
   font-weight: 500;
 }
+
+.carrito-nombre {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carrito-item-icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
 
 .carrito-cantidad {
   background: #f1e6dc;

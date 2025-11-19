@@ -10,16 +10,21 @@ import React, { createContext, useContext, useState } from 'react';
 
     type CarritoContextType = {
     carrito: ProductoCarrito[];
-    agregarProducto: (producto: ProductoCarrito) => void;
+        agregarProducto: (producto: ProductoCarrito) => void;
     eliminarProducto: (id: number) => void;
     vaciarCarrito: () => void;
     actualizarCantidad: (id: number, nuevaCantidad: number) => void;
+        // Notificación cuando se agrega un producto
+        ultimoAgregado: ProductoCarrito | null;
+        toastVisible: boolean;
     };
 
     const CarritoContext = createContext<CarritoContextType | undefined>(undefined);
 
     export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [carrito, setCarrito] = useState<ProductoCarrito[]>([]);
+    const [ultimoAgregado, setUltimoAgregado] = useState<ProductoCarrito | null>(null);
+    const [toastVisible, setToastVisible] = useState(false);
 
     const agregarProducto = (producto: ProductoCarrito) => {
         setCarrito((prev) => {
@@ -31,6 +36,10 @@ import React, { createContext, useContext, useState } from 'react';
         }
         return [...prev, { ...producto, cantidad: 1 }];
         });
+        // Mostrar notificación breve
+        setUltimoAgregado(producto);
+        setToastVisible(true);
+        setTimeout(() => setToastVisible(false), 1700);
     };
 
     const eliminarProducto = (id: number) => {
@@ -51,7 +60,7 @@ import React, { createContext, useContext, useState } from 'react';
 
     return (
         <CarritoContext.Provider
-        value={{ carrito, agregarProducto, eliminarProducto, vaciarCarrito, actualizarCantidad }}
+        value={{ carrito, agregarProducto, eliminarProducto, vaciarCarrito, actualizarCantidad, ultimoAgregado, toastVisible }}
         >
         {children}
         </CarritoContext.Provider>

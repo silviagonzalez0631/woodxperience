@@ -1,6 +1,8 @@
 import React from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button } from '@mui/material';
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Card, CardContent } from '@mui/material';
+import { useTheme, useMediaQuery } from '@mui/material';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import type { GridColDef } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -37,48 +39,78 @@ const rows = [
 ];
 
 const UsuariosPage: React.FC = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
         Usuarios Registrados
       </Typography>
       <Paper sx={{ mb: 2, p: 2 }}>
-        <Toolbar>
-            <TextField
-                variant="standard"
-                placeholder="Buscar por nombre, email..."
-                InputProps={{
-                    startAdornment: (
-                    <InputAdornment position="start">
-                        <SearchIcon />
-                    </InputAdornment>
-                    ),
-                }}
-                sx={{ flexGrow: 1 }}
-            />
-            
+        <Toolbar sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
+          <TextField
+            variant="standard"
+            placeholder="Buscar por nombre, email..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{ flexGrow: 1, width: { xs: '100%', sm: 'auto' } }}
+          />
+          <Button
+            startIcon={<AddIcon />}
+            variant="contained"
+            size="small"
+            sx={{
+              ml: { sm: 2 },
+              mt: { xs: 1, sm: 0 },
+              backgroundColor: '#5d4037',
+              width: { xs: '100%', sm: 'auto' }
+            }}
+          >
+            Agregar
+          </Button>
         </Toolbar>
       </Paper>
-      <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10, 20]}
-          checkboxSelection
-          slots={{ toolbar: GridToolbar }}
-          sx={{
-            border: 'none',
-            '& .MuiDataGrid-cell': {
-              color: '#5d4037',
-            },
-          }}
-        />
-      </Paper>
+      {isMobile ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {rows.map(row => (
+            <Card key={row.id}>
+              <CardContent>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{row.nombre}</Typography>
+                <Typography variant="body2">Rol: {row.rol}</Typography>
+                <Typography variant="body2">Teléfono: {row.telefono}</Typography>
+                <Typography variant="body2">Email: {row.email}</Typography>
+                <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>Creado: {row.fechaCreacion}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
+      ) : (
+        <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[5, 10, 20]}
+            checkboxSelection
+            slots={{ toolbar: GridToolbar }}
+            sx={{
+              border: 'none',
+              '& .MuiDataGrid-cell': {
+                color: '#5d4037',
+              },
+            }}
+          />
+        </Paper>
+      )}
     </Box>
   );
 };

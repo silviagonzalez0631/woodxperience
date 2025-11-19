@@ -17,21 +17,20 @@ const ProductosPagePC: React.FC = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
 
   useEffect(() => {
-    const fetchProductos = async () => {
-      try {
-        const res = await fetch("http://10.221.253.235:8001/productos");
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          setProductos(json.data);
-        }
-      } catch (error) {
-        console.error("Error al cargar productos:", error);
+  const fetchProductos = async () => {
+    try {
+      const res = await fetch("http://localhost:8001/productos"); // ← URL actualizada
+      const json = await res.json();
+      if (json.success && Array.isArray(json.data)) {
+        setProductos(json.data);
       }
-    };
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+    }
+  };
 
-    fetchProductos();
-  }, []);
-
+  fetchProductos();
+}, []);
   return (
     <div className="productos-page-container">
       {/* Llamado a la acción */}

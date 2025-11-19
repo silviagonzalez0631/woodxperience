@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import BarraNavegacion from './Components/BarraNavegacion';
 import Inicio from './Pages/Inicio';
@@ -11,6 +11,7 @@ import PiePagina from './Components/PiePagina';
 import BotonFlotante from './Components/BotonFlotante';
 import BarraInferiorMobile from './Components/BarraInferiorMobile';
 import BotonCarritoMobile from './Components/BotonCarritoMobile';
+import ToastCarrito from './Components/ToastCarrito';
 import NosotrosMobile from './Pages/NosotrosMobile';
 import NosotrosPC from './Pages/NosotrosPC';
 import AcercaDeMobile from './Pages/AcercaDeMobile';
@@ -39,6 +40,7 @@ import './index.css';
     function AppContent({ isMobile }: { isMobile: boolean }) {
     const location = useLocation();
     const isAdminRoute = location.pathname.startsWith('/admin');
+    const ocultarBarra = location.pathname === '/Login' || location.pathname === '/Registro';
     const isInicio = location.pathname === '/';
     const token = localStorage.getItem('token');
     const usuarioLogueado = !!token;
@@ -58,17 +60,18 @@ import './index.css';
 
     return (
         <div className="app-container">
-        {!isAdminRoute && <BarraNavegacion />}
+        {!isAdminRoute && !ocultarBarra && <BarraNavegacion />}
 
         <main style={{ flex: 1, paddingBottom: isMobile && !isAdminRoute ? '90px' : '0' }}>
             <Routes>
             <Route path="/" element={<Inicio />} />
+            <Route path="/Inicio" element={<Inicio />} /> 
             <Route path="/producto/:id" element={<DetalleProducto />} />
             <Route path="/servicios" element={<Servicios />} />
             <Route path="/nosotros" element={isMobile ? <NosotrosMobile /> : <NosotrosPC />} />
             <Route path="/acerca" element={isMobile ? <AcercaDeMobile /> : <NosotrosPC />} />
             <Route path="/productos" element={<ProductosPagePC />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/Login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
             <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
             <Route path="/modal-carrito" element={<ModalCarritoPC />} />
@@ -89,17 +92,20 @@ import './index.css';
         </main>
 
         {/* COMPONENTES MÓVIL */}
-        {isMobile && !isAdminRoute && (
+        {isMobile && !isAdminRoute && !ocultarBarra && (
             <>
-            <BarraInferiorMobile />
-            <BotonCarritoMobile />
+                <BarraInferiorMobile />
+                <BotonCarritoMobile />
+                <ToastCarrito />
             </>
-        )}
+            )}
+
 
         {/* COMPONENTES PC */}
         {!isMobile && !isAdminRoute && usuarioLogueado && !isInicio && location.pathname !== '/carrito' && (
             <>
             <BotonFlotante onClick={toggleCarrito} />
+            <ToastCarrito />
             {mostrarCarrito && (
                 <CarritoCompra
                 onClose={cerrarCarritoConAnimacion}

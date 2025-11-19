@@ -1,6 +1,7 @@
 // src/components/BotonCarritoMobile.tsx
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCarrito } from '../Pages/Context/CarrritoContext';
 
 const BotonCarritoMobile: React.FC = () => {
   const location = useLocation();
@@ -10,10 +11,12 @@ const BotonCarritoMobile: React.FC = () => {
     return location.pathname === path;
   };
 
+  const { toastVisible } = useCarrito();
+
   return (
     <>
       <button
-        className={`boton-carrito-flotante ${isActive('/carrito') ? 'activo' : ''}`}
+        className={`boton-carrito-flotante ${isActive('/carrito') ? 'activo' : ''} ${toastVisible ? 'pulse' : ''}`}
         onClick={() => navigate('/carrito')}
       >
         <svg width="26" height="26" viewBox="0 0 24 24" fill="none">

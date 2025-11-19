@@ -1,4 +1,4 @@
-const BACKEND_BASE_URL = "http://10.221.253.235:8001";
+const BACKEND_BASE_URL = "http://10.191.4.235:8001";
 
 export const getBackendAssetUrl = (path?: string): string => {
   if (!path) return "/imagenes/default.jpg"; // Fallback para rutas vacías o nulas

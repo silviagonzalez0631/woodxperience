@@ -54,7 +54,7 @@
 
         try {
         const res = await axios.post<{ data: LoginResponse }>(
-            "http://10.221.253.235:8001/login",
+            "http://localhost:8001/login",
             { email, password }
         );
 
@@ -62,7 +62,6 @@
 
         localStorage.setItem("token", token);
         localStorage.setItem("usuario", JSON.stringify(usuario));
-        window.location.href ="/" // Esto nos ayuda a recargar la pagina
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         setTipoMensaje("success");
@@ -161,6 +160,11 @@
                         Regístrate aquí
                     </span>
                     </p>
+                    <p className="regresar-link">
+                    <span className="regresar-enlace" onClick={() => navigate("/")}>
+                        Regresar al inicio
+                    </span>
+                    </p>
                 </div>
                 {mensaje && <Alert severity={tipoMensaje}>{mensaje}</Alert>}
                 </form>
@@ -168,5 +172,7 @@
             </div>
         </div>
         </section>
+        
+
     );
     }

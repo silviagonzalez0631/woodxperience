@@ -1,5 +1,15 @@
 import React from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Card, CardContent } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Paper,
+  Toolbar,
+  TextField,
+  InputAdornment,
+  Button,
+  Card,
+  CardContent
+} from '@mui/material';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import type { GridColDef } from '@mui/x-data-grid';
@@ -14,8 +24,9 @@ const columns: GridColDef[] = [
     width: 250,
     renderCell: (params) => (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {/* Aquí iría el Avatar con la foto */}
-        <Typography sx={{ ml: 1 }}>{params.value}</Typography>
+        <Typography sx={{ ml: 1, fontFamily: 'Montserrat, sans-serif' }}>
+          {params.value}
+        </Typography>
       </Box>
     ),
   },
@@ -28,24 +39,45 @@ const columns: GridColDef[] = [
     headerName: 'Acciones',
     width: 150,
     sortable: false,
-    renderCell: () => "..." // Placeholder for action buttons
+    renderCell: () => (
+      <Typography sx={{ fontFamily: 'Montserrat, sans-serif' }}>...</Typography>
+    )
   }
 ];
 
 const rows = [
-  { id: 1, nombre: 'Leonardo Corredor', rol: 'Admin', telefono: '3001234567', fechaCreacion: '2024-07-29', email: 'leo@example.com' },
-  { id: 2, nombre: 'Jane Smith', rol: 'Cliente', telefono: '3017654321', fechaCreacion: '2024-07-28', email: 'jane@example.com' },
-  // ... más datos de ejemplo
+  {
+    id: 1,
+    nombre: 'Leonardo Corredor',
+    rol: 'Admin',
+    telefono: '3001234567',
+    fechaCreacion: '2024-07-29',
+    email: 'leo@example.com'
+  },
+  {
+    id: 2,
+    nombre: 'Jane Smith',
+    rol: 'Cliente',
+    telefono: '3017654321',
+    fechaCreacion: '2024-07-28',
+    email: 'jane@example.com'
+  }
 ];
 
 const UsuariosPage: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
+    <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold', mb: 2 , textAlign: 'center' }}
+      >
         Usuarios Registrados
       </Typography>
+
       <Paper sx={{ mb: 2, p: 2 }}>
         <Toolbar sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
           <TextField
@@ -57,8 +89,19 @@ const UsuariosPage: React.FC = () => {
                   <SearchIcon />
                 </InputAdornment>
               ),
+              sx: {
+                '& input': {
+                  fontFamily: 'Montserrat, sans-serif'
+                },
+                '& input::placeholder': {
+                  fontFamily: 'Montserrat, sans-serif'
+                }
+              }
             }}
-            sx={{ flexGrow: 1, width: { xs: '100%', sm: 'auto' } }}
+            sx={{
+              flexGrow: 1,
+              width: { xs: '100%', sm: 'auto' }
+            }}
           />
           <Button
             startIcon={<AddIcon />}
@@ -68,23 +111,29 @@ const UsuariosPage: React.FC = () => {
               ml: { sm: 2 },
               mt: { xs: 1, sm: 0 },
               backgroundColor: '#5d4037',
-              width: { xs: '100%', sm: 'auto' }
+              width: { xs: '100%', sm: 'auto' },
+              fontFamily: 'Montserrat, sans-serif'
             }}
           >
             Agregar
           </Button>
         </Toolbar>
       </Paper>
+
       {isMobile ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {rows.map(row => (
-            <Card key={row.id}>
+          {rows.map((row) => (
+            <Card key={row.id} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
               <CardContent>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{row.nombre}</Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#53271aff' }}>
+                  {row.nombre}
+                </Typography>
                 <Typography variant="body2">Rol: {row.rol}</Typography>
                 <Typography variant="body2">Teléfono: {row.telefono}</Typography>
                 <Typography variant="body2">Email: {row.email}</Typography>
-                <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>Creado: {row.fechaCreacion}</Typography>
+                <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>
+                  Creado: {row.fechaCreacion}
+                </Typography>
               </CardContent>
             </Card>
           ))}
@@ -96,17 +145,25 @@ const UsuariosPage: React.FC = () => {
             columns={columns}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
+                paginationModel: { page: 0, pageSize: 10 }
+              }
             }}
             pageSizeOptions={[5, 10, 20]}
             checkboxSelection
             slots={{ toolbar: GridToolbar }}
             sx={{
               border: 'none',
+              fontFamily: 'Montserrat, sans-serif',
               '& .MuiDataGrid-cell': {
-                color: '#5d4037',
+                color: '#68493fff',
+                fontFamily: 'Montserrat, sans-serif'
               },
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontFamily: 'Montserrat, sans-serif'
+              },
+              '& .MuiDataGrid-toolbarContainer': {
+                fontFamily: 'Montserrat, sans-serif'
+              }
             }}
           />
         </Paper>

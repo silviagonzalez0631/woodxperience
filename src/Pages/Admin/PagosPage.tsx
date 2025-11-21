@@ -1,5 +1,21 @@
 import React, { useState } from 'react';
-import { Box, Typography, Card, CardContent, Paper, Toolbar, TextField, InputAdornment, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Link } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Paper,
+  Toolbar,
+  TextField,
+  InputAdornment,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Chip,
+  IconButton,
+  Link
+} from '@mui/material';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
@@ -33,10 +49,11 @@ const statusColors: Record<PaymentStatus, 'success' | 'error' | 'info'> = {
 const getStatusChip = (params: GridRenderCellParams) => {
   const status = params.value as PaymentStatus;
   const color = statusColors[status] || 'default';
-  return <Chip label={status} color={color} size="small" />;
+  return <Chip label={status} color={color} size="small" sx={{ fontFamily: 'Montserrat, sans-serif' }} />;
 };
 
-const formatCurrency = (value: number) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID Transacción', width: 220 },
@@ -45,7 +62,15 @@ const columns: GridColDef[] = [
     headerName: 'ID Orden',
     width: 120,
     renderCell: (params) => (
-      <Link href="#" underline="always" onClick={(e) => { e.preventDefault(); alert(`Abrir detalle de orden #${params.value}`); }}>
+      <Link
+        href="#"
+        underline="always"
+        onClick={(e) => {
+          e.preventDefault();
+          alert(`Abrir detalle de orden #${params.value}`);
+        }}
+        sx={{ fontFamily: 'Montserrat, sans-serif' }}
+      >
         #{params.value}
       </Link>
     )
@@ -80,127 +105,197 @@ const PagosPage: React.FC = () => {
   });
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
+    <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
+      <Typography variant="h4" gutterBottom sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
         Transacciones y Liquidez
       </Typography>
 
-      {/* KPIs Financieros (grid simple para evitar problemas de tipado en Grid) */}
-      <Box sx={{ mb: 3, display: 'grid', gap: isMobile ? 1 : 3, gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)' }}>
-        <Card sx={{ backgroundColor: '#e8f5e9' }}>
-          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
-            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Ingresos Netos (Mes)</Typography>
-            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#2e7d32', fontWeight: 'bold' }}>{formatCurrency(mockKpis.ingresosNetos)}</Typography>
+      {/* KPIs Financieros */}
+      <Box
+        sx={{
+          mb: 3,
+          display: 'grid',
+          gap: isMobile ? 1 : 3,
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+          fontFamily: 'Montserrat, sans-serif'
+        }}
+      >
+        <Card sx={{ backgroundColor: '#e8f5e9', fontFamily: 'Montserrat, sans-serif' }}>
+          <CardContent>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+              Ingresos Netos (Mes)
+            </Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#2e7d32', fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }}>
+              {formatCurrency(mockKpis.ingresosNetos)}
+            </Typography>
           </CardContent>
         </Card>
 
-        <Card sx={{ backgroundColor: '#fff8e1' }}>
-          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
-            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Reembolsos Procesados</Typography>
-            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#f57f17', fontWeight: 'bold' }}>{formatCurrency(mockKpis.reembolsos)}</Typography>
+        <Card sx={{ backgroundColor: '#fff8e1', fontFamily: 'Montserrat, sans-serif' }}>
+          <CardContent>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+              Reembolsos Procesados
+            </Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#f57f17', fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }}>
+              {formatCurrency(mockKpis.reembolsos)}
+            </Typography>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
-            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Comisiones de Plataforma</Typography>
-            <Typography variant={isMobile ? 'h6' : 'h5'} component="div">{formatCurrency(mockKpis.comisiones)}</Typography>
+        <Card sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <CardContent>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+              Comisiones de Plataforma
+            </Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+              {formatCurrency(mockKpis.comisiones)}
+            </Typography>
           </CardContent>
         </Card>
 
-        <Card sx={{ backgroundColor: '#ffebee' }}>
-          <CardContent sx={{ py: isMobile ? 1 : 2, px: isMobile ? 1.25 : 2 }}>
-            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom>Transacciones Fallidas</Typography>
-            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#c62828', fontWeight: 'bold' }}>{mockKpis.fallidas}</Typography>
+        <Card sx={{ backgroundColor: '#ffebee', fontFamily: 'Montserrat, sans-serif' }}>
+          <CardContent>
+            <Typography color="textSecondary" variant={isMobile ? 'caption' : undefined} gutterBottom sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+              Transacciones Fallidas
+            </Typography>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ color: '#c62828', fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }}>
+              {mockKpis.fallidas}
+            </Typography>
           </CardContent>
         </Card>
       </Box>
 
-      {/* Barra de Herramientas y Filtros */}
-      <Paper sx={{ mb: 2, p: 2 }}>
-        {isMobile ? (
-          <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <TextField
-              variant="standard"
-              placeholder="Buscar por ID Transacción/Orden..."
-              InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }}
-              sx={{ width: '100%' }}
-            />
-            <FormControl variant="standard" sx={{ width: '100%' }}>
-              <InputLabel>Filtrar por Estado</InputLabel>
-              <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Filtrar por Estado">
-                <MenuItem value=""><em>Todos</em></MenuItem>
-                <MenuItem value="Aprobado">Aprobado</MenuItem>
-                <MenuItem value="Fallido">Fallido</MenuItem>
-                <MenuItem value="Reembolsado">Reembolsado</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl variant="standard" sx={{ width: '100%' }}>
-              <InputLabel>Filtrar por Método</InputLabel>
-              <Select value={methodFilter} onChange={(e) => setMethodFilter(e.target.value)} label="Filtrar por Método">
-                <MenuItem value=""><em>Todos</em></MenuItem>
-                <MenuItem value="Visa">Visa</MenuItem>
-                <MenuItem value="PayPal">PayPal</MenuItem>
-                <MenuItem value="Mastercard">Mastercard</MenuItem>
-                <MenuItem value="PSE">PSE</MenuItem>
-              </Select>
-            </FormControl>
-          </Toolbar>
-        ) : (
-          <Toolbar>
-            <TextField variant="standard" placeholder="Buscar por ID Transacción/Orden..." InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>), }} sx={{ flexGrow: 1, mr: 2 }} />
-            <FormControl variant="standard" sx={{ minWidth: 180, mr: 2 }}>
-              <InputLabel>Filtrar por Estado</InputLabel>
-              <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} label="Filtrar por Estado">
-                <MenuItem value=""><em>Todos</em></MenuItem>
-                <MenuItem value="Aprobado">Aprobado</MenuItem>
-                <MenuItem value="Fallido">Fallido</MenuItem>
-                <MenuItem value="Reembolsado">Reembolsado</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl variant="standard" sx={{ minWidth: 180 }}>
-              <InputLabel>Filtrar por Método</InputLabel>
-              <Select value={methodFilter} onChange={(e) => setMethodFilter(e.target.value)} label="Filtrar por Método">
-                <MenuItem value=""><em>Todos</em></MenuItem>
-                <MenuItem value="Visa">Visa</MenuItem>
-                <MenuItem value="PayPal">PayPal</MenuItem>
-                <MenuItem value="Mastercard">Mastercard</MenuItem>
-                <MenuItem value="PSE">PSE</MenuItem>
-              </Select>
-            </FormControl>
-          </Toolbar>
-        )}
-      </Paper>
+{/* Barra de Herramientas y Filtros */}
+<Paper sx={{ mb: 2, p: 2, fontFamily: 'Montserrat, sans-serif' }}>
+  {isMobile ? (
+    <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+      <TextField
+        variant="standard"
+        placeholder="Buscar por ID Transacción/Orden..."
+        InputProps={{
+          startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>),
+          sx: {
+            '& input': { fontFamily: 'Montserrat, sans-serif' },
+            '& input::placeholder': { fontFamily: 'Montserrat, sans-serif' }
+          }
+        }}
+        sx={{ width: '100%', fontFamily: 'Montserrat, sans-serif' }}
+      />
+      <FormControl variant="standard" sx={{ width: '100%', fontFamily: 'Montserrat, sans-serif' }}>
+        <InputLabel sx={{ fontFamily: 'Montserrat, sans-serif' }}>Filtrar por Estado</InputLabel>
+        <Select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          label="Filtrar por Estado"
+          sx={{ fontFamily: 'Montserrat, sans-serif' }}
+        >
+          <MenuItem value="" sx={{ fontFamily: 'Montserrat, sans-serif' }}><em>Todos</em></MenuItem>
+          <MenuItem value="Aprobado" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Aprobado</MenuItem>
+          <MenuItem value="Fallido" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Fallido</MenuItem>
+          <MenuItem value="Reembolsado" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Reembolsado</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl variant="standard" sx={{ width: '100%', fontFamily: 'Montserrat, sans-serif' }}>
+        <InputLabel sx={{ fontFamily: 'Montserrat, sans-serif' }}>Filtrar por Método</InputLabel>
+        <Select
+          value={methodFilter}
+          onChange={(e) => setMethodFilter(e.target.value)}
+          label="Filtrar por Método"
+          sx={{ fontFamily: 'Montserrat, sans-serif' }}
+        >
+          <MenuItem value="" sx={{ fontFamily: 'Montserrat, sans-serif' }}><em>Todos</em></MenuItem>
+          <MenuItem value="Visa" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Visa</MenuItem>
+          <MenuItem value="PayPal" sx={{ fontFamily: 'Montserrat, sans-serif' }}>PayPal</MenuItem>
+          <MenuItem value="Mastercard" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Mastercard</MenuItem>
+          <MenuItem value="PSE" sx={{ fontFamily: 'Montserrat, sans-serif' }}>PSE</MenuItem>
+        </Select>
+      </FormControl>
+    </Toolbar>
+  ) : (
+    <Toolbar>
+      <TextField
+        variant="standard"
+        placeholder="Buscar por ID Transacción/Orden..."
+        InputProps={{
+          startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>),
+          sx: {
+            '& input': { fontFamily: 'Montserrat, sans-serif' },
+            '& input::placeholder': { fontFamily: 'Montserrat, sans-serif' }
+          }
+        }}
+        sx={{ flexGrow: 1, mr: 2, fontFamily: 'Montserrat, sans-serif' }}
+      />
+      <FormControl variant="standard" sx={{ minWidth: 180, mr: 2, fontFamily: 'Montserrat, sans-serif' }}>
+        <InputLabel sx={{ fontFamily: 'Montserrat, sans-serif' }}>Filtrar por Estado</InputLabel>
+        <Select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          label="Filtrar por Estado"
+          sx={{ fontFamily: 'Montserrat, sans-serif' }}
+        >
+          <MenuItem value="" sx={{ fontFamily: 'Montserrat, sans-serif' }}><em>Todos</em></MenuItem>
+          <MenuItem value="Aprobado" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Aprobado</MenuItem>
+          <MenuItem value="Fallido" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Fallido</MenuItem>
+          <MenuItem value="Reembolsado" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Reembolsado</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl variant="standard" sx={{ minWidth: 180, fontFamily: 'Montserrat, sans-serif' }}>
+        <InputLabel sx={{ fontFamily: 'Montserrat, sans-serif' }}>Filtrar por Método</InputLabel>
+        <Select
+          value={methodFilter}
+          onChange={(e) => setMethodFilter(e.target.value)}
+          label="Filtrar por Método"
+          sx={{ fontFamily: 'Montserrat, sans-serif' }}
+        >
+          <MenuItem value="" sx={{ fontFamily: 'Montserrat, sans-serif' }}><em>Todos</em></MenuItem>
+          <MenuItem value="Visa" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Visa</MenuItem>
+          <MenuItem value="PayPal" sx={{ fontFamily: 'Montserrat, sans-serif' }}>PayPal</MenuItem>
+          <MenuItem value="Mastercard" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Mastercard</MenuItem>
+          <MenuItem value="PSE" sx={{ fontFamily: 'Montserrat, sans-serif' }}>PSE</MenuItem>
+        </Select>
+      </FormControl>
+    </Toolbar>
+  )}
+</Paper>
 
-      {/* Tabla de Transacciones */}
-      {isMobile ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {filteredRows.map(row => (
-            <Card key={row.id}>
-              <CardContent>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{row.id}</Typography>
-                <Typography variant="body2">Orden: #{row.ordenId}</Typography>
-                <Typography variant="body2">Monto: {formatCurrency(row.monto)}</Typography>
-                <Typography variant="body2">Método: {row.metodo}</Typography>
-                <Typography variant="body2">Fecha: {row.fecha}</Typography>
-                <Box sx={{ mt: 1 }}>
-                  <Chip label={row.estado} size="small" />
-                </Box>
-              </CardContent>
-            </Card>
-          ))}
-        </Box>
-      ) : (
-        <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } } }}
-            pageSizeOptions={[5, 10, 20]}
-            sx={{ border: 'none', '& .MuiDataGrid-cell': { color: '#5d4037' } }}
-          />
-        </Paper>
-      )}
+{/* Tabla de Transacciones */}
+{isMobile ? (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    {filteredRows.map(row => (
+      <Card key={row.id} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <CardContent>
+          <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037', fontFamily: 'Montserrat, sans-serif' }}>
+            {row.id}
+          </Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Orden: #{row.ordenId}</Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Monto: {formatCurrency(row.monto)}</Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Método: {row.metodo}</Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>Fecha: {row.fecha}</Typography>
+          <Box sx={{ mt: 1 }}>
+            <Chip label={row.estado} size="small" sx={{ fontFamily: 'Montserrat, sans-serif' }} />
+          </Box>
+        </CardContent>
+      </Card>
+    ))}
+  </Box>
+) : (
+  <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff', fontFamily: 'Montserrat, sans-serif' }}>
+    <DataGrid
+      rows={filteredRows}
+      columns={columns}
+      initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } } }}
+      pageSizeOptions={[5, 10, 20]}
+      sx={{
+        border: 'none',
+        fontFamily: 'Montserrat, sans-serif',
+        '& .MuiDataGrid-cell': { color: '#5d4037', fontFamily: 'Montserrat, sans-serif' },
+        '& .MuiDataGrid-columnHeaderTitle': { fontFamily: 'Montserrat, sans-serif' }
+      }}
+    />
+  </Paper>
+)}
+
+      
     </Box>
   );
 };

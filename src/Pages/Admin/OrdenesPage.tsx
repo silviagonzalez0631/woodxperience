@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Chip, Select, MenuItem, ButtonGroup, Link, Card, CardContent } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Paper,
+  Toolbar,
+  TextField,
+  InputAdornment,
+  Button,
+  Chip,
+  Select,
+  MenuItem,
+  ButtonGroup,
+  Link,
+  Card,
+  CardContent
+} from '@mui/material';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
-// MoreVertIcon removed (not used)
 
-// --- Mock Data ---
 const mockRows = [
   { id: 1024, cliente: 'Leonardo Corredor', fecha: '2024-07-30', total: 1200000, estado: 'Enviado' },
   { id: 1023, cliente: 'Jane Smith', fecha: '2024-07-29', total: 850000, estado: 'Procesando' },
@@ -29,7 +42,7 @@ const statusColors: Record<OrderStatus, 'default' | 'primary' | 'warning' | 'suc
 const getStatusChip = (params: GridRenderCellParams) => {
   const status = params.value as OrderStatus;
   const color = statusColors[status] || 'default';
-  return <Chip label={status} color={color} size="small" />;
+  return <Chip label={status} color={color} size="small" sx={{ fontFamily: 'Montserrat, sans-serif' }} />;
 };
 
 const columns: GridColDef[] = [
@@ -38,13 +51,27 @@ const columns: GridColDef[] = [
     headerName: 'ID Orden',
     width: 120,
     renderCell: (params) => (
-      <Link href="#" underline="always" onClick={(e) => { e.preventDefault(); alert(`Abrir detalle de orden #${params.value}`); }}>
+      <Link
+        href="#"
+        underline="always"
+        onClick={(e) => {
+          e.preventDefault();
+          alert(`Abrir detalle de orden #${params.value}`);
+        }}
+        sx={{ fontFamily: 'Montserrat, sans-serif' }}
+      >
         #{params.value}
       </Link>
     )
   },
   { field: 'cliente', headerName: 'Cliente', width: 220 },
-  { field: 'fecha', headerName: 'Fecha', width: 150, type: 'date', valueGetter: (value: string) => new Date(value) },
+  {
+    field: 'fecha',
+    headerName: 'Fecha',
+    width: 150,
+    type: 'date',
+    valueGetter: (value: string) => new Date(value)
+  },
   {
     field: 'total',
     headerName: 'Total',
@@ -69,12 +96,19 @@ const columns: GridColDef[] = [
         size="small"
         value={params.row.estado}
         onChange={(e) => alert(`Cambiar estado de orden #${params.row.id} a ${e.target.value}`)}
-        sx={{ '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+        sx={{
+          fontFamily: 'Montserrat, sans-serif',
+          '.MuiOutlinedInput-notchedOutline': { border: 0 }
+        }}
         displayEmpty
       >
-        <MenuItem disabled value={params.row.estado}><em>Cambiar Estado</em></MenuItem>
+        <MenuItem disabled value={params.row.estado} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <em>Cambiar Estado</em>
+        </MenuItem>
         {Object.keys(statusColors).map(status => (
-          <MenuItem key={status} value={status}>{status}</MenuItem>
+          <MenuItem key={status} value={status} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+            {status}
+          </MenuItem>
         ))}
       </Select>
     )
@@ -91,11 +125,11 @@ const OrdenesPage: React.FC = () => {
   });
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
+    <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
+      <Typography variant="h4" gutterBottom sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
         Seguimiento de Órdenes
       </Typography>
-      <Paper sx={{ mb: 2, p: 2 }}>
+      <Paper sx={{ mb: 2, p: 2, fontFamily: 'Montserrat, sans-serif' }}>
         {isMobile ? (
           <>
             <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -103,10 +137,18 @@ const OrdenesPage: React.FC = () => {
                 <TextField
                   variant="standard"
                   placeholder="Buscar por ID, cliente, email..."
-                  InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }}
+                  InputProps={{
+                    startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>),
+                    sx: {
+                      '& input': { fontFamily: 'Montserrat, sans-serif' },
+                      '& input::placeholder': { fontFamily: 'Montserrat, sans-serif' }
+                    }
+                  }}
                   sx={{ flex: 1 }}
                 />
-                <Button variant="outlined" sx={{ color: '#5d4037', borderColor: '#5d4037', whiteSpace: 'nowrap' }}>Filtro Avanzado</Button>
+                <Button variant="outlined" sx={{ color: '#5d4037', borderColor: '#5d4037', whiteSpace: 'nowrap', fontFamily: 'Montserrat, sans-serif' }}>
+                  Filtro Avanzado
+                </Button>
               </Box>
               <Box sx={{ width: '100%', overflowX: 'auto' }}>
                 <ButtonGroup variant="outlined" aria-label="Filtros de estado" sx={{ display: 'inline-flex' }}>
@@ -115,7 +157,12 @@ const OrdenesPage: React.FC = () => {
                       key={status}
                       onClick={() => setStatusFilter(status)}
                       variant={statusFilter === status ? 'contained' : 'outlined'}
-                      sx={statusFilter === status ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } } : { color: '#5d4037', borderColor: '#c8b7b5' }}
+                      sx={{
+                        fontFamily: 'Montserrat, sans-serif',
+                        ...(statusFilter === status
+                          ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }
+                          : { color: '#5d4037', borderColor: '#c8b7b5' })
+                      }}
                     >
                       {status}
                     </Button>
@@ -136,22 +183,33 @@ const OrdenesPage: React.FC = () => {
                       <SearchIcon />
                     </InputAdornment>
                   ),
+                  sx: {
+                    '& input': { fontFamily: 'Montserrat, sans-serif' },
+                    '& input::placeholder': { fontFamily: 'Montserrat, sans-serif' }
+                  }
                 }}
                 sx={{ flexGrow: 1, mr: 2 }}
               />
-              <Button variant="outlined" sx={{ color: '#5d4037', borderColor: '#5d4037' }}>
+              <Button variant="outlined" sx={{ color: '#5d4037', borderColor: '#5d4037', fontFamily: 'Montserrat, sans-serif' }}>
                 Filtro Avanzado
               </Button>
             </Toolbar>
             <Toolbar sx={{ mt: 1 }}>
-              <Typography variant="body2" sx={{ mr: 2, color: '#5d4037' }}>Filtrar por estado:</Typography>
+              <Typography variant="body2" sx={{ mr: 2, color: '#5d4037', fontFamily: 'Montserrat, sans-serif' }}>
+                Filtrar por estado:
+              </Typography>
               <ButtonGroup variant="outlined" aria-label="Filtros de estado">
                 {['Todos', ...Object.keys(statusColors)].map(status => (
                   <Button
                     key={status}
                     onClick={() => setStatusFilter(status)}
                     variant={statusFilter === status ? 'contained' : 'outlined'}
-                    sx={statusFilter === status ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } } : { color: '#5d4037', borderColor: '#c8b7b5' }}
+                    sx={{
+                      fontFamily: 'Montserrat, sans-serif',
+                      ...(statusFilter === status
+                        ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }
+                        : { color: '#5d4037', borderColor: '#c8b7b5' })
+                    }}
                   >
                     {status}
                   </Button>
@@ -161,36 +219,62 @@ const OrdenesPage: React.FC = () => {
           </>
         )}
       </Paper>
-      {isMobile ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          {filteredRows.map(r => (
-            <Card key={r.id}>
-              <CardContent>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>Orden #{r.id}</Typography>
-                  <Typography variant="body2">Cliente: {r.cliente}</Typography>
-                  <Typography variant="body2">Fecha: {r.fecha}</Typography>
-                  <Typography variant="body2">Total: {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(r.total)}</Typography>
-                  <Box sx={{ mt: 1 }}><Chip label={r.estado} size="small" /></Box>
-                </CardContent>
-            </Card>
-          ))}
-        </Box>
-      ) : (
-        <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
-            }}
-            pageSizeOptions={[5, 10, 20]}
-            checkboxSelection
-            sx={{ border: 'none', '& .MuiDataGrid-cell': { color: '#5d4037' } }}
-          />
-        </Paper>
-      )}
+ {isMobile ? (
+  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    {filteredRows.map(r => (
+      <Card key={r.id} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <CardContent>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 'bold', color: '#5d4037', fontFamily: 'Montserrat, sans-serif' }}
+          >
+            Orden #{r.id}
+          </Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Cliente: {r.cliente}
+          </Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Fecha: {r.fecha}
+          </Typography>
+          <Typography variant="body2" sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+            Total: {new Intl.NumberFormat('es-CO', {
+              style: 'currency',
+              currency: 'COP',
+              minimumFractionDigits: 0
+            }).format(r.total)}
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            <Chip
+              label={r.estado}
+              size="small"
+              sx={{ fontFamily: 'Montserrat, sans-serif' }}
+            />
+          </Box>
+        </CardContent>
+      </Card>
+    ))}
+  </Box>
+) : (
+      <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff', fontFamily: 'Montserrat, sans-serif' }}>
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10, 20]}
+          checkboxSelection
+          sx={{
+            border: 'none',
+            fontFamily: 'Montserrat, sans-serif',
+            '& .MuiDataGrid-cell': { color: '#5d4037', fontFamily: 'Montserrat, sans-serif' },
+            '& .MuiDataGrid-columnHeaderTitle': { fontFamily: 'Montserrat, sans-serif' }
+          }}
+        />
+      </Paper>
+    )}
     </Box>
   );
 };

@@ -156,8 +156,8 @@ const OrdenesPage: React.FC = () => {
         // Filtro de búsqueda por ID o nombre (por ahora, solo ID/ID Cliente)
         const searchLower = search.toLowerCase();
         const matchesSearch = row.id.toString().includes(searchLower) ||
-                              row.usuario_id.toString().includes(searchLower) ||
-                              row.cliente_nombre.toLowerCase().includes(searchLower);
+                            row.usuario_id.toString().includes(searchLower) ||
+                            row.cliente_nombre.toLowerCase().includes(searchLower);
 
         return matchesStatus && matchesSearch;
     });

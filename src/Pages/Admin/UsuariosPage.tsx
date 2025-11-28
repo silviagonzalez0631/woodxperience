@@ -89,10 +89,15 @@ const UsuariosPage: React.FC = () => {
   );
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
+    <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold', mb: 2 , textAlign: 'center' }}
+      >
         Usuarios Registrados
       </Typography>
+
       <Paper sx={{ mb: 2, p: 2 }}>
         <Toolbar sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
           <TextField
@@ -106,8 +111,19 @@ const UsuariosPage: React.FC = () => {
                   <SearchIcon />
                 </InputAdornment>
               ),
+              sx: {
+                '& input': {
+                  fontFamily: 'Montserrat, sans-serif'
+                },
+                '& input::placeholder': {
+                  fontFamily: 'Montserrat, sans-serif'
+                }
+              }
             }}
-            sx={{ flexGrow: 1, width: { xs: '100%', sm: 'auto' } }}
+            sx={{
+              flexGrow: 1,
+              width: { xs: '100%', sm: 'auto' }
+            }}
           />
           <Button
             startIcon={<AddIcon />}
@@ -117,24 +133,30 @@ const UsuariosPage: React.FC = () => {
               ml: { sm: 2 },
               mt: { xs: 1, sm: 0 },
               backgroundColor: '#5d4037',
-              width: { xs: '100%', sm: 'auto' }
+              width: { xs: '100%', sm: 'auto' },
+              fontFamily: 'Montserrat, sans-serif'
             }}
           >
             Agregar
           </Button>
         </Toolbar>
       </Paper>
+
       {isMobile ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {/* OJO: Aquí cambié "rows.map" por "usuariosFiltrados.map" */}
           {usuariosFiltrados.map(row => (
             <Card key={row.id}>
               <CardContent>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{row.nombre}</Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#53271aff' }}>
+                  {row.nombre}
+                </Typography>
                 <Typography variant="body2">Rol: {row.rol}</Typography>
                 <Typography variant="body2">Teléfono: {row.telefono}</Typography>
                 <Typography variant="body2">Email: {row.email}</Typography>
-                <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>Creado: {row.fechaCreacion}</Typography>
+                <Typography variant="caption" sx={{ display: 'block', mt: 1 }}>
+                  Creado: {row.fechaCreacion}
+                </Typography>
               </CardContent>
             </Card>
           ))}
@@ -147,17 +169,25 @@ const UsuariosPage: React.FC = () => {
             columns={columns}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
+                paginationModel: { page: 0, pageSize: 10 }
+              }
             }}
             pageSizeOptions={[5, 10, 20]}
             checkboxSelection
             slots={{ toolbar: GridToolbar }}
             sx={{
               border: 'none',
+              fontFamily: 'Montserrat, sans-serif',
               '& .MuiDataGrid-cell': {
-                color: '#5d4037',
+                color: '#68493fff',
+                fontFamily: 'Montserrat, sans-serif'
               },
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontFamily: 'Montserrat, sans-serif'
+              },
+              '& .MuiDataGrid-toolbarContainer': {
+                fontFamily: 'Montserrat, sans-serif'
+              }
             }}
           />
         </Paper>

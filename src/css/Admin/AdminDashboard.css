@@ -1,9 +1,16 @@
+/* Tipografía global */
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Contenedor principal */
 .admin-dashboard {
   padding: 2rem;
   min-height: 100vh;
   background: #f7f5f2;
 }
 
+/* Tarjeta de bienvenida */
 .welcome-card {
   background-color: #ffffff;
   padding: 2rem;
@@ -13,38 +20,42 @@
   border-left: 5px solid #a88a6d;
 }
 
-.welcome-card h1 {
-  color: #5d4037;
-}
 
-.welcome-card p {
-  color: #a88a6d;
-}
-
+/* Encabezado de bienvenida */
 .welcome-header {
   margin-bottom: 0.5rem;
 }
 
 .welcome-header h1 {
-  color: #5d4037;
-  font-size: 1.35rem;
+  color: #5d4000;
+  font-size: 27px;
+  font-weight: 700;
+  text-align: center;
   margin-bottom: 0.2rem;
 }
 
-.welcome-header .MuiTypography-subtitle1 {
+.welcome-header p {
   color: #7a6a60;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 0.4rem;
 }
 
+/* KPIs */
 .kpi-grid {
   margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
 }
 
 .kpi-card {
-  color: white !important;
-  border-radius: 12px !important;
+  color: white;
+  border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 8px rgba(168, 138, 109, 0.15);
   cursor: pointer;
+  padding: 1rem;
 }
 
 .kpi-card:hover {
@@ -56,7 +67,6 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding: 1rem 0.5rem;
 }
 
 .kpi-value {
@@ -69,6 +79,7 @@
   font-size: 1rem;
 }
 
+/* Widget general */
 .dashboard-widget {
   background: #fff;
   border-radius: 12px;
@@ -77,7 +88,20 @@
   padding: 1.5rem;
 }
 
-/* Recomendaciones / Última actividad styles */
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #4e3618;
+}
+
+.widget-header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Última actividad */
 .dashboard-widget .last-activity {
   display: flex;
   flex-direction: column;
@@ -85,58 +109,97 @@
 }
 
 .last-activity .activity-item {
-  background: #faf7f5;
+  background: #ebe4dbde;
   border-radius: 8px;
   padding: 0.6rem 0.8rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  box-shadow: 0 1px 4px rgba(168, 138, 109, 0.08);
   font-size: 0.95rem;
-  color: #5d4037;
+  color: #4e3618; /* café más profundo */
 }
 
-/* Compact KPI quick list for small screens */
+/* KPIs compactos para móviles */
 .kpi-compact {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
   margin-top: 1rem;
 }
+
 .kpi-compact .compact-item {
   background: #fff;
   border-radius: 10px;
   padding: 0.6rem 0.9rem;
-  box-shadow: 0 2px 6px rgba(168,138,109,0.06);
+  box-shadow: 0 2px 6px rgba(168, 138, 109, 0.06);
   display: flex;
   align-items: center;
   gap: 0.6rem;
   min-width: 140px;
 }
+
 .kpi-compact .compact-item .compact-value {
   font-weight: 700;
   color: #5d4037;
 }
+
 .kpi-compact .compact-item .compact-label {
   font-size: 0.85rem;
   color: #7a6a60;
 }
 
-.rec-icon { color: #8a6f60; }
+.rec-icon {
+  color: #8a6f60;
+}
 
+/* Perfil del administrador */
 .admin-profile-card {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(168, 138, 109, 0.10);
   margin-top: 2rem;
   padding: 1.5rem 0.5rem;
+  text-align: center;
 }
 
+.admin-avatar {
+  width: 80px;
+  height: 80px;
+  background-color: #a88a6d;
+  color: rgb(161, 52, 52);
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-profile-card h3 {
+  margin-bottom: 0.3rem;
+  color: #5d4037;
+}
+
+.admin-role {
+  color: #7a6a58;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.admin-welcome {
+  font-size: 0.9rem;
+  color: #4e3618;
+}
+
+/* Responsive */
 @media (max-width: 900px) {
-  .admin-dashboard .MuiGrid-container {
-    flex-direction: column !important;
+  .dashboard-grid {
+    flex-direction: column;
   }
-  .kpi-grid .MuiGrid-item {
-    max-width: 100% !important;
-    flex-basis: 100% !important;
+
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
   }
+
   .admin-profile-card {
     margin-top: 1.5rem;
   }
@@ -146,34 +209,157 @@
   .admin-dashboard {
     padding: 0.5rem;
   }
+
   .welcome-header h1 {
     font-size: 1.08rem;
     line-height: 1.15;
     margin-bottom: 0.12rem;
   }
-  .welcome-header .MuiTypography-subtitle1 {
+
+  .welcome-header p {
     font-size: 0.82rem;
     margin-bottom: 0.18rem;
   }
+
   .kpi-card-content {
     flex-direction: row;
     gap: 0.9rem;
     padding: 0.6rem 0.15rem;
   }
+
   .kpi-value {
     font-size: 1.15rem;
   }
+
   .dashboard-widget {
     padding: 0.95rem;
   }
+
   .admin-profile-card {
     padding: 0.95rem 0.18rem;
   }
-  .kpi-compact { gap: 0.5rem; }
-  .kpi-compact .compact-item { min-width: calc(50% - 0.5rem); padding: 0.45rem 0.55rem; }
-  .kpi-compact .compact-item .compact-value { font-size: 1rem; }
-  .kpi-compact .compact-item .compact-label { font-size: 0.78rem; }
-  .recommendation-list { margin-top: 0.45rem; }
-  .dashboard-widget .last-activity { gap: 0.35rem; }
-  .last-activity .activity-item { font-size: 0.9rem; padding: 0.34rem; }
+
+  .kpi-compact {
+    gap: 0.5rem;
+  }
+
+  .kpi-compact .compact-item {
+    min-width: calc(50% - 0.5rem);
+    padding: 0.45rem 0.55rem;
+  }
+
+  .kpi-compact .compact-item .compact-value {
+    font-size: 1rem;
+  }
+
+  .kpi-compact .compact-item .compact-label {
+    font-size: 0.78rem;
+  }
+
+  .recommendation-list {
+    margin-top: 0.45rem;
+  }
+
+  .dashboard-widget .last-activity {
+    gap: 0.35rem;
+  }
+
+  
+}
+
+
+/* Botón para abrir el perfil */
+.view-profile-btn {
+  background-color: transparent;
+  border: none;
+  color: #5d4037;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Modal */
+.profile-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(93, 64, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.profile-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  position: relative;
+  max-width: 360px;
+  width: 90%;
+  animation: fadeInModal 200ms ease-out;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.close-profile {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #5d4037;
+  cursor: pointer;
+}
+
+/* Colores suaves para KPIs */
+.kpi-ingresos {
+  background-color: #d0e8d0; 
+  color: #2e7d32;
+}
+
+.kpi-pendientes {
+  background-color: #fce8d5; 
+  color: #d35400;
+}
+
+.kpi-stock {
+  background-color: #fdf2d0;
+  color: #a67c00;
+}
+
+.kpi-resenas {
+  background-color: #f8d7da; 
+  color: #c62828;
+}
+
+
+.kpi-card .kpi-value,
+.kpi-card .kpi-title {
+  color: inherit;
+}
+
+.dashboard-footer {
+  margin-top: auto;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #5d4037;
+  background-color: #f0eae2;
+  border-top: 1px solid #d6c7b8;
+  box-shadow: 0 -2px 8px rgba(168, 138, 109, 0.08);
 }

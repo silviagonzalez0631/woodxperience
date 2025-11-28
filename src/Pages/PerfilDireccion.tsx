@@ -1,7 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+    import { useState } from "react";
+    import { useNavigate } from "react-router-dom";
+    import {
+    TextField,
+    InputAdornment,
+    Button,
+    } from "@mui/material";
+    import HomeIcon from "@mui/icons-material/Home";
+    import LocationCityIcon from "@mui/icons-material/LocationCity";
+    import PublicIcon from "@mui/icons-material/Public";
+    import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
+    import "../css/PerfilDireccion.css";
 
-export default function PerfilDireccion() {
+    export default function PerfilDireccion() {
     const [linea, setLinea] = useState("");
     const [ciudad, setCiudad] = useState("");
     const [pais, setPais] = useState("");
@@ -10,96 +20,139 @@ export default function PerfilDireccion() {
 
     const handleGuardar = async () => {
         let tokenRaw = localStorage.getItem("token");
-
-        // 📌 CORRECCIÓN: Limpiar el token de comillas dobles si se guardó serializado.
         if (tokenRaw && tokenRaw.startsWith('"') && tokenRaw.endsWith('"')) {
-            tokenRaw = tokenRaw.slice(1, -1);
+        tokenRaw = tokenRaw.slice(1, -1);
         }
-        
+
         const token = tokenRaw;
 
         if (!token) {
-            alert("Debes iniciar sesión.");
-            navigate("/login");
-            return;
+        alert("Debes iniciar sesión.");
+        navigate("/login");
+        return;
         }
 
         const res = await fetch("http://localhost:8001/direcciones", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                // Aseguramos que el token limpio se envíe
-                Authorization: `Bearer ${token}`, 
-            },
-            body: JSON.stringify({
-                linea_direccion1: linea,
-                ciudad,
-                pais,
-                codigo_postal: codigoPostal,
-                es_principal: true,
-            }),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+            linea_direccion1: linea,
+            ciudad,
+            pais,
+            codigo_postal: codigoPostal,
+            es_principal: true,
+        }),
         });
 
         if (res.ok) {
-            // 2xx status codes (201 Created)
-            const data = await res.json();
-            alert("Dirección guardada correctamente.");
-            console.log("Respuesta del servidor:", data);
-            navigate("/carrito");
+        const data = await res.json();
+        alert("Dirección guardada correctamente.");
+        console.log("Respuesta del servidor:", data);
+        navigate("/carrito");
         } else {
-            // Manejo de errores más detallado
-            try {
-                const errorData = await res.json();
-                console.error("Error del servidor:", errorData);
-                alert("Error al guardar dirección: " + (errorData.error || "Error de validación o del servidor."));
-            } catch { // 👈 SOLUCIÓN FINAL: Dejar el 'catch' sin parámetro
-                // Si la respuesta no es JSON (ej. error 500 puro)
-                console.error("Error de red o servidor sin respuesta JSON:", res.status, res.statusText);
-                alert(`Error ${res.status}: Fallo en la comunicación con el servidor.`);
-            }
+        try {
+            const errorData = await res.json();
+            console.error("Error del servidor:", errorData);
+            alert("Error al guardar dirección: " + (errorData.error || "Error de validación o del servidor."));
+        } catch {
+            console.error("Error de red o servidor sin respuesta JSON:", res.status, res.statusText);
+            alert(`Error ${res.status}: Fallo en la comunicación con el servidor.`);
+        }
         }
     };
 
     return (
-        <div style={{ padding: "2rem", maxWidth: "500px", margin: "auto" }}>
-            <h2>Dirección de envío</h2>
-            <p>Agrega tu dirección para poder realizar compras.</p>
+        <section className="form-direccion-background">
 
-            <label>Dirección:</label>
-            <input 
+        <div className="form-direccion-container user_options-container">
+            <h2 className="user_unregistered-title">Dirección de envío</h2>
+            <p className="user_unregistered-text">Agrega tu dirección para poder realizar compras.</p>
+
+            <div className="forms_field">
+            <TextField
+                placeholder="Dirección"
                 type="text"
-                value={linea} 
-                onChange={(e) => setLinea(e.target.value)} 
-                required 
+                value={linea}
+                onChange={(e) => setLinea(e.target.value)}
+                required
+                fullWidth
+                InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">
+                    <HomeIcon />
+                    </InputAdornment>
+                ),
+                }}
             />
+            </div>
 
-            <label>Ciudad:</label>
-            <input 
+            <div className="forms_field">
+            <TextField
+                placeholder="Ciudad"
                 type="text"
-                value={ciudad} 
-                onChange={(e) => setCiudad(e.target.value)} 
-                required 
+                value={ciudad}
+                onChange={(e) => setCiudad(e.target.value)}
+                required
+                fullWidth
+                InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">
+                    <LocationCityIcon />
+                    </InputAdornment>
+                ),
+                }}
             />
+            </div>
 
-            <label>País:</label>
-            <input 
+            <div className="forms_field">
+            <TextField
+                placeholder="País"
                 type="text"
-                value={pais} 
-                onChange={(e) => setPais(e.target.value)} 
-                required 
+                value={pais}
+                onChange={(e) => setPais(e.target.value)}
+                required
+                fullWidth
+                InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">
+                    <PublicIcon />
+                    </InputAdornment>
+                ),
+                }}
             />
+            </div>
 
-            <label>Código Postal:</label>
-            <input 
+            <div className="forms_field">
+            <TextField
+                placeholder="Código Postal"
                 type="text"
-                value={codigoPostal} 
-                onChange={(e) => setCodigoPostal(e.target.value)} 
-                required 
+                value={codigoPostal}
+                onChange={(e) => setCodigoPostal(e.target.value)}
+                required
+                fullWidth
+                InputProps={{
+                startAdornment: (
+                    <InputAdornment position="start">
+                    <MarkunreadMailboxIcon />
+                    </InputAdornment>
+                ),
+                }}
             />
+            </div>
 
-            <button onClick={handleGuardar} style={{ marginTop: "1rem" }}>
+            <div className="forms_buttons">
+            <Button
+                variant="contained"
+                className="forms_buttons-action"
+                onClick={handleGuardar}
+            >
                 Guardar dirección
-            </button>
+            </Button>
+            </div>
         </div>
+        </section>
     );
-}
+    }

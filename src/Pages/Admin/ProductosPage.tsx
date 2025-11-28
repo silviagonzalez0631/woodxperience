@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Select, MenuItem, FormControl, InputLabel, Chip, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Card, CardContent } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { 
+    Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, 
+    Select, MenuItem, FormControl, InputLabel, Chip, IconButton, 
+    Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, 
+    Card, CardContent, CardMedia, Avatar, Alert 
+} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useTheme, useMediaQuery } from '@mui/material';
@@ -7,19 +12,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ReviewsIcon from '@mui/icons-material/Reviews';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import axios from 'axios';
 
-// --- Mock Data ---
-const mockCategories = ['Muebles de Sala', 'Comedor', 'Decoración', 'Oficina'];
-
-const mockRows = [
-  { id: 1, sku: 'MBL-001', nombre: 'Sofá de 3 Puestos "Nórdico"', categoria: 'Muebles de Sala', precio: 1200000, stock: 15 },
-  { id: 2, sku: 'CMD-005', nombre: 'Mesa de Comedor "Roble"', categoria: 'Comedor', precio: 850000, stock: 8 },
-  { id: 3, sku: 'DEC-012', nombre: 'Lámpara de Pie "Industrial"', categoria: 'Decoración', precio: 250000, stock: 0 },
-  { id: 4, sku: 'OFC-002', nombre: 'Escritorio "Minimalista"', categoria: 'Oficina', precio: 450000, stock: 25 },
-  { id: 5, sku: 'MBL-002', nombre: 'Silla Auxiliar "Vintage"', categoria: 'Muebles de Sala', precio: 300000, stock: 3 },
-];
-
+// --- Lógica de Chips de Stock ---
 const getStockChip = (params: GridRenderCellParams) => {
   const stock = params.value as number;
   let color: 'success' | 'warning' | 'error' = 'success';
@@ -28,26 +24,42 @@ const getStockChip = (params: GridRenderCellParams) => {
   if (stock === 0) {
     color = 'error';
     label = 'Agotado';
-  } else if (stock <= 10) {
+  } else if (stock <= 3) {
     color = 'warning';
-    label = `Stock Bajo (${stock})`;
+    label = `Últimas ${stock}`;
   }
 
-  return <Chip label={label} color={color} size="small" />;
+  return <Chip label={label} color={color} size="small" variant="outlined" />;
 };
 
+// --- Columnas adaptadas a TU Base de Datos ---
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'sku', headerName: 'SKU', width: 130 },
-  { field: 'nombre', headerName: 'Nombre del Producto', width: 300 },
-  { field: 'categoria', headerName: 'Categoría', width: 180 },
+  {
+    field: 'imagen',
+    headerName: 'Img',
+    width: 80,
+    renderCell: (params) => (
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+            {params.value ? (
+                <Avatar src={params.value} variant="rounded" sx={{ width: 40, height: 40 }} />
+            ) : (
+                <Inventory2Icon color="disabled" />
+            )}
+        </Box>
+    ),
+  },
+  { field: 'titulo', headerName: 'Nombre del Producto', width: 250 },
+  { field: 'descripcion', headerName: 'Descripción', width: 250 },
   {
     field: 'precio',
     headerName: 'Precio',
     width: 150,
     type: 'number',
-    valueFormatter: (value) =>
-      new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value),
+    valueFormatter: (value: number) => {
+        if(value == null) return "";
+        return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(value);
+    }
   },
   {
     field: 'stock',
@@ -58,19 +70,12 @@ const columns: GridColDef[] = [
   {
     field: 'acciones',
     headerName: 'Acciones',
-    width: 150,
+    width: 120,
     sortable: false,
     renderCell: () => (
       <Box>
-        <IconButton size="small" aria-label="editar">
-          <EditIcon />
-        </IconButton>
-        <IconButton size="small" aria-label="eliminar">
-          <DeleteIcon />
-        </IconButton>
-        <IconButton size="small" aria-label="ver reseñas">
-          <ReviewsIcon />
-        </IconButton>
+        <IconButton size="small" color="primary"><EditIcon /></IconButton>
+        <IconButton size="small" color="error"><DeleteIcon /></IconButton>
       </Box>
     )
   }
@@ -79,10 +84,19 @@ const columns: GridColDef[] = [
 const ProductosPage: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  
+  // Estados para datos reales
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [rows, setRows] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  
+  // Estados de filtros y UI
   const [stockFilter, setStockFilter] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
+  // Estado del formulario
   const [newProduct, setNewProduct] = useState({
     titulo: '',
     descripcion: '',
@@ -90,26 +104,96 @@ const ProductosPage: React.FC = () => {
     stock: '',
   });
 
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // --- 1. CARGAR PRODUCTOS (GET) ---
+  const fetchProductos = async () => {
+    setLoading(true);
+    try {
+        const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+        const response = await axios.get('http://localhost:8001/productos', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
 
-  const handleFormSubmit = () => {
-    console.log("Nuevo producto a guardar:", newProduct);
-    // Aquí iría la lógica para enviar los datos a la API
-    handleClose();
+        if(response.data.success){
+            // Mapeamos los datos tal como vienen de Deno
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const productosAdaptados = response.data.data.map((prod: any) => ({
+                id: prod.id,
+                titulo: prod.titulo,
+                descripcion: prod.descripcion,
+                precio: prod.precio,
+                stock: prod.stock,
+                imagen: prod.imagenes && prod.imagenes.length > 0 ? prod.imagenes[0] : null
+            }));
+            setRows(productosAdaptados);
+        }
+    } catch (error) {
+        console.error("Error fetching productos", error);
+    } finally {
+        setLoading(false);
+    }
   };
 
-  // Lógica de filtrado (a implementar con datos reales)
-  const filteredRows = mockRows.filter(row => {
-    const stockCondition =
-      stockFilter === '' ||
-      (stockFilter === 'en-stock' && row.stock > 10) ||
-      (stockFilter === 'stock-bajo' && row.stock > 0 && row.stock <= 10) ||
-      (stockFilter === 'agotado' && row.stock === 0);
+  useEffect(() => {
+      fetchProductos();
+  }, []);
 
-    const categoryCondition = categoryFilter === '' || row.categoria === categoryFilter;
+  // --- 2. CREAR PRODUCTO (POST) ---
+  const handleFormSubmit = async () => {
+    try {
+        const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+        const usuarioRaw = sessionStorage.getItem('usuario') || localStorage.getItem('usuario');
+        const usuario = usuarioRaw ? JSON.parse(usuarioRaw) : null;
 
-    return stockCondition && categoryCondition;
+        if (!usuario || !usuario.id) {
+            setErrorMsg("Error: No se pudo identificar al usuario administrador.");
+            return;
+        }
+
+        // Preparamos el objeto tal cual lo pide tu API
+        const payload = {
+            titulo: newProduct.titulo,
+            descripcion: newProduct.descripcion,
+            precio: Number(newProduct.precio),
+            stock: Number(newProduct.stock),
+            usuario_creador_id: usuario.id // ID IMPRESCINDIBLE
+        };
+
+        await axios.post('http://localhost:8001/productos', payload, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        // Si todo sale bien:
+        setOpen(false);
+        setNewProduct({ titulo: '', descripcion: '', precio: '', stock: '' }); // Limpiar form
+        fetchProductos(); // Recargar tabla
+        setErrorMsg('');
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        console.error(error);
+        setErrorMsg(error.response?.data?.error || "Error al guardar producto");
+    }
+  };
+
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => {
+      setOpen(false);
+      setErrorMsg('');
+  };
+
+  // --- Lógica de filtrado en Frontend ---
+  const filteredRows = rows.filter(row => {
+    // Filtro de texto
+    const matchesSearch = row.titulo.toLowerCase().includes(search.toLowerCase()) || 
+                          row.descripcion.toLowerCase().includes(search.toLowerCase());
+    
+    // Filtro de Stock
+    let matchesStock = true;
+    if (stockFilter === 'en-stock') matchesStock = row.stock > 3;
+    if (stockFilter === 'stock-bajo') matchesStock = row.stock > 0 && row.stock <= 3;
+    if (stockFilter === 'agotado') matchesStock = row.stock === 0;
+
+    return matchesSearch && matchesStock;
   });
 
   return (
@@ -117,171 +201,162 @@ const ProductosPage: React.FC = () => {
       <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
         Gestión de Productos
       </Typography>
+      
+      {/* BARRA DE HERRAMIENTAS */}
       <Paper sx={{ mb: 2, p: 2 }}>
-        {isMobile ? (
-          <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Button variant="contained" startIcon={<AddIcon />} onClick={handleClickOpen} sx={{ width: '100%', backgroundColor: '#5d4037' }}>Agregar Producto</Button>
-            <FormControl variant="standard" sx={{ width: '100%' }}>
-              <InputLabel>Filtrar por Stock</InputLabel>
-              <Select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)} label="Filtrar por Stock">
-                <MenuItem value=""><em>Todos</em></MenuItem>
-                <MenuItem value="en-stock">En Stock</MenuItem>
-                <MenuItem value="stock-bajo">Stock Bajo</MenuItem>
-                <MenuItem value="agotado">Agotado</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl variant="standard" sx={{ width: '100%' }}>
-              <InputLabel>Filtrar por Categoría</InputLabel>
-              <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} label="Filtrar por Categoría">
-                <MenuItem value=""><em>Todas</em></MenuItem>
-                {mockCategories.map(cat => <MenuItem key={cat} value={cat}>{cat}</MenuItem>)}
-              </Select>
-            </FormControl>
-            <TextField variant="standard" placeholder="Buscar por nombre, SKU..." InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }} sx={{ width: '100%' }} />
-          </Toolbar>
-        ) : (
-          <Toolbar>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' }, mr: 2 }}
-              onClick={handleClickOpen}
-            >
-              Agregar Producto
-            </Button>
-            <FormControl variant="standard" sx={{ minWidth: 150, mr: 2 }}>
-              <InputLabel>Filtrar por Stock</InputLabel>
-              <Select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)} label="Filtrar por Stock">
-                <MenuItem value=""><em>Todos</em></MenuItem>
-                <MenuItem value="en-stock">En Stock</MenuItem>
-                <MenuItem value="stock-bajo">Stock Bajo</MenuItem>
-                <MenuItem value="agotado">Agotado</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl variant="standard" sx={{ minWidth: 180, mr: 2 }}>
-              <InputLabel>Filtrar por Categoría</InputLabel>
-              <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} label="Filtrar por Categoría">
-                <MenuItem value=""><em>Todas</em></MenuItem>
-                {mockCategories.map(cat => <MenuItem key={cat} value={cat}>{cat}</MenuItem>)}
-              </Select>
-            </FormControl>
-            <TextField
-              variant="standard"
-              placeholder="Buscar por nombre, SKU..."
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{ flexGrow: 1 }}
-            />
-          </Toolbar>
-        )}
+        <Toolbar sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 2, padding: 0 }}>
+          
+          <Button 
+            variant="contained" 
+            startIcon={<AddIcon />} 
+            onClick={handleClickOpen} 
+            sx={{ backgroundColor: '#5d4037', width: isMobile ? '100%' : 'auto', whiteSpace: 'nowrap' }}
+          >
+            Agregar Producto
+          </Button>
+
+          <FormControl variant="standard" sx={{ minWidth: 150, width: isMobile ? '100%' : 'auto' }}>
+            <InputLabel>Filtrar por Stock</InputLabel>
+            <Select value={stockFilter} onChange={(e) => setStockFilter(e.target.value)}>
+              <MenuItem value=""><em>Todos</em></MenuItem>
+              <MenuItem value="en-stock">Normal</MenuItem>
+              <MenuItem value="stock-bajo">Stock Bajo</MenuItem>
+              <MenuItem value="agotado">Agotado</MenuItem>
+            </Select>
+          </FormControl>
+
+          {/* NOTA: Quité el filtro de CATEGORÍA porque tu DB no tiene ese campo aún */}
+
+          <TextField
+            variant="standard"
+            placeholder="Buscar producto..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            InputProps={{
+              startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>),
+            }}
+            sx={{ flexGrow: 1, width: '100%' }}
+          />
+        </Toolbar>
       </Paper>
+
+      {/* VISTA MÓVIL (CARDS) */}
       {isMobile ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {filteredRows.map(p => (
-            <Card key={p.id}>
-              <CardContent>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>{p.nombre}</Typography>
-                <Typography variant="body2">SKU: {p.sku}</Typography>
-                <Typography variant="body2">Categoría: {p.categoria}</Typography>
-                <Typography variant="body2">Precio: {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(p.precio)}</Typography>
+            <Card key={p.id} sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', p: 1 }}>
+              {p.imagen ? (
+                 <CardMedia component="img" sx={{ width: 80, height: 80, borderRadius: 1 }} image={p.imagen} alt={p.titulo} />
+              ) : (
+                 <Avatar variant="rounded" sx={{ width: 80, height: 80 }}><Inventory2Icon /></Avatar>
+              )}
+              
+              <CardContent sx={{ flex: 1, py: 1 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037', lineHeight: 1.2 }}>
+                    {p.titulo}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" noWrap>
+                    {p.descripcion}
+                </Typography>
+                <Typography variant="h6" sx={{ fontSize: '1rem', mt: 0.5 }}>
+                    {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(p.precio)}
+                </Typography>
                 <Box sx={{ mt: 1 }}>
-                  {(() => {
-                    const stock = p.stock;
-                    let color: 'success' | 'warning' | 'error' = 'success';
-                    let label = `En Stock (${stock})`;
-                    if (stock === 0) { color = 'error'; label = 'Agotado'; }
-                    else if (stock <= 10) { color = 'warning'; label = `Stock Bajo (${stock})`; }
-                    return <Chip label={label} color={color} size="small" />;
-                  })()}
-                </Box>
-                <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
-                  <IconButton size="small"><EditIcon /></IconButton>
-                  <IconButton size="small"><DeleteIcon /></IconButton>
-                  <IconButton size="small"><ReviewsIcon /></IconButton>
+                   {/* Reusamos la lógica visual del chip pero manual */}
+                   {p.stock === 0 ? 
+                      <Chip label="Agotado" color="error" size="small" /> : 
+                      <Chip label={`Stock: ${p.stock}`} color={p.stock <= 3 ? "warning" : "success"} size="small" variant="outlined" />
+                   }
                 </Box>
               </CardContent>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <IconButton size="small"><EditIcon /></IconButton>
+                  <IconButton size="small" color="error"><DeleteIcon /></IconButton>
+              </Box>
             </Card>
           ))}
         </Box>
       ) : (
+        /* VISTA PC (TABLA) */
         <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
           <DataGrid
             rows={filteredRows}
             columns={columns}
+            loading={loading}
+            rowHeight={60}
             initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
-              },
+              pagination: { paginationModel: { page: 0, pageSize: 10 } },
             }}
             pageSizeOptions={[5, 10, 20]}
             sx={{
               border: 'none',
-              '& .MuiDataGrid-cell': {
-                color: '#5d4037',
-              },
-              '& .MuiDataGrid-columnHeaders': {
-                backgroundColor: '#f5f5f5',
-              }
+              '& .MuiDataGrid-cell': { color: '#5d4037' },
+              '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f5f5f5' }
             }}
           />
         </Paper>
       )}
 
-      {/* Modal para agregar nuevo producto */}
+      {/* MODAL PARA AGREGAR PRODUCTO */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle sx={{ color: '#5d4037' }}>Agregar Nuevo Producto</DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>
-            Completa los siguientes campos para registrar un nuevo producto en el inventario.
+            Ingresa los datos para registrar un nuevo producto en la base de datos.
           </DialogContentText>
+          
+          {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
+
           <TextField
             autoFocus
             margin="dense"
-            name="titulo"
             label="Título del Producto"
-            type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
+            value={newProduct.titulo}
             onChange={(e) => setNewProduct({ ...newProduct, titulo: e.target.value })}
           />
           <TextField
             margin="dense"
-            name="descripcion"
             label="Descripción"
-            type="text"
             fullWidth
             multiline
-            rows={4}
-            variant="standard"
+            rows={3}
+            variant="outlined"
+            value={newProduct.descripcion}
             onChange={(e) => setNewProduct({ ...newProduct, descripcion: e.target.value })}
           />
-          <TextField
-            margin="dense"
-            name="precio"
-            label="Precio (COP)"
-            type="number"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setNewProduct({ ...newProduct, precio: e.target.value })}
-          />
-          <TextField
-            margin="dense"
-            name="stock"
-            label="Stock (Cantidad disponible)"
-            type="number"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
-          />
+          <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
+            <TextField
+                margin="dense"
+                label="Precio (COP)"
+                type="number"
+                fullWidth
+                variant="outlined"
+                value={newProduct.precio}
+                onChange={(e) => setNewProduct({ ...newProduct, precio: e.target.value })}
+            />
+            <TextField
+                margin="dense"
+                label="Stock Inicial"
+                type="number"
+                fullWidth
+                variant="outlined"
+                value={newProduct.stock}
+                onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+            />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} sx={{ color: '#5d4037' }}>Cancelar</Button>
-          <Button onClick={handleFormSubmit} variant="contained" sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }}>Guardar</Button>
+          <Button 
+            onClick={handleFormSubmit} 
+            variant="contained" 
+            sx={{ backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }}
+            disabled={!newProduct.titulo || !newProduct.precio}
+          >
+            Guardar
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>

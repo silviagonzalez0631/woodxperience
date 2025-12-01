@@ -5,6 +5,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 
 // --- Definiciones de Tipos de Estado ---
 type OrdenEstadoDB = 'pendiente' | 'en_proceso' | 'enviado' | 'completado' | 'cancelado';
@@ -162,121 +164,205 @@ const OrdenesPage: React.FC = () => {
         return matchesStatus && matchesSearch;
     });
 
-    return (
-        <Box sx={{ padding: 3 }}>
-            <Typography variant="h4" gutterBottom sx={{ color: '#5d4037' }}>
-                Seguimiento de Órdenes
-            </Typography>
+        return (
+    <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
+        <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+            color: '#815041d5',
+            fontFamily: 'Montserrat, sans-serif',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1
+        }}
+        >
+        <FontAwesomeIcon icon={faClipboardList} style={{ fontSize: '1.6rem', color: '#4f3027d5' }} />
+        Seguimiento de Órdenes
+        </Typography>
 
-            {errorMsg && <Alert severity="error" sx={{ mb: 2 }}>{errorMsg}</Alert>}
-            
-            {/* BARRA DE HERRAMIENTAS */}
-            <Paper sx={{ mb: 2, p: 2 }}>
-                {isMobile ? (
-                    <>
-                        <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 0 }}>
-                            <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
-                                <TextField
-                                    variant="standard"
-                                    placeholder="Buscar por ID, cliente..."
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }}
-                                    sx={{ flex: 1 }}
-                                />
-                                <Button variant="outlined" sx={{ color: '#5d4037', borderColor: '#5d4037', whiteSpace: 'nowrap' }}>Filtro Avanzado</Button>
-                            </Box>
-                            <Box sx={{ width: '100%', overflowX: 'auto' }}>
-                                <ButtonGroup variant="outlined" aria-label="Filtros de estado" sx={{ display: 'inline-flex' }}>
-                                    {['Todos', ...Object.keys(statusMap)].map(status => (
-                                        <Button
-                                            key={status}
-                                            onClick={() => setStatusFilter(status)}
-                                            variant={statusFilter === status ? 'contained' : 'outlined'}
-                                            sx={statusFilter === status ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } } : { color: '#5d4037', borderColor: '#c8b7b5' }}
-                                        >
-                                            {status === 'Todos' ? 'Todos' : statusMap[status as OrdenEstadoDB].label}
-                                        </Button>
-                                    ))}
-                                </ButtonGroup>
-                            </Box>
-                        </Toolbar>
-                    </>
-                ) : (
-                    <>
-                        <Toolbar sx={{ padding: 0 }}>
-                            <TextField
-                                variant="standard"
-                                placeholder="Buscar por ID, cliente, email..."
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <SearchIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                sx={{ flexGrow: 1, mr: 2 }}
-                            />
-                            <Button variant="outlined" sx={{ color: '#5d4037', borderColor: '#5d4037' }}>
-                                Filtro Avanzado
-                            </Button>
-                        </Toolbar>
-                        <Toolbar sx={{ mt: 1, padding: 0 }}>
-                            <Typography variant="body2" sx={{ mr: 2, color: '#5d4037' }}>Filtrar por estado:</Typography>
-                            <ButtonGroup variant="outlined" aria-label="Filtros de estado">
-                                {['Todos', ...Object.keys(statusMap)].map(status => (
-                                    <Button
-                                        key={status}
-                                        onClick={() => setStatusFilter(status)}
-                                        variant={statusFilter === status ? 'contained' : 'outlined'}
-                                        sx={statusFilter === status ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } } : { color: '#5d4037', borderColor: '#c8b7b5' }}
-                                    >
-                                        {status === 'Todos' ? 'Todos' : statusMap[status as OrdenEstadoDB].label}
-                                    </Button>
-                                ))}
-                            </ButtonGroup>
-                        </Toolbar>
-                    </>
-                )}
-            </Paper>
+        {errorMsg && (
+        <Alert severity="error" sx={{ mb: 2, fontFamily: 'Montserrat, sans-serif' }}>
+            {errorMsg}
+        </Alert>
+        )}
 
-            {/* VISTA MÓVIL (CARDS) */}
-            {isMobile ? (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    {filteredRows.map(r => (
-                        <Card key={r.id}>
-                            <CardContent>
-                                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>Orden #{r.id}</Typography>
-                                <Typography variant="body2">Cliente: {r.cliente_nombre}</Typography>
-                                <Typography variant="body2">Fecha: {new Date(r.fecha_orden).toLocaleDateString()}</Typography>
-                                <Typography variant="body2">Total: {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(r.total)}</Typography>
-                                <Box sx={{ mt: 1 }}>
-                                    <Chip label={statusMap[r.estado].label} color={statusMap[r.estado].color} size="small" />
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    ))}
+        {/* BARRA DE HERRAMIENTAS */}
+        <Paper sx={{ mb: 2, p: 2 }}>
+        {isMobile ? (
+            <>
+            <Toolbar sx={{ display: 'flex', flexDirection: 'column', gap: 1, padding: 0 }}>
+                <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
+                <TextField
+                    variant="standard"
+                    placeholder="Buscar por ID, cliente..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                        <SearchIcon />
+                        </InputAdornment>
+                    ),
+                    sx: {
+                        '& input': { fontFamily: 'Montserrat, sans-serif' },
+                        '& input::placeholder': { fontFamily: 'Montserrat, sans-serif' }
+                    }
+                    }}
+                    sx={{ flex: 1 }}
+                />
+                <Button
+                    variant="outlined"
+                    sx={{
+                    color: '#5d4037',
+                    borderColor: '#5d4037',
+                    whiteSpace: 'nowrap',
+                    fontFamily: 'Montserrat, sans-serif'
+                    }}
+                >
+                    Filtro Avanzado
+                </Button>
                 </Box>
-            ) : (
-                /* VISTA PC (TABLA) */
-                <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
-                    <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        loading={loading}
-                        initialState={{
-                            pagination: { paginationModel: { page: 0, pageSize: 10 } },
+                <Box sx={{ width: '100%', overflowX: 'auto' }}>
+                <ButtonGroup variant="outlined" aria-label="Filtros de estado" sx={{ display: 'inline-flex' }}>
+                    {['Todos', ...Object.keys(statusMap)].map(status => (
+                    <Button
+                        key={status}
+                        onClick={() => setStatusFilter(status)}
+                        variant={statusFilter === status ? 'contained' : 'outlined'}
+                        sx={{
+                        fontFamily: 'Montserrat, sans-serif',
+                        ...(statusFilter === status
+                            ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }
+                            : { color: '#5d4037', borderColor: '#c8b7b5' })
                         }}
-                        pageSizeOptions={[5, 10, 20]}
-                        checkboxSelection
-                        sx={{ border: 'none', '& .MuiDataGrid-cell': { color: '#5d4037' } }}
-                    />
-                </Paper>
-            )}
+                    >
+                        {status === 'Todos' ? 'Todos' : statusMap[status as OrdenEstadoDB].label}
+                    </Button>
+                    ))}
+                </ButtonGroup>
+                </Box>
+            </Toolbar>
+            </>
+        ) : (
+            <>
+            <Toolbar sx={{ padding: 0 }}>
+                <TextField
+                variant="standard"
+                placeholder="Buscar por ID, cliente, email..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                InputProps={{
+                    startAdornment: (
+                    <InputAdornment position="start">
+                        <SearchIcon />
+                    </InputAdornment>
+                    ),
+                    sx: {
+                    '& input': { fontFamily: 'Montserrat, sans-serif' },
+                    '& input::placeholder': { fontFamily: 'Montserrat, sans-serif' }
+                    }
+                }}
+                sx={{ flexGrow: 1, mr: 2 }}
+                />
+                <Button
+                variant="outlined"
+                sx={{
+                    color: '#5d4037',
+                    borderColor: '#5d4037',
+                    fontFamily: 'Montserrat, sans-serif'
+                }}
+                >
+                Filtro Avanzado
+                </Button>
+            </Toolbar>
+            <Toolbar sx={{ mt: 1, padding: 0 }}>
+                <Typography variant="body2" sx={{ mr: 2, color: '#5d4037', fontFamily: 'Montserrat, sans-serif' }}>
+                Filtrar por estado:
+                </Typography>
+                <ButtonGroup variant="outlined" aria-label="Filtros de estado">
+                {['Todos', ...Object.keys(statusMap)].map(status => (
+                    <Button
+                    key={status}
+                    onClick={() => setStatusFilter(status)}
+                    variant={statusFilter === status ? 'contained' : 'outlined'}
+                    sx={{
+                        fontFamily: 'Montserrat, sans-serif',
+                        ...(statusFilter === status
+                        ? { backgroundColor: '#5d4037', '&:hover': { backgroundColor: '#4e342e' } }
+                        : { color: '#5d4037', borderColor: '#c8b7b5' })
+                    }}
+                    >
+                    {status === 'Todos' ? 'Todos' : statusMap[status as OrdenEstadoDB].label}
+                    </Button>
+                ))}
+                </ButtonGroup>
+            </Toolbar>
+            </>
+        )}
+        </Paper>
+
+        {/* VISTA MÓVIL (CARDS) */}
+        {isMobile ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {filteredRows.map(r => (
+            <Card key={r.id}>
+                <CardContent sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#5d4037' }}>
+                    Orden #{r.id}
+                </Typography>
+                <Typography variant="body2">Cliente: {r.cliente_nombre}</Typography>
+                <Typography variant="body2">Fecha: {new Date(r.fecha_orden).toLocaleDateString()}</Typography>
+                <Typography variant="body2">
+                    Total:{' '}
+                    {new Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    minimumFractionDigits: 0
+                    }).format(r.total)}
+                </Typography>
+                <Box sx={{ mt: 1 }}>
+                    <Chip label={statusMap[r.estado].label} color={statusMap[r.estado].color} size="small" />
+                </Box>
+                </CardContent>
+            </Card>
+            ))}
         </Box>
+        ) : (
+        /* VISTA PC (TABLA) */
+        <Paper sx={{ height: 600, width: '100%', backgroundColor: '#ffffff' }}>
+            <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            loading={loading}
+            initialState={{
+                pagination: { paginationModel: { page: 0, pageSize: 10 } }
+            }}
+            pageSizeOptions={[5, 10, 20]}
+            checkboxSelection
+            sx={{
+                border: 'none',
+                fontFamily: 'Montserrat, sans-serif',
+                '& .MuiDataGrid-cell': {
+                color: '#5d4037',
+                fontFamily: 'Montserrat, sans-serif'
+                },
+                '& .MuiDataGrid-columnHeaderTitle': {
+                fontFamily: 'Montserrat, sans-serif'
+                },
+                '& .MuiDataGrid-toolbarContainer': {
+                fontFamily: 'Montserrat, sans-serif'
+                }
+            }}
+            />
+        </Paper>
+        )}
+    </Box>
     );
+
 };
 
 export default OrdenesPage;

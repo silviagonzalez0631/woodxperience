@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Button, Card, CardContent } from '@mui/material';
+import { Box, Typography, Paper, Toolbar, TextField, InputAdornment, Card, CardContent } from '@mui/material';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import type { GridColDef } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
+
 import axios from 'axios'; // ¡No olvides importar axios!
 
 // Las columnas pueden estar afuera, eso está bien porque son constantes estáticas
@@ -24,13 +26,7 @@ const columns: GridColDef[] = [
   { field: 'telefono', headerName: 'Teléfono', width: 150 },
   { field: 'fechaCreacion', headerName: 'Fecha Creación', width: 180 },
   { field: 'email', headerName: 'Email', width: 250 },
-  {
-    field: 'acciones',
-    headerName: 'Acciones',
-    width: 150,
-    sortable: false,
-    renderCell: () => "..." 
-  }
+  
 ];
 
 const UsuariosPage: React.FC = () => {
@@ -93,10 +89,22 @@ const UsuariosPage: React.FC = () => {
       <Typography
         variant="h4"
         gutterBottom
-        sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold', mb: 2 , textAlign: 'center' }}
-      >
-        Usuarios Registrados
-      </Typography>
+        sx={{
+          color: '#815041d5',
+          fontFamily: 'Montserrat, sans-serif',
+          fontWeight: 'bold',
+          mb: 2,
+          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1
+  }}
+>
+  <FontAwesomeIcon icon={faUsers} style={{ fontSize: '1.6rem', color: '#4f3027d5' }} />
+  Usuarios Registrados
+</Typography>
+
 
       <Paper sx={{ mb: 2, p: 2 }}>
         <Toolbar sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
@@ -125,20 +133,6 @@ const UsuariosPage: React.FC = () => {
               width: { xs: '100%', sm: 'auto' }
             }}
           />
-          <Button
-            startIcon={<AddIcon />}
-            variant="contained"
-            size="small"
-            sx={{
-              ml: { sm: 2 },
-              mt: { xs: 1, sm: 0 },
-              backgroundColor: '#5d4037',
-              width: { xs: '100%', sm: 'auto' },
-              fontFamily: 'Montserrat, sans-serif'
-            }}
-          >
-            Agregar
-          </Button>
         </Toolbar>
       </Paper>
 

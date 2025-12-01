@@ -61,11 +61,132 @@
   font-weight: bold;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
   background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
   color: #fffefb;
 }
 
 .btn-agregar:hover {
+  background: rgb(165, 123, 84);
+
+}
+
+/* Reseñas de los productos */
+.detalle-reseñas {
+  max-width: 1000px;
+  margin: 20px auto 60px; 
+  padding: 1.5rem 2rem;
+  background: #fffefb;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-top: 1px solid #e6d9cd;
+}
+
+.reseñas-titulo {
+  font-size: 1.4rem;
+  color: #5d4037;
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+}
+
+.reseña-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.reseña-avatar {
+  width: 48px;
+  height: 48px;
+  background: #ce9976;
+  color: #fffefb;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.reseña-contenido {
+  flex: 1;
+}
+
+.reseña-nombre {
+  font-weight: 600;
+  color: #5d4037;
+  margin-bottom: 0.3rem;
+}
+
+.reseña-texto {
+  font-size: 0.95rem;
+  color: #74594e;
+  line-height: 1.4;
+}
+
+.reseña-estrellas {
+  font-size: 1.1rem;
+  color: #f5b841;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+.reseña-formulario {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.reseña-textarea {
+  width: 100%;
+  max-width: 800px; 
+  height: 120px;
+  padding: 1rem;
+  border-radius: 16px;
+  border: 1px solid #e6d9cd;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  resize: none;
+  margin-bottom: 1rem;
+  background: #fdfaf7;
+  color: #5d4037;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.reseña-estrellas-selector {
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+  color: #f5b841;
+  letter-spacing: 2px;
+}
+
+.estrella {
+  cursor: pointer;
+  padding: 0 6px;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.estrella.activa {
+  opacity: 1;
+}
+
+.btn-comentar-reseña {
+  padding: 0.75rem 1.8rem;
+  background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
+  color: #fffefb;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn-comentar-reseña:hover {
   background: #b98c61;
+  transform: translateY(-2px);
 }

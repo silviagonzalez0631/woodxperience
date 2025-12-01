@@ -18,6 +18,8 @@ export default function DetalleProducto() {
   const navigate = useNavigate();
   const { agregarProducto } = useCarrito();
   const [producto, setProducto] = useState<Producto | null>(null);
+  const [nuevaReseña, setNuevaReseña] = useState("");
+  const [estrellas, setEstrellas] = useState(5);
 
   useEffect(() => {
     const fetchProducto = async () => {
@@ -38,7 +40,7 @@ export default function DetalleProducto() {
   const handleAgregar = () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/modal-carrito"); // ← redirección sin alerta
+      navigate("/modal-carrito");
       return;
     }
 
@@ -51,46 +53,104 @@ export default function DetalleProducto() {
         cantidad: 1,
       });
 
-      navigate("/productos"); // ← también sin alerta
+      navigate("/productos");
     }
+  };
+
+  const handleEnviarReseña = () => {
+    alert("¡Reseña exitosa!");
+    setNuevaReseña("");
+    setEstrellas(5);
   };
 
   if (!producto) return <p className="detalle-cargando">Cargando producto...</p>;
 
   return (
-    <div className="detalle-producto-layout">
-      <div className="detalle-imagenes">
-        {producto.modelo3D ? (
-          <ModelViewer
-            src={producto.modelo3D}
-            alt={producto.titulo}
-            style={{ width: "100%", height: "400px", borderRadius: "12px" }}
-          />
-        ) : (
-          <img
-            src={producto.imagenes?.[0]}
-            alt={producto.titulo}
-            className="detalle-imagen-principal"
-          />
-        )}
-      </div>
-
-      <div className="detalle-info">
-        <h1 className="detalle-titulo">{producto.titulo}</h1>
-        <p className="detalle-descripcion">{producto.descripcion}</p>
-        <div className="detalle-precio">${producto.precio.toLocaleString()}</div>
-
-        <div className="detalle-botones">
-          <button className="btn-agregar" onClick={handleAgregar}>
-            Agregar al carrito
-          </button>
-          {producto.modelo3D && (
-            <button className="btn-3d" onClick={() => navigate("/productos")}>
-              Regresar
-            </button>
+    <>
+      <div className="detalle-producto-layout">
+        <div className="detalle-imagenes">
+          {producto.modelo3D ? (
+            <ModelViewer
+              src={producto.modelo3D}
+              alt={producto.titulo}
+              style={{ width: "100%", height: "400px", borderRadius: "12px" }}
+            />
+          ) : (
+            <img
+              src={producto.imagenes?.[0]}
+              alt={producto.titulo}
+              className="detalle-imagen-principal"
+            />
           )}
         </div>
+
+        <div className="detalle-info">
+          <h1 className="detalle-titulo">{producto.titulo}</h1>
+          <p className="detalle-descripcion">{producto.descripcion}</p>
+          <div className="detalle-precio">${producto.precio.toLocaleString()}</div>
+
+          <div className="detalle-botones">
+            <button className="btn-agregar" onClick={handleAgregar}>
+              Agregar al carrito
+            </button>
+            {producto.modelo3D && (
+              <button className="btn-3d" onClick={() => navigate("/productos")}>
+                Regresar
+              </button>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+
+      <div className="detalle-reseñas">
+        <h2 className="reseñas-titulo">Reseñas de clientes</h2>
+
+        <div className="reseña-item">
+          <div className="reseña-avatar">A</div>
+          <div className="reseña-contenido">
+            <p className="reseña-nombre">Ana Rodríguez</p>
+            <div className="reseña-estrellas">★★★★★</div>
+            <p className="reseña-texto">
+              El producto superó mis expectativas. Excelente calidad y acabados impecables.
+            </p>
+          </div>
+        </div>
+
+        <div className="reseña-item">
+          <div className="reseña-avatar">J</div>
+          <div className="reseña-contenido">
+            <p className="reseña-nombre">Juan Pérez</p>
+            <div className="reseña-estrellas">★★★★☆</div>
+            <p className="reseña-texto">
+              Muy buen servicio y entrega puntual. Lo recomiendo totalmente.
+            </p>
+          </div>
+        </div>
+
+        {/* Caja visual para nueva reseña */}
+        <div className="reseña-formulario">
+          <textarea
+            className="reseña-textarea"
+            placeholder="Escribe tu reseña aquí..."
+            value={nuevaReseña}
+            onChange={(e) => setNuevaReseña(e.target.value)}
+          />
+          <div className="reseña-estrellas-selector">
+            {[1, 2, 3, 4, 5].map((num) => (
+              <span
+                key={num}
+                className={num <= estrellas ? "estrella activa" : "estrella"}
+                onClick={() => setEstrellas(num)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+          <button className="btn-comentar-reseña" onClick={handleEnviarReseña}>
+            Enviar reseña
+          </button>
+        </div>
+      </div>
+    </>
   );
 }

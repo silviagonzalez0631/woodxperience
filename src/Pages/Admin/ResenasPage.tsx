@@ -22,6 +22,8 @@ import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import StarIcon from '@mui/icons-material/Star';
 import ReplyIcon from '@mui/icons-material/Reply';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 // --- Mock Data ---
 const mockReviews = [
@@ -108,7 +110,23 @@ const ResenasPage: React.FC = () => {
 
   return (
     <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', textAlign: 'center', mb: 3, fontWeight: 'bold'}}>
+      
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          color: '#815041d5',
+          fontFamily: 'Montserrat, sans-serif',
+          textAlign: 'center',
+          mb: 3,
+          fontWeight: 'bold',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1
+        }}
+      >
+        <FontAwesomeIcon icon={faStar} style={{ fontSize: '1.6rem', color: '#4f3027d5' }} />
         Gestión de Reseñas y Feedback
       </Typography>
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useCarrito } from '../Pages/Context/CarrritoContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'; 
 
 const ToastCarrito: React.FC = () => {
   const { toastVisible, ultimoAgregado } = useCarrito();
@@ -9,7 +11,9 @@ const ToastCarrito: React.FC = () => {
   return (
     <div className="toast-carrito show">
       <div className="toast-content">
-        <div className="toast-icon">🛒</div>
+        <div className="toast-icon">
+          <FontAwesomeIcon icon={faCartShopping} />
+        </div>
         <div className="toast-text">
           <strong>Agregado al carrito</strong>
           <div className="toast-title">{ultimoAgregado.titulo}</div>

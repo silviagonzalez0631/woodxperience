@@ -21,6 +21,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import type { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
 
 // --- Mock Data ---
 const mockKpis = {
@@ -106,9 +108,25 @@ const PagosPage: React.FC = () => {
 
   return (
     <Box sx={{ padding: 3, fontFamily: 'Montserrat, sans-serif' }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#815041d5', fontFamily: 'Montserrat, sans-serif', fontWeight: 'bold', mb: 2, textAlign: 'center' }}>
-        Transacciones y Liquidez
-      </Typography>
+      <Typography
+    variant="h4"
+    gutterBottom
+    sx={{
+      color: '#815041d5',
+      fontFamily: 'Montserrat, sans-serif',
+      fontWeight: 'bold',
+      mb: 2,
+      textAlign: 'center',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 1
+    }}
+  >
+    <FontAwesomeIcon icon={faCoins} style={{ fontSize: '1.6rem', color: '#4f3027d5' }} />
+    Transacciones y Liquidez
+  </Typography>
+
 
       {/* KPIs Financieros */}
       <Box

@@ -25,6 +25,11 @@ import ModalCarritoPC from './Pages/ModalCarritoPC';
 import RespuestaPago from './Pages/RespuestaPago';
 import PerfilDireccion from './Pages/PerfilDireccion';
 import FormularioPago from './Components/FormularioPago';
+import RutaProtegidaAdmin from './Routes/RutaProtegidaAdmin';
+import RutaProtegidaCliente from './Routes/RutaProtegidaCliente';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 // Panel de administrador
 import AdminLayout from './Pages/Admin/AdminLayout'; // This path is correct if AdminLayout.tsx is in src/admin/
@@ -39,10 +44,12 @@ import './index.css';
 
     function AppContent({ isMobile }: { isMobile: boolean }) {
     const location = useLocation();
+    const navigate = useNavigate();
     const isAdminRoute = location.pathname.startsWith('/admin');
     const ocultarBarra = location.pathname === '/Login' || location.pathname === '/Registro';
     const isInicio = location.pathname === '/';
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const usuarioRaw = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
     const usuarioLogueado = !!token;
 
     const [mostrarCarrito, setMostrarCarrito] = useState(false);
@@ -58,6 +65,25 @@ import './index.css';
         }, 300); // duración de la animación en ms
     };
 
+    const usuario = usuarioRaw ? JSON.parse(usuarioRaw) : null;
+    const rolUsuario = usuario?.rol || null;
+    const esAdmin = rolUsuario === "admin";
+
+        useEffect(() => {
+    if (!usuario) return;
+
+    const estaFueraDelMundoAdmin = !location.pathname.startsWith("/admin");
+    const estaEnLoginORegistro = location.pathname === "/Login" || location.pathname === "/Registro";
+
+    if (esAdmin && estaFueraDelMundoAdmin && !estaEnLoginORegistro) {
+        navigate("/admin", { replace: true });
+    }
+    }, [esAdmin, location.pathname, navigate, usuario]);
+
+
+
+
+
     return (
         <div className="app-container">
         {!isAdminRoute && !ocultarBarra && <BarraNavegacion />}
@@ -70,16 +96,16 @@ import './index.css';
             <Route path="/servicios" element={<Servicios />} />
             <Route path="/nosotros" element={isMobile ? <NosotrosMobile /> : <NosotrosPC />} />
             <Route path="/acerca" element={isMobile ? <AcercaDeMobile /> : <NosotrosPC />} />
-            <Route path="/productos" element={<ProductosPagePC />} />
+            <Route path="/productos" element={ <RutaProtegidaCliente><ProductosPagePC /> </RutaProtegidaCliente>} />
             <Route path="/Login" element={<Login />} />
             <Route path="/registro" element={<Registro />} />
-            <Route path="/perfil" element={isMobile ? <PerfilMobile /> : <PerfilPC />} />
+            <Route path="/perfil" element={<RutaProtegidaCliente>{isMobile ? <PerfilMobile /> : <PerfilPC />}</RutaProtegidaCliente>}/>
             <Route path="/modal-carrito" element={<ModalCarritoPC />} />
-            <Route path="/carrito" element={<CarritoPage />} />
+            <Route path="/carrito" element={ <RutaProtegidaCliente><CarritoPage /> </RutaProtegidaCliente>}/>
             <Route path="/respuesta-pago" element={<RespuestaPago />} />
             <Route path="/perfil/direccion" element={<PerfilDireccion />} />
             <Route path="/pago/:id" element={<FormularioPago />} />
-            <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin" element={  <RutaProtegidaAdmin><AdminLayout /> </RutaProtegidaAdmin>}>
                 <Route index element={<DashboardPage />} />
                 <Route path="usuarios" element={<UsuariosPage />} />
                 <Route path="productos" element={<ProductosPage />} />
@@ -92,7 +118,8 @@ import './index.css';
         </main>
 
         {/* COMPONENTES MÓVIL */}
-        {isMobile && !isAdminRoute && !ocultarBarra && (
+        {isMobile && !isAdminRoute && !ocultarBarra && !esAdmin && (
+
             <>
                 <BarraInferiorMobile />
                 <BotonCarritoMobile />
@@ -102,7 +129,7 @@ import './index.css';
 
 
         {/* COMPONENTES PC */}
-        {!isMobile && !isAdminRoute && usuarioLogueado && !isInicio && location.pathname !== '/carrito' && (
+        {!isMobile && !isAdminRoute && usuarioLogueado && !isInicio && !esAdmin && location.pathname !== '/carrito' && (
             <>
             <BotonFlotante onClick={toggleCarrito} />
             <ToastCarrito />
@@ -115,7 +142,7 @@ import './index.css';
             </>
         )}
 
-        {!isMobile && !isAdminRoute && <PiePagina />}
+        {!isMobile && !isAdminRoute && !esAdmin && <PiePagina />}
         </div>
     );
     }

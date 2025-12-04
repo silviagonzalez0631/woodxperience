@@ -141,7 +141,7 @@ import '../css/CarritoPage.css';
                 <button className="btn-regresar" onClick={() => navigate('/productos')}>
                     ← Regresar a productos
                 </button>
-                <button className="btn-cupon">Ingresar código de descuento</button>
+                
                 
                 </aside>
             </>

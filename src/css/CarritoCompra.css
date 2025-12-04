@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   z-index: 2000;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   animation: fadeInSlide 0.3s ease forwards;
 }
 
@@ -68,17 +68,43 @@
 }
 
 .carrito-preview-item.simple {
-  background: none;
-  box-shadow: none;
-  padding: 0;
-  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #e6d9cd;
   font-size: 0.95rem;
   color: #5d4037;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e6d9cd;
-  padding-bottom: 0.5rem;
+}
+
+.carrito-item-icono {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-right: 12px;
+}
+
+.carrito-nombre {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #5d4037;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carrito-cantidad {
+  background: #f1e6dc;
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #8B4513;
+  margin-left: 8px;
 }
 
 .carrito-mensaje {
@@ -114,61 +140,6 @@
   font-weight: 600;
   text-align: center;
 }
-.carrito-preview-item.simple {
-  background: none;
-  box-shadow: none;
-  padding: 0;
-  border-radius: 0;
-  border-bottom: 1px solid #e6d9cd;
-  padding-bottom: 0.6rem;
-}
-
-.carrito-info-texto {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.8rem;
-  font-size: 1rem;
-  color: #5d4037;
-  font-weight: 500;
-}
-
-.carrito-nombre {
-  flex: 1;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.carrito-item-icono {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-
-.carrito-cantidad {
-  background: #f1e6dc;
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #8B4513;
-}
-
-.carrito-nombre {
-  flex: 1;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #5d4037;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 
 .carrito-footer {
   padding: 1.5rem 1.2rem;
@@ -204,4 +175,3 @@
     transform: translateY(-2px);
   }
 }
-

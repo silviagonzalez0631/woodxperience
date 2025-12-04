@@ -60,13 +60,28 @@
 
         const { token, usuario } = res.data.data;
 
-        localStorage.setItem("token", token);
-        localStorage.setItem("usuario", JSON.stringify(usuario));
+        if(usuario.rol === "admin"){
+            //No guardar la sesion del admin en el localStorage
+            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("usuario", JSON.stringify(usuario));
+            
+        }else{
+            //Guardar la sesion del cliente en el localStorage
+            localStorage.setItem("token", token);
+            localStorage.setItem("usuario", JSON.stringify(usuario));
+        }
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         setTipoMensaje("success");
         setMensaje("Login exitoso");
-        setTimeout(() => navigate("/Inicio"), 2000);
+        setTimeout(() =>{
+            if (usuario.rol === "admin") {  
+                navigate("/admin");
+            } else{
+                navigate("/inicio");
+            }
+        },2000);
+
         } catch (error: unknown) {
         setTipoMensaje("error");
         if (isAxiosErrorLike<BackendError>(error)) {

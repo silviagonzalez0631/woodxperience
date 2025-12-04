@@ -1,43 +1,59 @@
-    .form-direccion-container {
-    background: #fffefb;
-    padding: 2rem;
-    max-width: 500px;
-    margin: 60px auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
+    
+/* Fondo para la página de dirección */
+    .form-direccion-background {
+    padding: 5rem 2rem;
+    background: linear-gradient(135deg, #fdf8f3 0%, #e4d1c1 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     }
+
+    .form-direccion-container {
+    padding: 2.5rem 2rem;
+    max-width: 480px;
+    margin: 50px auto; /* Reduje el margen superior para acercarlo al header */
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* Ajusté la sombra para un look más moderno */
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    animation: fadeIn 0.6s ease-in-out;
+    }
+
+
 
     .form-direccion-container h2 {
     font-size: 1.8rem;
-    color: #5d4037;
+    font-weight: 700;
+    color: #4E342E;
     margin-bottom: 0.5rem;
     }
 
     .form-direccion-container p {
     font-size: 1rem;
-    color: #74594e;
+    color: #5D4037;
     margin-bottom: 2rem;
+    padding: 0 10px;
     }
 
     .form-direccion-container label {
     display: block;
-    font-weight: bold;
+    font-weight: 600;
     color: #8B4513;
     margin-bottom: 0.5rem;
     text-align: left;
+    font-size: 0.95rem;
     }
 
     .form-direccion-container input {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     border: 2px solid #ce9976;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 1rem;
     background: #f8f5f2;
     color: #5d4037;
     margin-bottom: 1.5rem;
+    transition: border-color 0.3s ease, background 0.3s ease;
     }
 
     .form-direccion-container input:focus {
@@ -48,16 +64,24 @@
 
     .form-direccion-container button {
     padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #ce9976 0%, #b98c61 100%);
-    color: #fffefb;
+    background: linear-gradient(135deg, #e8716d 0%, #d45f5b 100%);
+    color: #fff;
     border: none;
-    border-radius: 25px;
-    font-weight: bold;
+    border-radius: 12px;
+    font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.3s ease;
+    box-shadow: 0 4px 12px rgba(232, 113, 109, 0.3);
+    transition: all 0.3s ease-in-out;
     }
 
     .form-direccion-container button:hover {
-    background: #b98c61;
+    background: #d45f5b;
+    transform: scale(1.03);
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
     }

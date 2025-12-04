@@ -23,14 +23,14 @@ const CarritoCompra: React.FC<Props> = ({ onClose, className = '' }) => {
       <div className="carrito-items">
         {carrito.map((p) => (
           <div key={p.id} className="carrito-preview-item simple">
-
-          <div className="carrito-info-texto">
-          <span className="carrito-nombre">{p.titulo}</span>
-          <img src={getBackendAssetUrl(p.imagen)} alt={p.titulo} className="carrito-item-icono" />
-        </div>
-
-        </div>
-
+            <img
+              src={getBackendAssetUrl(p.imagen)}
+              alt={p.titulo}
+              className="carrito-item-icono"
+            />
+            <span className="carrito-nombre">{p.titulo}</span>
+            <span className="carrito-cantidad">x{p.cantidad}</span>
+          </div>
         ))}
       </div>
 

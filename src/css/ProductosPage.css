@@ -319,9 +319,9 @@
 /* CTA Video Section */
 .cta-section {
   position: relative;
-  height: 420px; /* ligeramente más alto */
-  margin: 40px 0 30px 0; /* ajustado al flujo visual */
-  padding: 0 40px; /* igual que el navbar para alinear horizontalmente */
+  height: 420px; 
+  margin: 40px 0 30px 0; 
+  padding: 0 40px; 
   overflow: hidden;
 }
 
@@ -345,7 +345,7 @@
 .cta-content {
   position: relative;
   z-index: 1;
-  max-width: 800px; /* alineado con el contenido principal */
+  max-width: 800px; 
   margin: 0 auto;
   height: 100%;
   padding: 70px 40px; /* más alto, alineado horizontalmente */
@@ -404,7 +404,49 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .cta-section {
+    height: auto; /* que se ajuste al contenido */
+    padding: 20px; /* menos padding en móvil */
+  }
 
+  .cta-content {
+    padding: 40px 20px; /* más compacto */
+    border-radius: 20px; /* menos curva para pantallas pequeñas */
+  }
+
+  .cta-content h2 {
+    font-size: 1.8rem; /* más pequeño en móvil */
+    margin-bottom: 15px;
+  }
+
+  .cta-content p {
+    font-size: 1rem;
+    margin-bottom: 25px;
+  }
+
+  .cta-buttons {
+    flex-direction: column; /* botones uno debajo del otro */
+    gap: 15px;
+  }
+
+  .cta-btn {
+    width: 100%; /* que ocupen todo el ancho */
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-content p {
+    font-size: 0.95rem;
+  }
+}
 
 
 /* Responsive para móvil */

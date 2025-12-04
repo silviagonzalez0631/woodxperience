@@ -11,5 +11,9 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
+    allowedHosts: [
+      '.trycloudflare.com'   // permite cualquier subdominio de Cloudflare Tunnel
+    ],
   },
+
 })

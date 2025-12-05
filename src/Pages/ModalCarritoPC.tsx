@@ -17,10 +17,10 @@ const ModalCarritoPC: React.FC = () => {
             <p>Para agregar productos al carrito y realizar la compra, debe iniciar sesión</p>
 
             <div className="modal-carrito-pc-botones">
-            <button className="btn-modal-carrito crear" onClick={() => navigate("/registro")}>
+            <button className="btn-modal-carrito crear" onClick={() => navigate("/Registro")}>
                 Crear cuenta
             </button>
-            <button className="btn-modal-carrito ingresar" onClick={() => navigate("/login")}>
+            <button className="btn-modal-carrito ingresar" onClick={() => navigate("/Login")}>
                 Ingresar
             </button>
             </div>

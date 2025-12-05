@@ -68,7 +68,7 @@ const ProductosPagePC: React.FC = () => {
         <h3>Escritorio Moderno</h3>
         <p>Diseño funcional en madera clara, ideal para espacios de trabajo elegantes</p>
         <div className="precio-destacado">Desde $320.000</div>
-        <button className="btn-destacado">Ver Detalles</button>
+        
       </div>
     </div>
 
@@ -80,7 +80,7 @@ const ProductosPagePC: React.FC = () => {
         <h3>Mesa de Comedor</h3>
         <p>Mesa robusta para 6 personas, acabados en roble natural y estilo clásico</p>
         <div className="precio-destacado">Desde $450.000</div>
-        <button className="btn-destacado">Ver Detalles</button>
+        
       </div>
     </div>
 
@@ -92,7 +92,7 @@ const ProductosPagePC: React.FC = () => {
         <h3>Silla Ergonómica</h3>
         <p>Comodidad y estilo en una pieza de madera curvada, perfecta para oficina o comedor</p>
         <div className="precio-destacado">Desde $180.000</div>
-        <button className="btn-destacado">Ver Detalles</button>
+        
       </div>
     </div>
   </div>

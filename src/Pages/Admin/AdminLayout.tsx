@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -36,10 +36,11 @@ import '../../css/admin/AdminLayout.css';
 import Footer from '../../Components/Admin/footerAdmin';
 
 const AdminLayout: React.FC = () => {
-  const adminUser = {
-    name: 'Katie Pena',
-    avatar: 'KP'
-  };
+  const navigate = useNavigate();
+
+  // 🔹 Leer usuario desde sessionStorage
+  const storedUser = sessionStorage.getItem("usuario");
+  const adminUser = storedUser ? JSON.parse(storedUser) : null;
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorUserMenu, setAnchorUserMenu] = useState<null | HTMLElement>(null);
@@ -48,6 +49,13 @@ const AdminLayout: React.FC = () => {
 
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
+
+    useEffect(() => {
+      // Si no hay admin en sesión, redirigir al login
+      if (!adminUser) {
+        navigate("/login");
+      }
+    }, [adminUser, navigate]);
 
   const handleUserMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorUserMenu(event.currentTarget);
@@ -130,33 +138,33 @@ const AdminLayout: React.FC = () => {
             </Box>
           </Toolbar>
         </AppBar>
-              {/* Menú usuario */}
-          <Menu
-            anchorEl={anchorUserMenu}
-            open={Boolean(anchorUserMenu)}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            classes={{ paper: 'admin-menu' }}
+
+           {/* Menú usuario */}
+        <Menu
+          anchorEl={anchorUserMenu}
+          open={Boolean(anchorUserMenu)}
+          onClose={handleMenuClose}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          classes={{ paper: 'admin-menu' }}
+          sx={{ fontFamily: 'Montserrat, sans-serif' }}
+        >
+          <MenuItem onClick={handleOpenProfile} sx={{ fontFamily: 'Montserrat, sans-serif' }}>
+            <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+            Ver perfil
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={() => {
+              sessionStorage.clear();
+              navigate("/login");
+            }}
             sx={{ fontFamily: 'Montserrat, sans-serif' }}
           >
-            <MenuItem
-              onClick={handleOpenProfile}
-              sx={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <ListItemIcon><AccountCircleIcon /></ListItemIcon>
-              Ver perfil
-            </MenuItem>
-            <Divider />
-            <MenuItem
-              onClick={handleMenuClose}
-              sx={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              <ListItemIcon><LogoutIcon /></ListItemIcon>
-              Cerrar sesión
-            </MenuItem>
-          </Menu>
-
+            <ListItemIcon><LogoutIcon /></ListItemIcon>
+            Cerrar sesión
+          </MenuItem>
+        </Menu>
           {/* Menú tema */}
           <Menu
             anchorEl={anchorThemeMenu}
@@ -212,20 +220,24 @@ const AdminLayout: React.FC = () => {
           <Outlet />
         </Box>
 
-        {/* Modal perfil */}
-        {showProfileModal && (
-          <div className="profile-modal-overlay" onClick={handleCloseProfile}>
-            <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
-              <button className="close-profile" onClick={handleCloseProfile}>×</button>
-              <div className="admin-profile-card">
-                <div className="admin-avatar">KP</div>
-                <h3>Katie Pena</h3>
-                <p className="admin-role">Administrador</p>
-                <p className="admin-welcome">Bienvenido al menú de administrador.</p>
-              </div>
+        {/* Modal perfil dinámico */}
+    {showProfileModal && adminUser && (
+      <div className="profile-modal-overlay" onClick={handleCloseProfile}>
+        <div className="profile-modal" onClick={(e) => e.stopPropagation()}>
+          <button className="close-profile" onClick={handleCloseProfile}>×</button>
+          <div className="admin-profile-card">
+            <div className="admin-avatar">
+              {adminUser.nombre.charAt(0)}{adminUser.nombre.split(" ")[1]?.charAt(0)}
             </div>
+            <h3>{adminUser.nombre}</h3>
+            <p className="admin-role">{adminUser.rol}</p>
+            <p className="admin-email">{adminUser.email}</p>
+            <p className="admin-welcome">Bienvenido al menú de administrador.</p>
           </div>
-        )}
+        </div>
+      </div>
+    )}
+
       </Box>
 
       {/* Footer separado del layout */}

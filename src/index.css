@@ -52,29 +52,49 @@ body {
 
 /* HEADER MÓVIL */
 .header-mobile {
-  background: #ffffff;
-  padding: 15px 20px;
-  color: rgb(121, 104, 104);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra el bloque del logo */
+}
+
+.logo-wrapper {
   width: 100%;
-  box-sizing: border-box;
-}
-
-.logo-container {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.logo-img {
-  width: 200px;
-  height: auto;
+  text-align: center;  /* centra hijos en línea */
+  display: block;      /* asegura ancho completo */
   margin-bottom: 8px;
 }
 
+.logo-container {
+  display: inline-flex;    /* se comporta como inline para que text-align center funcione */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logo-img {
+  width: 60px;
+  height: auto;
+}
+
+.logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(45deg, #612c06, #a88a6d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .logo-subtitulo {
+  display: block;          /* evita comportamientos de inline que hereden anchura del contenido */
+  width: 100%;
+  text-align: center !important; /* sube la especificidad si hay reglas previas */
   font-size: 12px;
   color: #4e3618;
   font-weight: 300;
   letter-spacing: 0.5px;
+  margin-top: 4px;
 }
 
 .nav-mobile {
@@ -194,7 +214,27 @@ body {
   display: flex;
   align-items: center;
 }
+@media (max-width: 600px) {
+  .logo-img {
+    width: 140px;
+  }
 
+  .logo-subtitulo {
+    font-size: 10px;
+    line-height: 1.2;
+    padding: 0 5px;
+  }
+
+  .logo-container {
+    padding: 0 10px;
+  }
+
+  .header-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
 /* PRODUCTOS MÓVIL - GRID DE 2 COLUMNAS */
 .section-header {
   padding: 20px 20px 10px;

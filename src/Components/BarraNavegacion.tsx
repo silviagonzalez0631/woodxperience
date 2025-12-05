@@ -31,16 +31,20 @@ const BarraNavegacion: React.FC = () => {
       <div className="mobile-content">
         <header className="header">
           <div className="header-mobile">
+            <div className="logo-wrapper">
             <div className="logo-container">
               <img 
-                src="/imagenes/LogoWoodXperience.png" 
+                src="../imagenes/logocudo.png" 
                 alt="WOODXPERIENCE" 
                 className="logo-img"
               />
-              <div className="logo-subtitulo">
-                MADERA QUE INSPIRA, TECNOLOGIA QUE TRANSFORMA
-              </div>
+              <span className="logo-text">WoodXperience</span>
             </div>
+
+            <div className="logo-subtitulo">
+              MADERA QUE INSPIRA, TECNOLOGIA QUE TRANSFORMA
+            </div>
+          </div>
 
             <Buscador />
 

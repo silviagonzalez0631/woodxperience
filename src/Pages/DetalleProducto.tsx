@@ -42,7 +42,7 @@ export default function DetalleProducto() {
       let reseñaData: Reseña[] = [];
       if (json.success && Array.isArray(json.data)) {
         reseñaData = json.data;
-      } else if (Array.isArray(json)) { // Manejar el caso de que la API devuelva un array directamente
+      } else if (Array.isArray(json)) { 
         reseñaData = json;
       }
 
@@ -100,7 +100,7 @@ export default function DetalleProducto() {
 
     if (!token || !usuarioData) {
       alert("Debes iniciar sesión para dejar una reseña.");
-      navigate("/login");
+      navigate("/Login");
       return;
     }
 

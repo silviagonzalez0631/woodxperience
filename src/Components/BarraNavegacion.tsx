@@ -77,16 +77,19 @@ const BarraNavegacion: React.FC = () => {
     <div className="pc-content">
       <header className="barra-navegacion-pc">
         <div className="logo-pc">
+        <Link to="/">
           <img 
             src="/imagenes/logocudo.png" 
             alt="WOODXPERIENCE" 
             className="logo-img-pc"
           />
-          <div className="texto-logo-pc">
-            <div className="nombre-logo-pc">WOODXPERIENCE</div>
-            <div className="subtitulo-logo-pc">MADERA QUE INSPIRA, TECNOLOGIA QUE TRANSFORMA</div>
-          </div>
+        </Link>
+        <div className="texto-logo-pc">
+          <div className="nombre-logo-pc">WOODXPERIENCE</div>
+          <div className="subtitulo-logo-pc">MADERA QUE INSPIRA, TECNOLOGIA QUE TRANSFORMA</div>
         </div>
+      </div>
+
 
         <nav className="nav-pc">
       <Link to="/" className="nav-link-pc">Inicio</Link>

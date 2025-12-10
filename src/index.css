@@ -1271,3 +1271,71 @@ main {
     min-width: 280px;
   }
 }
+
+/*componente de respuesta del pago Payu latam diseño*/
+
+
+.respuesta-container {
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  background-color: #f9f6f2; /* tono claro que combina con WoodXperience */
+}
+
+.respuesta-card {
+  background: #fff;
+  border: 1px solid #d1835c;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.respuesta-mensaje {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4b2b16;
+  margin-top: 1rem;
+}
+
+.respuesta-ref {
+  font-size: 0.9rem;
+  color: #6b4a2b;
+  margin-top: 0.5rem;
+}
+
+/* Íconos */
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.icon.success {
+  color: #4caf50; 
+}
+.icon.error {
+  color: #e53935; 
+}
+.icon.unknown {
+  color: #ff9800; 
+}
+
+/* Loader */
+.respuesta-loader {
+  margin-top: 2rem;
+}
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #a0522d; 
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

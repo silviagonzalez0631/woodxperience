@@ -157,7 +157,7 @@ const AdminLayout: React.FC = () => {
           <MenuItem
             onClick={() => {
               sessionStorage.clear();
-              navigate("/login");
+              navigate("/Login");
             }}
             sx={{ fontFamily: 'Montserrat, sans-serif' }}
           >
